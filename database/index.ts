@@ -15,4 +15,6 @@ const expense = Mongoose.Schema({
   name: { type: String }
 });
 
+// just comment
+
 export const expenseScope = Mongoose.model("expenseScope", expense);
