@@ -2,7 +2,6 @@ import * as Hapi from 'hapi';
 import * as Pino from 'pino';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
-import * as Handlebars from 'handlebars';
 // import * as HapiSwagger from 'hapi-swagger';
 
 import { setUpconnection, expenseScope } from './database';
@@ -20,7 +19,7 @@ const logger = Pino();
 
 export default class Server {
   private port: string;
-  private _server: Hapi.Server;
+  private _server;
   constructor(port: string = '5000') {
     this.port = port;
   }
@@ -61,7 +60,20 @@ export default class Server {
           html: require('handlebars')
         },
         relativeTo: __dirname,
+        partialsPath: 'views/partials',
+        helpersPath: 'views/helpers',
+        layoutPath: 'views/layout',
+        layout: true,
         path: 'views'
+      });
+
+      this._server.state('data', {
+        ttl: null,
+        isSecure: true,
+        isHttpOnly: true,
+        encoding: 'base64json',
+        clearInvalid: true,
+        strictHeader: true
       });
 
       this._server.route([...users]);
@@ -93,3 +105,4 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
+

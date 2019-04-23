@@ -1,6 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { getTemplateMainPage } from '../controllers'
+import * as Vision from 'vision';
+import { getTemplateMainPage } from '../controllers';
 // import docs from '../docs';
 
 const users: Hapi.ServerRoute[] = [
@@ -8,12 +9,9 @@ const users: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/',
     // handler: controller.get,
-    handler: (req, h) => {
-      console.log('This is home page!');
-
-      return {
-        message: 'This is home page!'
-      }
+    handler: (req, h: Vision<Hapi.ResponseToolkit>) => {
+      h.state('data', { firstVisit: false });
+      return h.view('index');
     },
     // options: {
     //   // ...docs.getDoc,
@@ -24,21 +22,18 @@ const users: Hapi.ServerRoute[] = [
     //     },
     //   },
     // },
+    options: {
+      state: {
+        parse: true,
+        failAction: 'error'
+      }
+    }
   },
   {
     method: 'GET',
     path: '/{mainPages}',
     // handler: controller.get,
     handler: getTemplateMainPage,
-    // options: {
-    //   // ...docs.getDoc,
-    //   auth: {
-    //     strategy: 'user',
-    //     access: {
-    //       scope: ['action: read, target: users', 'admin'],
-    //     },
-    //   },
-    // },
   }
 ]
 
