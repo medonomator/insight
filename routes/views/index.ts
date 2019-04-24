@@ -1,10 +1,10 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import * as Vision from 'vision';
-import { getTemplateMainPage } from '../controllers';
+import { getTemplateMainPage } from '../../controllers/views';
 // import docs from '../docs';
 
-const users: Hapi.ServerRoute[] = [
+const views: Hapi.ServerRoute[] = [
   {
     method: 'GET',
     path: '/',
@@ -37,4 +37,4 @@ const users: Hapi.ServerRoute[] = [
   }
 ]
 
-export default users;
+export default views;

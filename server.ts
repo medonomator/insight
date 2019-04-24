@@ -4,16 +4,13 @@ import * as Inert from 'inert';
 import * as Vision from 'vision';
 // import * as HapiSwagger from 'hapi-swagger';
 
-import { setUpconnection, expenseScope } from './database';
+import { setUpconnection } from './database/mongoConnection';
+import { mySqlconnection } from './database/mySqlConnection';
 // routes
-import users from './routes';
+import users from './routes/users';
 
 setUpconnection();
-// (async () => {
-//   const opa = await expenseScope.update({ _id: '5cbb473261a0891ecc1cd245' });
-
-//   opa.update({ food: 100000 })
-// })();
+// mySqlconnection();
 
 const logger = Pino();
 

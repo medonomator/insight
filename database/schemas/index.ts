@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import * as Mongoose from "mongoose";
 
-const users = mongoose.Schema({
+const users = Mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -50,26 +50,16 @@ const users = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  options: {
-    enableKeys: true,
-    secretName: 'secretName',
-    secretAge: 324,
-    arr: [1, 2, 3, 4, 5],
-    arrObje: [
-      {
-        firstName: 'first',
-        lastName: 'second'
-      },
-      {
-        firstName: 'Dasha',
-        lastName: 'Sonya'
-      },
-    ],
-    stock: {
-      velosity: 'keksik',
-      majority: 'large'
-    }
-  }
+  sex: {
+    type: String,
+    enum: ['male', 'female'],
+    default: 'male',
+  },
+  birthDate: {
+    type: String,
+    default: '',
+  },
+  articleId: Mongoose.Schema.Types.ObjectId,
 }, { versionKey: false });
 
-export const usersSchema = mongoose.model("usersSchema", users);
+export const usersSchema = Mongoose.model("usersSchema", users);
