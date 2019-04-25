@@ -24,7 +24,7 @@ const users = Mongoose.Schema({
   },
   status: {
     type: String,
-    default: ''
+    default: 'newbie'
   },
   city: {
     type: String,

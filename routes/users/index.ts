@@ -1,35 +1,20 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import * as Vision from 'vision';
-import { getTemplateMainPage } from '../../controllers/views';
-import * as db from '../../database/schemas'
+import { userRegister } from '../../controllers/users';
+
 // import docs from '../docs';
 
 const users: Hapi.ServerRoute[] = [
   {
     method: 'POST',
     path: '/user/register',
-    // handler: controller.get,
-    handler: (req, h: Hapi.ResponseToolkit) => {
-
-
-      console.log('works');
-
-      // const newUSer = db.usersSchema({
-      //   email: "new@email.com",
-      //   password: '12345',
-      //   name: "Dima"
-      // })
-
-      // newUSer.save(res => {
-      //   console.log(res, 'super save');
-      // })
-      return req.payload
-    },
+    handler: userRegister,
     options: {
       validate: {
         payload: {
           email: Joi.string().email().required(),
+          password: Joi.string().min(4).required(),
+          name: Joi.string().required(),
         },
       },
       state: {
