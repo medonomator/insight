@@ -2,7 +2,7 @@ import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import { userRegister } from '../../controllers/users';
 
-// import docs from '../docs';
+import { docs } from '../../config/docs';
 
 const users: Hapi.ServerRoute[] = [
   {
@@ -10,23 +10,27 @@ const users: Hapi.ServerRoute[] = [
     path: '/user/register',
     handler: userRegister,
     options: {
+      ...docs.users,
       validate: {
         payload: {
-          email: Joi.string().email().required(),
-          password: Joi.string().min(4).required(),
+          email: Joi.string()
+            .email()
+            .required(),
+          password: Joi.string()
+            .min(4)
+            .required(),
           name: Joi.string().required(),
         },
       },
       state: {
         parse: true,
-        failAction: 'error'
+        failAction: 'error',
       },
-    }
+    },
   },
-]
+];
 
 export default users;
-
 
 // TODO:
 // path: '/user/login',

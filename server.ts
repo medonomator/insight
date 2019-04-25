@@ -2,7 +2,8 @@ import * as Hapi from 'hapi';
 import * as Pino from 'pino';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
-// import * as HapiSwagger from 'hapi-swagger';
+import * as HapiSwagger from 'hapi-swagger';
+import { swaggerOptions } from './config';
 
 import { setUpconnection } from './database/mongoConnection';
 import { mySqlconnection } from './database/mySqlConnection';
@@ -26,10 +27,10 @@ export default class Server {
       Vision,
       // AuthBearer,
       // JWT,
-      // {
-      //   plugin: HapiSwagger,
-      //   options: this.swaggerOptions,
-      // },
+      {
+        plugin: HapiSwagger,
+        options: swaggerOptions,
+      },
     ]);
   }
   public async init() {
@@ -54,14 +55,14 @@ export default class Server {
 
       this._server.views({
         engines: {
-          html: require('handlebars')
+          html: require('handlebars'),
         },
         relativeTo: __dirname,
         partialsPath: 'views/partials',
         helpersPath: 'views/helpers',
         layoutPath: 'views/layout',
         layout: true,
-        path: 'views'
+        path: 'views',
       });
 
       this._server.state('data', {
@@ -70,7 +71,7 @@ export default class Server {
         isHttpOnly: true,
         encoding: 'base64json',
         clearInvalid: true,
-        strictHeader: true
+        strictHeader: true,
       });
 
       this._server.route([...users]);
@@ -102,4 +103,3 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
-

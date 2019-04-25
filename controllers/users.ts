@@ -1,8 +1,12 @@
 import * as Hapi from 'hapi';
 import * as db from '../database/schemas';
 
-export const userRegister = (req, h: Hapi.ResponseToolkit) => {
+(async () => {
+  const opa = await db.usersSchema.find({}, { name: 'Dima' });
+  console.log(opa);
+})();
 
+export const userRegister = (req, h: Hapi.ResponseToolkit) => {
   console.log(req.payload);
 
   // const newUSer = db.usersSchema({
@@ -15,8 +19,7 @@ export const userRegister = (req, h: Hapi.ResponseToolkit) => {
   //   console.log(res, 'super save');
   // })
 
-
   return {
-    users: 'Register Success'
-  }
-}
+    users: 'Register Success',
+  };
+};
