@@ -27,6 +27,7 @@
     "pino": "^5.12.2",
     "pino-pretty": "^2.6.0",
     "ramda": "^0.26.1",
+    "uuid": "^3.3.2",
     "vision": "^5.4.4"
   },
   "devDependencies": {
