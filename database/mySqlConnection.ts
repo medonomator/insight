@@ -1,26 +1,39 @@
-var mysql = require('mysql');
+import * as mysql from 'mysql2/promise';
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "mydb"
-});
-
-export const mySqlconnection = async () => {
-
-  con.connect(function (err) {
-    if (err) throw err;
-    con.query("CREATE DATABASE IF NOT EXISTS mydb", function (err, result) {
-      if (err) throw err;
-      console.log("Database Connected");
-
-      var sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255),name VARCHAR(255), address VARCHAR(255))";
-      con.query(sql, function (err, result) {
-        if (err) throw err;
-        console.log("Table created", result);
-      });
-    });
+export async function mySqlConnection() {
+  let mySqlInstance;
+  const conMsql = await mysql.createConnection({
+    host: process.env.HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASSWORD || "1234",
+    database: process.env.DB_NAME || "mydb"
   });
 
+  // const resultQuerty = await conMsql.query('SELECT age FROM users WHERE age BETWEEN 20 AND 25');
+
+  // console.log(resultQuerty);
+
+
+  return mySqlInstance;
 }
+
+export default mySqlConnection;
+
+
+// class Singleton {
+//   private static instance: Singleton;
+
+//   private constructor() { }
+
+//   static getInstance() {
+//     if (!Singleton.instance) {
+//       Singleton.instance = new Singleton();
+//     }
+//     return Singleton.instance;
+//   }
+// }
+
+// let e = new Singleton(); // Error: constructor of 'Singleton' is private.
+// let v = Singleton.getInstance();
+
+

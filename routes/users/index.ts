@@ -1,6 +1,6 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { userRegister } from '../../controllers/users';
+import { userRegister } from '../../handlers/users/userRegister';
 
 import { docs } from '../../config/docs';
 

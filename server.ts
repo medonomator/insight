@@ -1,17 +1,19 @@
 import * as Hapi from 'hapi';
 import * as Pino from 'pino';
 import * as Inert from 'inert';
+import * as Path from 'path';
 import * as Vision from 'vision';
 import * as HapiSwagger from 'hapi-swagger';
 import { swaggerOptions } from './config';
 
 import { setUpconnection } from './database/mongoConnection';
-import { mySqlconnection } from './database/mySqlConnection';
+import mySqlconnection from './database/mySqlConnection';
 // routes
 import users from './routes/users';
+import views from './routes/views';
 
 setUpconnection();
-// mySqlconnection();
+mySqlconnection();
 
 const logger = Pino();
 
@@ -74,7 +76,8 @@ export default class Server {
         strictHeader: true,
       });
 
-      this._server.route([...users]);
+      this._server.route([...users, ...views]);
+
     } catch (error) {
       logger.error(error);
     }
