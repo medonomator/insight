@@ -65,8 +65,4 @@ const users = Mongoose.Schema(
   { versionKey: false },
 );
 
-users.methods.example = function(cb) {
-  console.log(this);
-};
-
 export const usersSchema = Mongoose.model('usersSchema', users);

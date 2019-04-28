@@ -22,10 +22,6 @@ const users: Hapi.ServerRoute[] = [
           name: Joi.string().required(),
         },
       },
-      state: {
-        parse: true,
-        failAction: 'error',
-      },
     },
   },
 ];
