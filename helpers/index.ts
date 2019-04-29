@@ -1,4 +1,5 @@
 import * as jsonwebtoken from 'jsonwebtoken';
+import * as crypto from 'crypto';
 
 interface ITokens {
   token: string;
@@ -39,3 +40,10 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
     ),
   };
 };
+
+export const encryptData = (str: string, secretKey = 'secretKey') => {
+  return crypto
+    .createHmac('sha256', secretKey)
+    .update(str)
+    .digest('hex');
+}

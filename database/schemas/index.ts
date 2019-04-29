@@ -56,6 +56,9 @@ const users = Mongoose.Schema(
       enum: ['male', 'female'],
       default: 'male',
     },
+    userId: {
+      type: String
+    },
     birthDate: {
       type: String,
       default: '',

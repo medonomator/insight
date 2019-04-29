@@ -1,14 +1,13 @@
 import * as Hapi from 'hapi';
 import * as db from '../../../database/schemas';
-import * as crypto from 'crypto';
 import * as uuid from 'uuid';
-import * as Logger from 'pino';
+import logger from '../../../helpers/logger'
+import { encryptData } from '../../../helpers';
 import { ErrorStatus, default as Error } from '../../../helpers/error';
-import { IUser } from './interfaces';
 import { prepareTokens } from '../../../helpers/index';
-const logger = Logger();
+import { IParams, IUser } from './interfaces';
 
-export const userRegister = async (req, h: Hapi.ResponseToolkit) => {
+export const userRegister = async (req: IParams, h: Hapi.ResponseToolkit) => {
   try {
     const { email, password, name } = req.payload;
     const oldUser: IUser | null = <any>await db.usersSchema.findOne({ email });
@@ -26,14 +25,13 @@ export const userRegister = async (req, h: Hapi.ResponseToolkit) => {
     const payload = {
       userId,
       email,
-      password: encrypt(password, email.toLowerCase()),
+      password: encryptData(password, email.toLowerCase()),
       name,
     };
 
     const newUser = new db.usersSchema(payload);
-
     newUser.save().then(() => {
-      logger.info('New user registered', {});
+      logger.info('New user registered', payload);
     });
 
     if (!newUser) {
@@ -61,9 +59,3 @@ export const userRegister = async (req, h: Hapi.ResponseToolkit) => {
   }
 };
 
-function encrypt(str: string, secretKey = 'secretKey') {
-  return crypto
-    .createHmac('sha256', secretKey)
-    .update(str)
-    .digest('hex');
-}

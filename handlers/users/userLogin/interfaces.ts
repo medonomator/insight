@@ -1,13 +1,12 @@
 /**
-* Регистрация клиента 
-* В ответ возвращаются токены, если регистрация успешна, или ошибка
-*/
+ * Вход клиента в ЛК
+ * В ответ возвращаются токены, если credentials верные
+ */
 
 export interface IParams {
   payload: {
     email: string;
     password: string;
-    name: string;
   }
 }
 
