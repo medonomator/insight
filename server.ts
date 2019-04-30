@@ -77,7 +77,6 @@ export default class Server {
       });
 
       this._server.route([...users, ...views]);
-
     } catch (error) {
       logger.error(error);
     }
