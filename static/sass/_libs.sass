@@ -1,10 +1,16 @@
 @import "vars"
-
-/*** main ***/	
+  
 *
+	-webkit-box-sizing: border-box
+	-moz-box-sizing: border-box
 	box-sizing: border-box
 	margin: 0
 	padding: 0
+	&:before, &:after
+		-webkit-box-sizing: border-box
+		-moz-box-sizing: border-box
+		box-sizing: border-box
+
 
 *::-webkit-input-placeholder
 	color: #666
@@ -33,10 +39,20 @@ body input:required:valid,
 body textarea:required:valid
 	color: #666
 
-/*** hamburger ***/
-.hamburger
-  display: none
-  cursor: pointer
+  
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.65
+	overflow-x: hidden
+	color: #222
+	font-family: 'PTSansCaption', sans-serif
+
+  // hamburger
+.hamburger 
+	display: none
+	cursor: pointer
 
 .bar1, .bar2, .bar3 
 	width: 40px
@@ -57,26 +73,3 @@ body textarea:required:valid
 .change .bar3 
 	-webkit-transform: rotate(45deg) translate(-8px, -8px)
 	transform: rotate(45deg) translate(-8px, -8px)
-
-/*** pop up ***/
-.pop-up-window
-	position: absolute
-	background: rgba(0, 0, 0, 0.8)
-	top: 0
-	bottom: 0
-	left: 0
-	right: 0
-	display: none
-	width: 100%
-	z-index: 1000
-
-.pop-up-wrapper
-	width: 570px
-	height: 570px
-	border-radius: 100%
-	position: fixed
-	top: calc(50% - 200px)
-	left: 0
-	right: 0
-	margin: auto
-	z-index: 1000

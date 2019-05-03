@@ -13,12 +13,13 @@ export async function mySqlConnection() {
     database: process.env.DB_NAME || 'mydb',
   });
 
-  // const resultQuerty = await conMsql.query('SELECT age FROM users WHERE age BETWEEN 20 AND 25');
+  // const resultQuerty = await conMsql.query(`SELECT * FROM usersP INNER JOIN departments ON usersP.d_id = departments.id`);
 
   // console.log(resultQuerty);
 
   return mySqlInstance;
 }
+
 
 export default mySqlConnection;
 

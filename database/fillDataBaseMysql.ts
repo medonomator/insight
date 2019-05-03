@@ -51,8 +51,22 @@ async function createInitialDataBaseAndTables() {
     status VARCHAR(50) DEFAULT 'newbie')
   `;
 
-  const createTableNotes = await conMsql.query(sqlCreateTableNotes);
-  const createTableUsers = await conMsql.query(slqCreateTableUsers);
+
+  const slq = `CREATE TABLE IF NOT EXISTS usersP
+    (id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    d_id VARCHAR(255))
+  `;
+
+  const slq2 = `CREATE TABLE IF NOT EXISTS departments
+    (id INT AUTO_INCREMENT PRIMARY KEY,
+    position VARCHAR(255))
+  `;
+
+  await conMsql.query(sqlCreateTableNotes);
+  await conMsql.query(slqCreateTableUsers);
+  await conMsql.query(slq);
+  await conMsql.query(slq2);
 
   logger.info('Create table complete');
 }
@@ -66,6 +80,17 @@ async function fillInitialDataBaseAndTables() {
     password: process.env.DB_PASSWORD || '1234',
     database: process.env.DB_NAME || 'mydb',
   });
+
+  const randomName = faker.name.findName()
+
+  const sql = `INSERT INTO departments (position)
+    VALUES ('Старший')`
+
+
+  const query = await conMsql.query(sql);
+  console.log(query);
+
+  conMsql.end();
 }
 
 fillInitialDataBaseAndTables();

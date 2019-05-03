@@ -5,3 +5,9 @@ export const swaggerOptions = {
     description: 'API для запросов',
   },
 };
+
+export const CONFIG = {
+  path: process.argv[2]
+    ? '../static/'
+    : 'assets/'
+}

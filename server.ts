@@ -1,7 +1,6 @@
 import * as Hapi from 'hapi';
 import * as Pino from 'pino';
 import * as Inert from 'inert';
-import * as Path from 'path';
 import * as Vision from 'vision';
 import * as HapiSwagger from 'hapi-swagger';
 import { swaggerOptions } from './config';
@@ -19,7 +18,7 @@ const logger = Pino();
 
 export default class Server {
   private port: string;
-  private _server;
+  private _server: any;
   constructor(port: string = '5000') {
     this.port = port;
   }
@@ -53,18 +52,20 @@ export default class Server {
           },
         },
       });
+
       await this.addPlugins();
 
       this._server.views({
         engines: {
-          html: require('handlebars'),
+          hbs: require('handlebars'),
         },
         relativeTo: __dirname,
         partialsPath: 'views/partials',
         helpersPath: 'views/helpers',
-        layoutPath: 'views/layout',
-        layout: true,
         path: 'views',
+        context: {
+          path: '../static/'
+        }
       });
 
       this._server.state('data', {

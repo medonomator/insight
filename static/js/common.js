@@ -1,6 +1,6 @@
-$(function() {
+$(function () {
   /** hamburger */
-  $(".hamburger").click(function() {
+  $(".hamburger").click(function () {
     $(".hamburger").toggleClass("change");
     $(".mobile-menu").slideToggle();
   });
@@ -20,7 +20,7 @@ $(function() {
   /** scroll to block */
   var $page = $("html, body");
   $(".example, .order-print, .order-print, .order-consultation-click").click(
-    function() {
+    function () {
       $page.animate(
         {
           scrollTop: $(".calculate-order").offset().top - 150
