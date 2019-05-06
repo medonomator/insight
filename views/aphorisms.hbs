@@ -13,6 +13,30 @@
       <p>This is will description on this part. (Aphorisms)</p>
     </div>
 
+    <section class="aphorisms-container">
+
+      <div class="aphorisms-header">
+        <h2>Случайные афоризмы</h2>
+      </div>
+
+      {{#each aphorisms}}
+      <div class="aphorisms-item">
+        <div class="aphorisms-item-top">
+          <h2>{{this.author}}</h2>
+        </div>
+
+        <div class="aphorisms-item-body">
+          <p>{{this.body}}</p>
+        </div>
+      </div>
+      {{/each}}
+
+      <div class="aphorisms-all">
+        <a href="#">Читать все афоризмы...</a>
+      </div>
+
+    </section>
+
   </div>
   {{>footer}}
 </body>

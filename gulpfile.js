@@ -10,11 +10,12 @@ var gulp = require("gulp"),
   rename = require("gulp-rename"),
   autoprefixer = require("gulp-autoprefixer"),
   notify = require("gulp-notify"),
-  imagemin = require("gulp-imagemin");
+  imagemin = require("gulp-imagemin"),
+  handlebars = require('gulp-compile-handlebars'),
+  rename = require('gulp-rename');
 
-var handlebars = require('gulp-compile-handlebars');
-var rename = require('gulp-rename');
-
+// MOCK DATA
+const aphorisms = require('./config/data/aphorisms');
 
 gulp.task("imagemin", () =>
   gulp
@@ -23,15 +24,10 @@ gulp.task("imagemin", () =>
     .pipe(gulp.dest("dist/images"))
 );
 
-gulp.task("copy-files", () =>
-  gulp
-    .src("static/**/*")
-    .pipe(gulp.dest("dist/assets"))
-);
-
 gulp.task('handlebars', function () {
   var templateData = {
-    path: 'assets/'
+    path: 'assets/',
+    aphorisms: aphorisms.slice(0, 8)
   },
     options = {
       // ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
@@ -52,35 +48,13 @@ gulp.task('handlebars', function () {
     .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('handlebars', function () {
-
-//   var tepmplatedata = {
-//     "index": {
-//       "title": "Home page",
-//       "nav_index": "active"
-//     },
-//     "about": {
-//       "title": "About us",
-//       "nav_about": "active"
-//     },
-//     path: 'assets/'
-//   };
-
-//   gulp.src('./views/pages/*.hbs')
-//     .pipe(hbsmaster('./views/master.hbs', tepmplatedata, {}))
-//     .pipe(rename(function (path) {
-//       path.extname = '.html';
-//     }))
-//     .pipe(gulp.dest('./dist'));
-// });
-
 gulp.task("browser-sync", function () {
   browserSync({
     server: {
       baseDir: "dist"
     },
     notify: false,
-    // open: false,
+    open: false,
     // online: false, // Work Offline Without Internet Connection
     // tunnel: true, tunnel: "projectname", // Demonstration page: http://projectname.localtunnel.me
   });
@@ -94,6 +68,7 @@ gulp.task("styles", function () {
     .pipe(autoprefixer(["last 15 versions"]))
     .pipe(cleancss({ level: { 1: { specialComments: 0 } } })) // Opt., comment out when debugging
     .pipe(gulp.dest("static/css"))
+    .pipe(gulp.dest("dist/assets/css"))
     .pipe(browserSync.stream());
 });
 
@@ -110,13 +85,11 @@ gulp.task("js", function () {
   );
 });
 
-gulp.task("watch", ["styles", "js", "browser-sync", "handlebars", "copy-files"], function () {
+gulp.task("watch", ["styles", "js", "browser-sync", "handlebars"], function () {
   gulp.watch("static/" + syntax + "/**/*." + syntax + "", ["styles"]);
   gulp.watch(["libs/**/*.js", "static/js/common.js"], ["js"]);
   gulp.watch(["views/**/*.hbs"], ["handlebars"]);
-  gulp.watch(["static/**/*"], ["copy-files"]);
   gulp.watch("dist/*.html", browserSync.reload);
-  gulp.watch("static/**/*.css", browserSync.reload);
 });
 
 gulp.task("default", ["watch"]);

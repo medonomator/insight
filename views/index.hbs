@@ -18,87 +18,50 @@
 
     <section class="aphorisms-container">
 
+      <div class="aphorisms-header">
+        <h2>Случайные афоризмы</h2>
+      </div>
+
+      {{#each aphorisms}}
       <div class="aphorisms-item">
         <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
+          <h2>{{this.author}}</h2>
         </div>
 
         <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
+          <p>{{this.body}}</p>
         </div>
       </div>
+      {{/each}}
 
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
+      <div class="aphorisms-all">
+        <a href="#">Читать все афоризмы...</a>
+      </div>
+
+    </section>
+
+    <section class="notes-container">
+
+      <div class="notes-header">
+        <h2>Случайные заметки</h2>
+      </div>
+
+      {{#each aphorisms}}
+      <div class="notes-item">
+        <div class="notes-item-top">
+          <h2>{{this.author}}</h2>
         </div>
 
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
+        <div class="notes-item-body">
+          <p>{{this.body}}</p>
         </div>
       </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
+      {{/each}}
 
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
+      <div class="notes-all">
+        <a href="#">Читать все заметки...</a>
       </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
 
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
-      </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
-
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
-      </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
-
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
-      </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
-
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
-      </div>
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>aphorisms-item</h2>
-        </div>
-
-        <div class="aphorisms-item-body">
-          <p>Только труд может сделать человека счастливым, приводя его душу в ясность, гармонию и довольство самим
-            собою.</p>
-        </div>
-      </div>
     </section>
 
   </div>

@@ -6,8 +6,3 @@ export const swaggerOptions = {
   },
 };
 
-export const CONFIG = {
-  path: process.argv[2]
-    ? '../static/'
-    : 'assets/'
-}
