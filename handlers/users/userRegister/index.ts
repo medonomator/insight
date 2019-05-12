@@ -16,7 +16,7 @@ import { testSchema } from '../../../database/schemas/testSchema';
 //     console.log(res);
 //   });
 
-export const userRegister = async (req: IParams, h: Hapi.ResponseToolkit) => {
+export const userRegister = async (req: IParams) => {
   try {
     const { email, password, name } = req.payload;
     const oldUser: IUser | null = <any>await db.usersSchema.findOne({ email });

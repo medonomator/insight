@@ -15,7 +15,8 @@ hr
 
 h2
 	font-size: 20px
-
+	text-transform: uppercase
+	text-align: center	
 a
 	text-decoration: none
 	color: #333
@@ -30,7 +31,7 @@ a
 	max-width: 1170px
 	position: relative
 	min-height: 100vh
-	margin-bottom: 200px
+	margin-bottom: 400px
 
 .h2
 	text-transform: uppercase
@@ -67,13 +68,28 @@ a
 		color: #444
 		&:hover
 			@extend .hover-color
+			
 
 /*** about  ***/
 .about
-	padding: 20px 0
-	padding-top: 35px
+	padding: 35px 0
+	padding-bottom: 70px
 	text-align: center
-	text-shadow: 0 1px 2px $accent
+	text-shadow: 0 1px 1px $accent
+
+.text
+	margin-top: 20px
+	background: #f9f9f9
+	border-radius: 4px
+	padding: 10px 30px
+	box-shadow: $md-box-shadow-1
+	
+	p
+		text-indent: 20px
+		padding-bottom: 20px
+
+	a
+		color: blue
 	
 /*** aphorisms  ***/
 .aphorisms-container
@@ -92,7 +108,6 @@ a
 		background: linear-gradient(40deg,#45cafc,#303f9f)
 		padding: 5px 20px
 		h2
-
 			color: white
 
 	.aphorisms-item-body
@@ -104,9 +119,6 @@ a
 		width: 100%
 		padding-bottom: 40px
 		padding-top: 20px
-		h2
-			text-transform: uppercase
-			text-align: center
 			
 	.aphorisms-all
 		display: flex
