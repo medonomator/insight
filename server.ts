@@ -11,6 +11,10 @@ import mySqlconnection from './database/mySqlConnection';
 import users from './routes/users';
 import views from './routes/views';
 
+import { myFirstTools } from './helpers/tools'
+
+console.log(myFirstTools());
+
 
 setUpconnection();
 mySqlconnection();
@@ -107,3 +111,30 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
+
+
+
+const kue = require('kue');
+const { sleep } = require('sleep');
+const queue = kue.createQueue();
+const job = queue.create('mytype', {
+  title: 'mytitle',
+  letter: 'a',
+})
+  .removeOnComplete(true)
+  .save((err) => {
+    if (err) {
+      logger.error('error')
+
+      return;
+    }
+    job.on('complete', (result) => {
+      logger.info('complete')
+
+    });
+    job.on('failed', () => {
+      logger.error('error')
+    });
+  });
+
+
