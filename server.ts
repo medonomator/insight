@@ -6,25 +6,21 @@ import * as HapiSwagger from 'hapi-swagger';
 import { swaggerOptions } from './config';
 
 import { setUpconnection } from './database/mongoConnection';
-import mySqlconnection from './database/mySqlConnection';
+// import mySqlconnection from './database/mySqlConnection';
 // routes
 import users from './routes/users';
 import views from './routes/views';
-
-import { myFirstTools } from './helpers/tools'
-
-console.log(myFirstTools());
-
+import { myFirstTools } from './helpers/tools';
 
 setUpconnection();
-mySqlconnection();
+// mySqlconnection();
 
 const logger = Pino();
 
 export default class Server {
   private port: string;
   private _server: any;
-  constructor(port: string = '5000') {
+  constructor(port) {
     this.port = port;
   }
   private async addPlugins() {
@@ -69,8 +65,8 @@ export default class Server {
         helpersPath: 'views/helpers',
         path: 'views',
         context: {
-          path: '../static/'
-        }
+          path: '../static/',
+        },
       });
 
       this._server.state('data', {
@@ -111,30 +107,3 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
-
-
-
-const kue = require('kue');
-const { sleep } = require('sleep');
-const queue = kue.createQueue();
-const job = queue.create('mytype', {
-  title: 'mytitle',
-  letter: 'a',
-})
-  .removeOnComplete(true)
-  .save((err) => {
-    if (err) {
-      logger.error('error')
-
-      return;
-    }
-    job.on('complete', (result) => {
-      logger.info('complete')
-
-    });
-    job.on('failed', () => {
-      logger.error('error')
-    });
-  });
-
-

@@ -1,9 +1,13 @@
-FROM amazonlinux
+FROM mhart/alpine-node:10
 
-RUN apt-get update
-RUN apt-get install https
+WORKDIR /
 
-RUN echo 'Hello world from Docker!' > /var/www/html/index.html
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"] 
+COPY package.json .
+COPY . .
 
-EXPOSE 8080:8080
+RUN apk update; apk upgrade; npm i --production;
+
+ENV NODE_PATH /usr/src/app/dist
+
+ENTRYPOINT []
+CMD ["node", "server.ts"]
