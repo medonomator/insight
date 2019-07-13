@@ -1,0 +1,172 @@
+@import "fonts"
+@import "libs"
+@import "vars"
+
+
+img
+	width: 100%
+li
+	list-style-type: none
+p
+	font-size: 18px
+hr
+	margin-bottom: 30px
+	color: #999
+
+h2
+	font-size: 20px
+	text-transform: uppercase
+	text-align: center	
+a
+	text-decoration: none
+	color: #333
+
+.hover-color
+	color: $accent
+	transition: all .3s ease
+
+.wrapper 
+	margin-right: auto
+	margin-left: auto
+	max-width: 1170px
+	position: relative
+	min-height: 100vh
+	margin-bottom: 400px
+
+.h2
+	text-transform: uppercase
+	text-align: center
+	margin: 40px 0
+
+// header
+.header
+	display: flex
+	justify-content: space-between
+	.logo
+		width: 280px
+		margin-top: 40px
+	.sky
+		width: 250px
+		margin-top: 20px
+		margin-left: 40px
+	.soon
+		width: 250px
+		margin-top: -50px
+
+.main-menu
+	margin-top: -20px
+	ul
+		display: flex
+		justify-content: center
+	li
+		margin-right: 30px
+		text-transform: uppercase
+		font-family: 'Lora', sans-serif
+		font-weight: 600
+		font-size: 18px
+	a
+		color: #444
+		&:hover
+			@extend .hover-color
+			
+
+/*** about  ***/
+.about
+	padding: 35px 0
+	padding-bottom: 70px
+	text-align: center
+	text-shadow: 0 1px 1px $accent
+
+.text
+	margin-top: 20px
+	background: #f9f9f9
+	border-radius: 4px
+	padding: 10px 30px
+	box-shadow: $md-box-shadow-1
+	
+	p
+		text-indent: 20px
+		padding-bottom: 20px
+
+	a
+		color: blue
+	
+/*** aphorisms  ***/
+.aphorisms-container
+	display: flex
+	
+	justify-content: space-between
+	flex-wrap: wrap
+
+	.aphorisms-item
+		box-shadow: $md-box-shadow-1
+		margin: 10px
+		width: 250px
+		border-radius: 4px
+	.aphorisms-item-top
+		border-radius: 4px 4px 0 0 
+		background: linear-gradient(40deg,#45cafc,#303f9f)
+		padding: 5px 20px
+		h2
+			color: white
+
+	.aphorisms-item-body
+		text-align: center
+		padding: 10px
+		font-family: 'Lora', sans-serif
+
+	.aphorisms-header
+		width: 100%
+		padding-bottom: 40px
+		padding-top: 20px
+			
+	.aphorisms-all
+		display: flex
+		justify-content: flex-end
+		width: 100%
+		font-size: 20px
+		padding: 10px
+		text-shadow: 0 1px 2px $accent
+	
+/*** notes  ***/
+.notes-container
+	display: flex
+	
+	justify-content: space-between
+	flex-wrap: wrap
+
+	.notes-item
+		box-shadow: $md-box-shadow-1
+		margin: 10px
+		width: 250px
+		border-radius: 4px
+	.notes-item-top
+		border-radius: 4px 4px 0 0
+		background: linear-gradient(40deg,#ffd86f,#fc6262)
+		padding: 5px 20px
+		h2
+
+			color: white
+
+	.notes-item-body
+		text-align: center
+		padding: 10px
+		font-family: 'Lora', sans-serif
+
+	.notes-header
+		width: 100%
+		padding-bottom: 40px
+		padding-top: 20px
+		h2
+			text-transform: uppercase
+			text-align: center
+			
+	.notes-all
+		display: flex
+		justify-content: flex-end
+		width: 100%
+		font-size: 20px
+		padding: 10px
+		text-shadow: 0 1px 2px $accent
+
+@import "media" // Всегда в конце
