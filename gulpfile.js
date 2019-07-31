@@ -27,7 +27,7 @@ gulp.task("imagemin", () =>
 gulp.task('handlebars', function () {
   var templateData = {
     path: 'assets/',
-    aphorisms: aphorisms.slice(0, 8)
+    aphorisms: aphorisms.slice(0, 50)
   },
     options = {
       // ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
@@ -42,7 +42,7 @@ gulp.task('handlebars', function () {
       }
     }
 
-  return gulp.src('views/index.hbs')
+  return gulp.src('views/aphorisms.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));

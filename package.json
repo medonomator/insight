@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "&& nodemon --exec ts-node server.ts",
+    "start": "nodemon --exec ts-node server.ts",
     "fill:db": "ts-node ./database/fillDataBaseMysql.ts",
     "docker": "docker-compose up -d"
   },
