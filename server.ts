@@ -1,21 +1,16 @@
 import * as Hapi from 'hapi';
-import * as Pino from 'pino';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as HapiSwagger from 'hapi-swagger';
 import { swaggerOptions } from './config';
-
 import { setUpconnection } from './database/mongoConnection';
-// import mySqlconnection from './database/mySqlConnection';
-// routes
+import { logger } from './helpers/logger';
+
+/** Routes  */
 import users from './routes/users';
 import views from './routes/views';
-import { myFirstTools } from './helpers/tools';
 
 setUpconnection();
-// mySqlconnection();
-
-const logger = Pino();
 
 export default class Server {
   private port: string;
@@ -37,17 +32,13 @@ export default class Server {
   }
   public async init() {
     try {
-      process.on('unhandledRejection', (error: Error) => {
-        logger.error(error);
-        process.exit(1);
-      });
       this._server = new Hapi.Server({
         port: this.port,
         routes: {
           cors: { origin: ['*'] },
           validate: {
             failAction: async (req, h, err) => {
-              logger.error('router validate', err);
+              logger.error('invalid route', err);
               throw err;
             },
           },

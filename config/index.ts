@@ -6,3 +6,4 @@ export const swaggerOptions = {
   },
 };
 
+export const BASE_URL = process.env.baseUrl || 'http://localhost:5000'
