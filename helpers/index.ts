@@ -1,5 +1,6 @@
 import * as jsonwebtoken from 'jsonwebtoken';
 import * as crypto from 'crypto';
+import * as CyrToLat from 'cyrillic-to-translit-js';
 
 interface ITokens {
   token: string;
@@ -46,4 +47,12 @@ export const encryptData = (str: string, secretKey = 'secretKey') => {
     .createHmac('sha256', secretKey)
     .update(str)
     .digest('hex');
-}
+};
+
+export const cyrToLat = (symbols: string) => {
+  return new CyrToLat()
+    .transform(symbols)
+    .replace("'", '')
+    .replace(',', '')
+    .replace(' ', '');
+};

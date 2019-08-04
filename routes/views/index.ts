@@ -12,29 +12,37 @@ const views: Hapi.ServerRoute[] = [
         path: '.',
         redirectToSlash: true,
         index: true,
-      }
-    }
+      },
+    },
   },
   {
     method: 'GET',
     path: '/',
-    handler: getMainPage
+    handler: getMainPage,
   },
   {
     method: 'GET',
-    path: '/aphorisms',
-    handler: getAphorismsPage
+    path: '/aphorisms/{page}/{category}',
+    handler: getAphorismsPage,
+    options: {
+      validate: {
+        params: {
+          page: Joi.number(),
+          category: Joi.string().trim(),
+        },
+      },
+    },
   },
   {
     method: 'GET',
     path: '/notes',
-    handler: getNotesPage
+    handler: getNotesPage,
   },
   {
     method: 'GET',
     path: '/techniques',
-    handler: getTechniquesPage
+    handler: getTechniquesPage,
   },
-]
+];
 
 export default views;

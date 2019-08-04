@@ -1,6 +1,6 @@
 import * as Mongoose from 'mongoose';
 
-const users = Mongoose.Schema(
+const usersSchema = Mongoose.Schema(
   {
     email: {
       type: String,
@@ -63,9 +63,8 @@ const users = Mongoose.Schema(
       type: String,
       default: '',
     },
-    articleId: Mongoose.Schema.Types.ObjectId,
   },
   { versionKey: false },
 );
 
-export const usersSchema = Mongoose.model('usersSchema', users);
+export const users = Mongoose.model('users', usersSchema);
