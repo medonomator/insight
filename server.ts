@@ -15,11 +15,11 @@ setUpconnection();
 export default class Server {
   private port: string;
   private _server: any;
-  constructor(port) {
+  constructor( port ) {
     this.port = port;
   }
   private async addPlugins() {
-    await this._server.register([
+    await this._server.register( [
       Inert,
       Vision,
       // AuthBearer,
@@ -28,28 +28,29 @@ export default class Server {
         plugin: HapiSwagger,
         options: swaggerOptions,
       },
-    ]);
+    ] );
   }
   public async init() {
     try {
-      this._server = new Hapi.Server({
+      this._server = new Hapi.Server( {
         port: this.port,
+        host: "34.67.102.138",
         routes: {
           cors: { origin: ['*'] },
           validate: {
-            failAction: async (req, h, err) => {
-              logger.error('invalid route', err);
+            failAction: async ( req, h, err ) => {
+              logger.error( 'invalid route', err );
               throw err;
             },
           },
         },
-      });
+      } );
 
       await this.addPlugins();
 
-      this._server.views({
+      this._server.views( {
         engines: {
-          hbs: require('handlebars'),
+          hbs: require( 'handlebars' ),
         },
         relativeTo: __dirname,
         partialsPath: 'views/partials',
@@ -58,43 +59,43 @@ export default class Server {
         context: {
           path: '../static/',
         },
-      });
+      } );
 
-      this._server.state('data', {
+      this._server.state( 'data', {
         ttl: null,
         isSecure: true,
         isHttpOnly: true,
         encoding: 'base64json',
         clearInvalid: true,
         strictHeader: true,
-      });
+      } );
 
-      this._server.route([...users, ...views]);
-    } catch (error) {
-      logger.error(error);
+      this._server.route( [...users, ...views] );
+    } catch ( error ) {
+      logger.error( error );
     }
   }
   public async start() {
     await this._server.start();
-    logger.info(`Server running at ${this.server.info.uri}`);
+    logger.info( `Server running at ${this.server.info.uri}` );
   }
   get server() {
     return this._server;
   }
 }
 
-const server = new Server(process.env.PORT || '5000');
+const server = new Server( process.env.PORT || '5000' );
 
-(async () => {
+( async () => {
   await server.init();
   server.start();
-})();
+} )();
 
-process.on('unhandledRejection', (error: Error) => {
-  console.error(error.message);
-  console.error(error.stack);
-});
+process.on( 'unhandledRejection', ( error: Error ) => {
+  console.error( error.message );
+  console.error( error.stack );
+} );
 
-process.on('uncaughtException', (error: Error) => {
-  console.error(`uncaughtException ${error.message}`);
-});
+process.on( 'uncaughtException', ( error: Error ) => {
+  console.error( `uncaughtException ${error.message}` );
+} );
