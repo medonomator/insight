@@ -34,7 +34,7 @@ export default class Server {
     try {
       this._server = new Hapi.Server( {
         port: this.port,
-        // host: "34.67.102.138",
+        // host: "35.208.211.167",
         routes: {
           cors: { origin: ['*'] },
           validate: {
