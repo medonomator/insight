@@ -10,7 +10,7 @@ import { logger } from './helpers/logger';
 import users from './routes/users';
 import views from './routes/views';
 
-setUpconnection();
+// setUpconnection();
 
 export default class Server {
   private port: string;
@@ -70,7 +70,8 @@ export default class Server {
         strictHeader: true,
       });
 
-      this._server.route([...users, ...views]);
+      // this._server.route([...users, ...views]);
+      this._server.route([, ...views]);
     } catch (error) {
       logger.error(error);
     }
