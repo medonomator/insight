@@ -1,6 +1,5 @@
 import * as Mongoose from 'mongoose';
-Mongoose.Promise = global.Promise;
 
 export function setUpconnection() {
-  Mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
+  Mongoose.connect('mongodb://51.15.245.239/software', { useNewUrlParser: true });
 }

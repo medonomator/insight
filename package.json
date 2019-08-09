@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec  ts-node server.ts",
-    "fill:db": "ts-node ./database/fillDataBaseMysql.ts",
+    "start": "nohup env PORT=80 && nodemon --exec ts-node server.ts",
     "docker": "docker-compose up -d"
   },
   "keywords": [],
