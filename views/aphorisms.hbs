@@ -16,7 +16,7 @@
         на что и направлен их основной смысл. Начав систематически перепрошивать свое подсознание афоризмами, в
         короткий срок будет наблюдаться трансформация личности. Можно сказать постепенное оздаровление личности, что в
         итоге
-        приведет в более светлым и чистим мыслям.
+        приведет в более светлым и чистым мыслям.
         А как извество, что мыслим то чувствуем, что чувствуем то и проживаем. Все что требуется от вас это начать
         систематически читать, перечитывать афоризмы. Так-же можно
         читать с помощью "генератора случайных афоризмов". Главное ежедневно уделять этому немного времени, хотя бы по
@@ -25,26 +25,26 @@
         озарений...</p>
     </div>
 
-    <section class="aphorisms-container">
-      <div class="aphorisms-header">
-        <h2>Фильтр</h2>
+    <div class="aphorisms-header">
+      <h2>Фильтр</h2>
 
-        <div class="filter-block">
-          {{!-- <select name="" id="">
+      <div class="filter-block">
+        {{!-- <select name="" id="">
             <option value="Все">Все</option>
             <option value="Великие люди">Великие люди</option>
             <option value="Карлос кастанеда">Карлос кастанеда</option>
           </select> --}}
 
-          <select name="Категория" id="filter-block-select">
-            {{#each aphorisms.categories}}
-            <option value={{this.machineName}}>{{this.name}}</option>
-            {{/each}}
-          </select>
-        </div>
-
+        <select name="Категория" id="filter-block-select">
+          {{#each aphorisms.categories}}
+          <option value={{this.machineName}}>{{this.name}}</option>
+          {{/each}}
+        </select>
       </div>
 
+    </div>
+
+    <section class="aphorisms-container">
       {{#each aphorisms}}
       <div class="aphorisms-item">
         <div class="aphorisms-item-top">
@@ -57,7 +57,6 @@
         <div class="aphorisms-tags">{{this.tags.[0].name}}</div>
       </div>
       {{/each}}
-
       {{!-- <div class="aphorisms-all">
         <a href="#">Читать все афоризмы...</a>
       </div> --}}

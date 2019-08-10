@@ -1,6 +1,6 @@
 import * as Mongoose from 'mongoose';
 
-const usersSchema = Mongoose.Schema(
+const usersSchema = new Mongoose.Schema(
   {
     email: {
       type: String,
@@ -57,7 +57,7 @@ const usersSchema = Mongoose.Schema(
       default: 'male',
     },
     userId: {
-      type: String
+      type: String,
     },
     birthDate: {
       type: String,

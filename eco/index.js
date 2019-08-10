@@ -1,16 +1,17 @@
 module.exports = {
   apps: [
     {
-      users: {
-        name: 'Users',
-        // cwd: '/',
+      sowtware: {
+        name: 'sowtware',
+        cwd: '../',
         script: 'server.ts',
         watch: true,
         env: {
-          MONGOURI: 'mongodb://localhost/test',
-          PORT: '5000'
+          MONGOURI: 'mongodb://51.15.245.239/sowtware',
+          PORT: '5000',
+          PM2: 'true',
         },
       },
-    }
+    },
   ],
 };

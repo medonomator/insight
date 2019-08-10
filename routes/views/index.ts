@@ -22,12 +22,11 @@ const views: Hapi.ServerRoute[] = [
   },
   {
     method: 'GET',
-    path: '/aphorisms/{page}/{category}',
+    path: '/aphorisms/{category?}',
     handler: getAphorismsPage,
     options: {
       validate: {
         params: {
-          page: Joi.number(),
           category: Joi.string().trim(),
         },
       },

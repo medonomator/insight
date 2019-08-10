@@ -1,7 +1,7 @@
 import * as Mongoose from 'mongoose';
 import { logger } from '../helpers/logger';
 
-const MONGO_URI = process.env.MONGO_URI || 'localhost';
+const MONGO_URI = process.env.MONGO_URI || '51.15.245.239';
 
 export const setUpconnection = async () => {
   try {
