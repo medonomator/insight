@@ -4,7 +4,7 @@
   "description": "Spiritual evolution platform",
   "main": "server.js",
   "scripts": {
-    "deploy": "env PORT=80 && pm2 start ts-node server.ts",
+    "deploy": "export PORT=80 && pm2 start ts-node server.ts",
     "start": "pm2 start ts-node server.ts",
     "docker": "docker-compose up -d"
   },

@@ -53,7 +53,6 @@ export default class Server {
         },
         relativeTo: __dirname,
         partialsPath: 'views/partials',
-        helpersPath: 'views/helpers',
         path: 'views',
         context: {
           path: '../static/',
