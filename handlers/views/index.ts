@@ -6,6 +6,7 @@ import * as aphorismsJson from '../../config/data/aphorisms';
 import { BASE_URL } from '../../config';
 import { logger } from '../../helpers/logger';
 import { isEmpty } from 'lodash';
+import * as path from 'path';
 
 export const getMainPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
@@ -58,4 +59,10 @@ export const getNotesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getTechniquesPage request');
   return h.view('techniques', { techniques: [] });
+};
+
+export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('adminbundle request');
+  return h.file('./static/vue/index.html');
+  // return h.view('adminbundle', { path: `${BASE_URL}/static/` });
 };

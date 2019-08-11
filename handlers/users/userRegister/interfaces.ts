@@ -1,13 +1,13 @@
 /**
-* Регистрация клиента 
-* В ответ возвращаются токены, если регистрация успешна, или ошибка
-*/
+ * Регистрация клиента
+ * В ответ возвращаются токены, если регистрация успешна, или ошибка
+ */
 export interface IParams {
   payload: {
     email: string;
     password: string;
     name: string;
-  }
+  };
 }
 
 export interface IUser {
@@ -18,7 +18,7 @@ export interface IUser {
   _id: string;
   birthDate: string;
   sex: string;
-  regDate: Date,
+  regDate: Date;
   about: string;
   interests: string;
   activity: string;
@@ -28,3 +28,5 @@ export interface IUser {
   age: number | null;
   avatarUrl: string;
 }
+
+export type ResMongoUser = IUser | null;

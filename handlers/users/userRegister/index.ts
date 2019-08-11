@@ -5,13 +5,13 @@ import { logger } from '../../../helpers/logger';
 import { encryptData } from '../../../helpers';
 import { ErrorStatus, default as Error } from '../../../helpers/error';
 import { prepareTokens } from '../../../helpers/index';
-import { IParams, IUser } from './interfaces';
+import { IParams, ResMongoUser } from './interfaces';
 
 export const userRegister = async (req: IParams) => {
   try {
+    logger.info('userRegister');
     const { email, password, name } = req.payload;
-    const oldUser: IUser | null = <any>await users.findOne({ email });
-
+    const oldUser = <ResMongoUser>await users.findOne({ email });
     if (oldUser) {
       return {
         error: {
@@ -29,10 +29,11 @@ export const userRegister = async (req: IParams) => {
       name,
     };
 
-    const newUser = new users(payload);
-    newUser.save().then(() => {
-      logger.info('New user registered', payload);
-    });
+    const newUser = await users.insertMany(payload);
+
+    console.log('=============================');
+    console.log('logging', newUser);
+    console.log('=============================');
 
     if (!newUser) {
       throw new Error({
@@ -41,19 +42,12 @@ export const userRegister = async (req: IParams) => {
       });
     }
 
-    return {
-      error: null,
-      userId,
-      ...prepareTokens(payload),
-    };
+    return { ...prepareTokens(payload) };
   } catch (err) {
     logger.error(err);
     return {
-      error: {
-        status: err.status || ErrorStatus.internalServerError,
-        message: err.message,
-        data: err.data || {},
-      },
+      status: err.status || ErrorStatus.internalServerError,
+      message: err.message,
     };
   }
 };

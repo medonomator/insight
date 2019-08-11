@@ -1,6 +1,6 @@
 import * as jsonwebtoken from 'jsonwebtoken';
 import * as crypto from 'crypto';
-import * as CyrToLat from 'cyrillic-to-translit-js';
+const CyrToLat = require('cyrillic-to-translit-js');
 
 interface ITokens {
   token: string;
@@ -22,7 +22,7 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
         userId: obj.userId,
         email: obj.email,
       },
-      <string>process.env.TOKEN_SIGN_KEY || 'NeverShareYourSecret',
+      process.env.TOKEN_SIGN_KEY || 'NeverShareYourSecret',
       {
         algorithm: 'HS256',
         expiresIn: tokenExpirationSeconds,
@@ -33,7 +33,7 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
         userId: obj.userId,
         refresh: true,
       },
-      <string>process.env.REFRESH_TOKEN_SIGN_KEY || 'NeverShareYourSecret',
+      process.env.REFRESH_TOKEN_SIGN_KEY || 'NeverShareYourSecret',
       {
         algorithm: 'HS256',
         expiresIn: Math.floor(tokenExpirationSeconds + refreshTokenExpirationSeconds),

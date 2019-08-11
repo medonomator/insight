@@ -1,7 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 
-import { getMainPage, getAphorismsPage, getNotesPage, getTechniquesPage } from '../../handlers/views';
+import { getMainPage, getAphorismsPage, getNotesPage, getTechniquesPage, getAdminBundle } from '../../handlers/views';
 
 const views: Hapi.ServerRoute[] = [
   {
@@ -41,6 +41,11 @@ const views: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/techniques',
     handler: getTechniquesPage,
+  },
+  {
+    method: 'GET',
+    path: '/adminka/{path*}',
+    handler: getAdminBundle,
   },
 ];
 

@@ -42,11 +42,8 @@ gulp.task('handlebars', function() {
       },
     };
 
-        }
-      }
-    }
-
-  return gulp.src('views/aphorisms.hbs')
+  return gulp
+    .src('views/aphorisms.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));
