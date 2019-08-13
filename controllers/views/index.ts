@@ -64,5 +64,4 @@ export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('adminbundle request');
   return h.file('./static/vue/index.html');
-  // return h.view('adminbundle', { path: `${BASE_URL}/static/` });
 };

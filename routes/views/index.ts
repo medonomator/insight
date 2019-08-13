@@ -1,7 +1,13 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 
-import { getMainPage, getAphorismsPage, getNotesPage, getTechniquesPage, getAdminBundle } from '../../handlers/views';
+import {
+  getMainPage,
+  getAphorismsPage,
+  getNotesPage,
+  getTechniquesPage,
+  getAdminBundle,
+} from '../../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
   {

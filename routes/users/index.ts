@@ -1,7 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { userRegister } from '../../handlers/users/userRegister';
-import { userLogin } from '../../handlers/users/userLogin';
+import { userRegister } from '../../controllers/users/userRegister';
+import { userLogin } from '../../controllers/users/userLogin';
 
 import { users } from '../../config/docs';
 

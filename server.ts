@@ -12,6 +12,7 @@ import * as hapiAuthBasic from 'hapi-auth-basic';
 /** Routes  */
 import users from './routes/users';
 import views from './routes/views';
+import admin from './routes/admin';
 /** Connect Mongodb */
 setUpconnection();
 
@@ -39,7 +40,6 @@ export class Server {
           },
           validate: {
             failAction: async (req, h, err) => {
-              logger.error('invalid route', err);
               throw err;
             },
           },
@@ -72,7 +72,7 @@ export class Server {
         },
       });
 
-      server.route([...users, ...views]);
+      server.route([...users, ...views, ...admin]);
 
       await server.start();
       logger.info('Server running at:', server.info.uri);

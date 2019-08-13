@@ -31,10 +31,6 @@ export const userRegister = async (req: IParams) => {
 
     const newUser = await users.insertMany(payload);
 
-    console.log('=============================');
-    console.log('logging', newUser);
-    console.log('=============================');
-
     if (!newUser) {
       throw new Error({
         status: ErrorStatus.internalServerError,
