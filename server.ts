@@ -8,6 +8,7 @@ import { logger } from './helpers/logger';
 import * as JWT from 'hapi-auth-jwt2';
 import * as AuthBearer from 'hapi-auth-bearer-token';
 import * as hapiAuthBasic from 'hapi-auth-basic';
+import userToken from './helpers/auth/user';
 
 /** Routes  */
 import users from './routes/users';
@@ -60,6 +61,10 @@ export class Server {
         },
       ]);
 
+      server.auth.strategy('users', 'bearer-access-token', {
+        validate: userToken,
+      });
+
       server.views({
         engines: {
           hbs: require('handlebars'),
@@ -82,7 +87,7 @@ export class Server {
   }
 }
 
-const server = new Server(process.env.PORT || '5000');
+const server = new Server(process.env.PORT || '5001');
 server.start();
 
 process.on('unhandledRejection', (error: Error) => {

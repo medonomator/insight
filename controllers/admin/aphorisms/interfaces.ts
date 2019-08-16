@@ -9,7 +9,13 @@ export interface IParamsCreate {
   };
 }
 
-export interface IParamsUpdate {}
+export interface IParamsUpdate {
+  payload: {
+    _id: string;
+    author: string;
+    body: string;
+    tags: string[];
+  };
+}
 export interface IParamsDelete {}
 export interface IResponse {}
-

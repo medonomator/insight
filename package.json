@@ -4,8 +4,8 @@
   "description": "Spiritual evolution platform",
   "main": "server.js",
   "scripts": {
-    "deploy": "export PORT=80 && pm2 start ts-node server.ts",
-    "start": "pm2 start ts-node server.ts --watch",
+    "prod": "export PORT=80 && pm2 start eco/ecosystem-prod.config.js",
+    "dev": "pm2 start eco/ecosystem-dev.config.js",
     "docker": "docker-compose up -d"
   },
   "keywords": [],

@@ -48,6 +48,21 @@ const usersRoutes: Hapi.ServerRoute[] = [
       // auth: {
       //   strategies: [AuthStrategies.USER]
       // }
+      validate: {
+        payload: {
+          _id: Joi.string()
+            .trim()
+            .description('5d46debf5f7dff7ef9b79098')
+            .required(),
+          author: Joi.string()
+            .trim()
+            .required(),
+          body: Joi.string()
+            .trim()
+            .required(),
+          tags: Joi.array().required(),
+        },
+      },
     },
   },
   {

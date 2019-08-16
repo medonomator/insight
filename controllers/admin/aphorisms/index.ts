@@ -34,7 +34,12 @@ export const createAphorism = (req: IParamsCreate) => {
  */
 export const getAphorisms = async () => {
   try {
-    return aphorisms.find({}).select('-__v');
+    const data = await aphorisms.find({}).select('-__v');
+    const count = await aphorisms.countDocuments();
+    return {
+      data,
+      count,
+    };
   } catch (err) {
     logger.error(err);
     return {
@@ -49,9 +54,14 @@ export const getAphorisms = async () => {
  */
 export const updateAphorism = async (req: IParamsUpdate) => {
   try {
+    const { _id, author, body, tags = [] } = req.payload;
+
+    const res = await aphorisms.find({ _id });
+
     console.log('=============================');
-    console.log('logging', 'UPDATE');
+    console.log('logging', res);
     console.log('=============================');
+
     return 'modified';
   } catch (err) {
     logger.error(err);
