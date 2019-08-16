@@ -1,14 +1,21 @@
-import * as Hapi from 'hapi';
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
-import { ErrorStatus } from '../../../helpers/error';
-import { IParamsCreate, IParamsUpdate, IParamsDelete, IResponse } from './interfaces';
+import { ErrorStatus } from '../../../interfaces';
+import {
+  IParamsCreate,
+  IParamsUpdate,
+  IParamsDelete,
+  IResponse,
+  IGetResponseAphorisms,
+  IAphorisms,
+} from './interfaces';
 import { cyrToLat } from '../../../helpers';
+import { isEmpty } from 'lodash';
 /**
  * Create New Aphorism
  * @param {IParams} params
  */
-export const createAphorism = (req: IParamsCreate) => {
+export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => {
   try {
     const { author, body, tags } = req.payload;
     const tagsToWrite: any = [];
@@ -17,7 +24,7 @@ export const createAphorism = (req: IParamsCreate) => {
         tagsToWrite.push({ name, machineName: cyrToLat(name) });
       });
     }
-    aphorisms.insertMany({ author, body, tags: tagsToWrite });
+    await aphorisms.insertMany({ author, body, tags: tagsToWrite });
 
     return 'ok';
   } catch (err) {
@@ -32,9 +39,9 @@ export const createAphorism = (req: IParamsCreate) => {
  * Get All Aphorisms
  * @return Array
  */
-export const getAphorisms = async () => {
+export const getAphorisms = async (): Promise<IGetResponseAphorisms> => {
   try {
-    const data = await aphorisms.find({}).select('-__v');
+    const data: IAphorisms[] | any = await aphorisms.find({}).select('-__v');
     const count = await aphorisms.countDocuments();
     return {
       data,
@@ -52,17 +59,19 @@ export const getAphorisms = async () => {
  * Update Aphorism
  * @params {IParams} params
  */
-export const updateAphorism = async (req: IParamsUpdate) => {
+export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
-    const { _id, author, body, tags = [] } = req.payload;
+    const { _id, author, body, tags } = req.payload;
+    const tagsToWrite: any = [];
 
-    const res = await aphorisms.find({ _id });
+    if (!isEmpty(tags)) {
+      tags.forEach((name: any) => {
+        tagsToWrite.push({ name, machineName: cyrToLat(name) });
+      });
+    }
+    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: tagsToWrite } });
 
-    console.log('=============================');
-    console.log('logging', res);
-    console.log('=============================');
-
-    return 'modified';
+    return 'ok';
   } catch (err) {
     logger.error(err);
     return {
@@ -72,15 +81,15 @@ export const updateAphorism = async (req: IParamsUpdate) => {
   }
 };
 /**
- * Delete Aphorism
+ * Delete Aphorism by id
  * @params {IParams} params
  */
-export const deleteAphorism = async (req: IParamsDelete) => {
+export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => {
   try {
-    console.log('=============================');
-    console.log('logging', 'DELETE');
-    console.log('=============================');
-    return 'delete';
+    const { _id } = req.payload;
+    await aphorisms.deleteOne({ _id });
+
+    return 'ok';
   } catch (err) {
     logger.error(err);
     return {

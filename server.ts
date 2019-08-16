@@ -61,10 +61,6 @@ export class Server {
         },
       ]);
 
-      server.auth.strategy('users', 'bearer-access-token', {
-        validate: userToken,
-      });
-
       server.views({
         engines: {
           hbs: require('handlebars'),
@@ -74,6 +70,14 @@ export class Server {
         path: 'views',
         context: {
           path: '../static/',
+        },
+      });
+
+      server.auth.strategy('users', 'bearer-access-token', {
+        validate: (req, res, cb) => {
+          console.log('=============================');
+          console.log('logging', req);
+          console.log('=============================');
         },
       });
 
@@ -87,7 +91,7 @@ export class Server {
   }
 }
 
-const server = new Server(process.env.PORT || '5001');
+const server = new Server(process.env.PORT || '5000');
 server.start();
 
 process.on('unhandledRejection', (error: Error) => {

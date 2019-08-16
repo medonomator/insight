@@ -34,9 +34,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
     handler: getAphorisms,
     options: {
       // ...users.registerUser,
-      // auth: {
-      //   strategies: [AuthStrategies.USER]
-      // }
+      auth: {
+        strategy: 'users',
+      },
     },
   },
   {
@@ -74,6 +74,14 @@ const usersRoutes: Hapi.ServerRoute[] = [
       // auth: {
       //   strategies: [AuthStrategies.USER]
       // }
+      validate: {
+        payload: {
+          _id: Joi.string()
+            .trim()
+            .description('5d46debf5f7dff7ef9b79098')
+            .required(),
+        },
+      },
     },
   },
 ];

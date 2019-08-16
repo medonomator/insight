@@ -1,7 +1,8 @@
 import * as Hapi from 'hapi';
 import { users } from '../../../database/schemas/users';
 import { logger } from '../../../helpers/logger'
-import { ErrorStatus, default as Error } from '../../../helpers/error';
+import { ErrorStatus } from '../../../interfaces';
+import Error from '../../../helpers/error'
 import { prepareTokens } from '../../../helpers/index';
 import { encryptData } from '../../../helpers';
 import { IParams, IUser } from './interfaces';

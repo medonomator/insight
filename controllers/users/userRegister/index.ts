@@ -3,7 +3,8 @@ import { users } from '../../../database/schemas/users';
 import * as uuid from 'uuid';
 import { logger } from '../../../helpers/logger';
 import { encryptData } from '../../../helpers';
-import { ErrorStatus, default as Error } from '../../../helpers/error';
+import { ErrorStatus } from '../../../interfaces';
+import Error from '../../../helpers/error';
 import { prepareTokens } from '../../../helpers/index';
 import { IParams, ResMongoUser } from './interfaces';
 

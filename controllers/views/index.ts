@@ -6,7 +6,6 @@ import * as aphorismsJson from '../../config/data/aphorisms';
 import { BASE_URL } from '../../config';
 import { logger } from '../../helpers/logger';
 import { isEmpty } from 'lodash';
-import * as path from 'path';
 
 export const getMainPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
