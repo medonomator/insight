@@ -6,9 +6,12 @@ import * as aphorismsJson from '../../config/data/aphorisms';
 import { BASE_URL } from '../../config';
 import { logger } from '../../helpers/logger';
 import { isEmpty } from 'lodash';
+import { getAphorisms } from '../../controllers/admin/aphorisms';
 
 export const getMainPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
+  // TODO: здесь нужно отдавать 8 случайных афоризмов
+  // Так что наверно все-таки так и так выгодно вызывать этот контроллер с афоризмами
   return h.view('index', {
     aphorisms: aphorismsJson.slice(0, 8),
     notes: [],
@@ -17,7 +20,7 @@ export const getMainPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 };
 
 export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getMainPage request');
+  logger.info('getAphorismsPage request');
   try {
     const size = 100;
     const cond = {};
@@ -26,11 +29,15 @@ export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolki
       cond['tags.machineName'] = params.category;
     }
 
-    let resAphorisms = await aphorisms
-      .find(cond)
-      .select('-_id -__v')
-      .limit(size)
-      .lean();
+    let resAphorisms: any = await getAphorisms();
+    console.log('=============================');
+    console.log('logging', resAphorisms.data);
+    console.log('=============================');
+    // let resAphorisms = await aphorisms
+    //   .find(cond)
+    //   .select('-_id -__v')
+    //   .limit(size)
+    //   .lean();
 
     // TODO: make populate
     let { allCategories } = await settings
@@ -38,13 +45,14 @@ export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolki
       .lean()
       .select('allCategories -_id');
 
-    resAphorisms['categories'] = allCategories && allCategories.map(({ machineName, name }) => ({ machineName, name }));
+    resAphorisms.data['categories'] =
+      allCategories && allCategories.map(({ machineName, name }) => ({ machineName, name }));
 
     if (params.category) {
-      return resAphorisms;
+      return resAphorisms.data;
     }
 
-    return h.view('aphorisms', { aphorisms: resAphorisms, path: `${BASE_URL}/static/` });
+    return h.view('aphorisms', { aphorisms: resAphorisms.data, path: `${BASE_URL}/static/` });
   } catch (error) {
     logger.error('error', error);
   }

@@ -46,7 +46,8 @@ export const getAphorisms = async (): Promise<IGetResponseAphorisms> => {
     const data: IAphorisms[] | any = await aphorisms
       .find({})
       .select('-__v')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
     const count = await aphorisms.countDocuments();
     return {
       data: shuffle(data),

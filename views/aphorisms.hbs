@@ -29,19 +29,22 @@
       <h2>Фильтр</h2>
 
       <div class="filter-block">
-        {{!-- <select name="" id="">
-            <option value="Все">Все</option>
-            <option value="Великие люди">Великие люди</option>
-            <option value="Карлос кастанеда">Карлос кастанеда</option>
-          </select> --}}
-
-        <select name="Категория" id="filter-block-select">
+        <select id="filter-by-categories">
           {{#each aphorisms.categories}}
           <option value={{this.machineName}}>{{this.name}}</option>
           {{/each}}
         </select>
+        <select id="filter-by-topic">
+          <option value="философы, мыслители">Мыслители, философы</option>
+          <option value="Карлос кастанеда">Карлос кастанеда</option>
+        </select>
+        <select id="filter-by-author">
+          <option value="философы, мыслители">Ушинский</option>
+          <option value="Карлос кастанеда">Толстой</option>
+          <option value="Карлос кастанеда">Чехов</option>
+        </select>
+        <input type="button" class="shuffle-button" value="Перемешать">
       </div>
-
     </div>
 
     <section class="aphorisms-container">
@@ -54,7 +57,12 @@
         <div class="aphorisms-item-body">
           <p>{{this.body}}</p>
         </div>
-        <div class="aphorisms-tags">{{this.tags.[0].name}}</div>
+        <div class="aphorisms-tags">
+          {{!-- {{#each aphorisms.tags}}
+          <span>{{../this.name}}</span>
+          <span>{{../this.author}}</span>
+          {{/each}} --}}
+        </div>
       </div>
       {{/each}}
       {{!-- <div class="aphorisms-all">
