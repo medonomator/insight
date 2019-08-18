@@ -3,7 +3,6 @@ import * as Hapi from 'hapi';
 import { aphorisms } from '../../database/schemas/aphorisms';
 import { settings } from '../../database/schemas/settings';
 import * as aphorismsJson from '../../config/data/aphorisms';
-import { BASE_URL } from '../../config';
 import { logger } from '../../helpers/logger';
 import { isEmpty } from 'lodash';
 import { getAphorisms } from '../../controllers/admin/aphorisms';
@@ -43,7 +42,11 @@ export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolki
       .select('allCategories -_id');
 
     resAphorisms.data['categories'] =
-      allCategories && allCategories.map(({ machineName, name }) => ({ machineName, name }));
+      allCategories &&
+      allCategories
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
 
     if (params.category) {
       return resAphorisms.data;

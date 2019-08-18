@@ -238,14 +238,14 @@ a {
 .aphorisms-container .aphorisms-item-top {
   -webkit-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
-  background: -webkit-linear-gradient(50deg, #45cafc, #303f9f);
-  background: -o-linear-gradient(50deg, #45cafc, #303f9f);
-  background: linear-gradient(40deg, #45cafc, #303f9f);
+  background: -webkit-linear-gradient(40deg, #50a4be, #330b0b);
+  background: -o-linear-gradient(40deg, #50a4be, #330b0b);
+  background: linear-gradient(40deg, #50a4be, #330b0b);
   padding: 5px 20px;
 }
 .aphorisms-container .aphorisms-item-top h2 {
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
 }
 .aphorisms-container .aphorisms-item-body {
   text-align: center;
@@ -485,8 +485,16 @@ a {
   left: 0;
   right: 0;
   text-align: center;
-  background: linear-gradient(40deg, #ffffff, #7f7f7f);
+  /* background: linear-gradient(40deg, #ffffff, #7f7f7f); */
   border-radius: 0 0 5px 5px;
+}
+
+.aphorisms-tags span {
+  border-radius: 0 0 5px 5px;
+  padding: 5px 10px;
+  background: #deffa2;
+  color: #555;
+  border: 1px solid #aaa;
 }
 
 @media only screen and (max-width: 560px) {
