@@ -16,8 +16,12 @@ const aphorismsSchema = new Mongoose.Schema(
       },
     ],
   },
-  { versionKey: false },
+  {
+    timestamps: {
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    },
+  },
 );
-Mongoose.set('debug', true);
 
 export const aphorisms = Mongoose.model('aphorisms', aphorismsSchema);

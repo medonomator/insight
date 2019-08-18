@@ -10,7 +10,7 @@ import {
   IAphorisms,
 } from './interfaces';
 import { cyrToLat } from '../../../helpers';
-import { isEmpty } from 'lodash';
+import { isEmpty, shuffle } from 'lodash';
 /**
  * Create New Aphorism
  * @param {IParams} params
@@ -24,9 +24,11 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
         tagsToWrite.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.insertMany({ author, body, tags: tagsToWrite });
+    const res = await aphorisms.insertMany({ author, body, tags: tagsToWrite });
 
-    return 'ok';
+    return {
+      _id: res[0]._id,
+    };
   } catch (err) {
     logger.error(err);
     return {
@@ -41,10 +43,13 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (): Promise<IGetResponseAphorisms> => {
   try {
-    const data: IAphorisms[] | any = await aphorisms.find({}).select('-__v');
+    const data: IAphorisms[] | any = await aphorisms
+      .find({})
+      .select('-__v')
+      .sort({ createdAt: -1 });
     const count = await aphorisms.countDocuments();
     return {
-      data,
+      data: shuffle(data),
       count,
     };
   } catch (err) {

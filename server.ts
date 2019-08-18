@@ -2,12 +2,12 @@ import * as Hapi from 'hapi';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as HapiSwagger from 'hapi-swagger';
-import { swaggerOptions } from './config';
-import { setUpconnection } from './database/mongoConnection';
-import { logger } from './helpers/logger';
 import * as JWT from 'hapi-auth-jwt2';
 import * as AuthBearer from 'hapi-auth-bearer-token';
 import * as hapiAuthBasic from 'hapi-auth-basic';
+import { swaggerOptions } from './config';
+import { setUpconnection } from './database/mongoConnection';
+import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
 
 /** Routes  */
@@ -74,11 +74,7 @@ export class Server {
       });
 
       server.auth.strategy('users', 'bearer-access-token', {
-        validate: (req, res, cb) => {
-          console.log('=============================');
-          console.log('logging', req);
-          console.log('=============================');
-        },
+        validate: userToken,
       });
 
       server.route([...users, ...views, ...admin]);

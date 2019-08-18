@@ -35,5 +35,9 @@ export interface IResponseAphorisms {
   count: number;
 }
 
-export type IResponse = IError | 'ok';
+export interface IResponseCreate {
+  _id: string
+}
+
+export type IResponse = IError | 'ok' | IResponseCreate;
 export type IGetResponseAphorisms = IError | IResponseAphorisms;

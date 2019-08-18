@@ -34,9 +34,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
     handler: getAphorisms,
     options: {
       // ...users.registerUser,
-      auth: {
-        strategy: 'users',
-      },
+      // auth: {
+      //   strategy: 'users',
+      // },
     },
   },
   {
