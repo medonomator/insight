@@ -1,4 +1,9 @@
 $(function() {
+  if (sessionStorage.getItem('mainMenu') === 'visible') {
+    $('.hamburger').toggleClass('change');
+    $('.main-menu').slideToggle();
+  }
+
   const BASE_URL = window.location.origin;
   const funcRequest = (url, func) => {
     $.ajax({
@@ -11,7 +16,13 @@ $(function() {
   /** hamburger */
   $('.hamburger').click(function() {
     $('.hamburger').toggleClass('change');
-    $('.mobile-menu').slideToggle();
+    $('.main-menu').slideToggle();
+
+    if (sessionStorage.getItem('mainMenu') === 'visible') {
+      sessionStorage.setItem('mainMenu', 'invisible');
+    } else {
+      sessionStorage.setItem('mainMenu', 'visible');
+    }
   });
   /** scroll to block */
   const $page = $('html, body');

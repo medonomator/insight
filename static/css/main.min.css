@@ -483,3 +483,32 @@ a {
   background: linear-gradient(40deg, #ffffff, #7f7f7f);
   border-radius: 0 0 5px 5px;
 }
+
+@media only screen and (max-width: 560px) {
+  .aphorisms-container {
+    justify-content: center;
+  }
+  .aphorisms-container .aphorisms-item {
+    width: 100%;
+  }
+}
+
+select#filter-block-select {
+  -webkit-appearance: button;
+  border-radius: 2px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  background-image: url('../img/customSelect.png'), -webkit-linear-gradient(#fafafa, #f4f4f4 40%, #e5e5e5);
+  background-position: 97% center;
+  background-repeat: no-repeat;
+  border: 1px solid #aaa;
+  color: #555;
+  font-size: inherit;
+  margin: 10px;
+  overflow: hidden;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+}

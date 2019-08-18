@@ -50,7 +50,7 @@ const views: Hapi.ServerRoute[] = [
   },
   {
     method: 'GET',
-    path: '/adminka/{path*}',
+    path: '/admin/{path*}',
     handler: getAdminBundle,
   },
 ];
