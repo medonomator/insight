@@ -30,9 +30,6 @@ export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolki
     }
 
     let resAphorisms: any = await getAphorisms();
-    console.log('=============================');
-    console.log('logging', resAphorisms.data);
-    console.log('=============================');
     // let resAphorisms = await aphorisms
     //   .find(cond)
     //   .select('-_id -__v')
@@ -52,7 +49,7 @@ export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolki
       return resAphorisms.data;
     }
 
-    return h.view('aphorisms', { aphorisms: resAphorisms.data, path: `${BASE_URL}/static/` });
+    return h.view('aphorisms', { aphorisms: resAphorisms.data });
   } catch (error) {
     logger.error('error', error);
   }
