@@ -1,6 +1,4 @@
 import * as Hapi from 'hapi';
-import * as Joi from 'joi';
-
 import {
   getMainPage,
   getAphorismsPage,
@@ -28,15 +26,8 @@ const views: Hapi.ServerRoute[] = [
   },
   {
     method: 'GET',
-    path: '/aphorisms/{category?}',
+    path: '/aphorisms',
     handler: getAphorismsPage,
-    options: {
-      validate: {
-        params: {
-          category: Joi.string().trim(),
-        },
-      },
-    },
   },
   {
     method: 'GET',

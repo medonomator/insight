@@ -37,6 +37,12 @@ const usersRoutes: Hapi.ServerRoute[] = [
       // auth: {
       //   strategy: 'users',
       // },
+      validate: {
+        query: {
+          offset: Joi.number(),
+          category: Joi.string().trim(),
+        },
+      },
     },
   },
   {

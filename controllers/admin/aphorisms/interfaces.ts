@@ -2,15 +2,17 @@ import { IError } from '../../../interfaces';
 /**
  * GRUD for aphorisms
  */
+export interface ICategories {
+  _id: string;
+  name: string;
+  machineName: string;
+}
+
 export interface IAphorisms {
   _id: string;
   author: string;
   body: string;
-  tags: Array<{
-    _id: string;
-    name: string;
-    machineName: string;
-  }>;
+  tags: ICategories[];
 }
 
 export interface IParamsCreate {
@@ -30,13 +32,22 @@ export interface IParamsDelete {
   };
 }
 
+export interface IParamsGet {
+  query: {
+    size?: number;
+    offset?: number;
+    category?: string;
+  };
+}
+
 export interface IResponseAphorisms {
   data: IAphorisms[];
   count: number;
+  categories?: ICategories[];
 }
 
 export interface IResponseCreate {
-  _id: string
+  _id: string;
 }
 
 export type IResponse = IError | 'ok' | IResponseCreate;

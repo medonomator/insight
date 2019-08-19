@@ -1,4 +1,5 @@
 import { aphorisms } from '../../../database/schemas/aphorisms';
+import { settings } from '../../../database/schemas/settings';
 import { logger } from '../../../helpers/logger';
 import { ErrorStatus } from '../../../interfaces';
 import {
@@ -8,6 +9,7 @@ import {
   IResponse,
   IGetResponseAphorisms,
   IAphorisms,
+  IParamsGet,
 } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty, shuffle } from 'lodash';
@@ -41,17 +43,39 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  * Get All Aphorisms
  * @return Array
  */
-export const getAphorisms = async (): Promise<IGetResponseAphorisms> => {
+export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
+    const { size = 100, category, offset = 0 } = params.query;
+    const cond = {};
+
+    if (!isEmpty(category) && category !== 'all') {
+      cond['tags.machineName'] = category;
+    }
+
     const data: IAphorisms[] | any = await aphorisms
-      .find({})
+      .find(cond)
       .select('-__v')
       .sort({ createdAt: -1 })
+      .limit(size)
+      .skip(offset)
       .lean();
     const count = await aphorisms.countDocuments();
+
+    const { allCategories } = await settings
+      .findOne({ allCategories: { $exists: true } })
+      .lean()
+      .select('allCategories -_id');
+    const categories =
+      allCategories &&
+      allCategories
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
     return {
       data: shuffle(data),
       count,
+      categories,
     };
   } catch (err) {
     logger.error(err);

@@ -1,58 +1,27 @@
 import * as Vision from 'vision';
 import * as Hapi from 'hapi';
-import { aphorisms } from '../../database/schemas/aphorisms';
-import { settings } from '../../database/schemas/settings';
-import * as aphorismsJson from '../../config/data/aphorisms';
 import { logger } from '../../helpers/logger';
-import { isEmpty } from 'lodash';
 import { getAphorisms } from '../../controllers/admin/aphorisms';
 
-export const getMainPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
-  // TODO: здесь нужно отдавать 8 случайных афоризмов
-  // Так что наверно все-таки так и так выгодно вызывать этот контроллер с афоризмами
+  const res = await getAphorisms({ query: { size: 8 } });
+  console.log('=============================');
+  console.log('logging', res);
+  console.log('=============================');
   return h.view('index', {
-    aphorisms: aphorismsJson.slice(0, 8),
+    res,
     notes: [],
     techniques: [],
   });
 };
 
-export const getAphorismsPage = async ({ params }, h: Vision<Hapi.ResponseToolkit>) => {
+export const getAphorismsPage = async (res, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const size = 100;
-    const cond = {};
+    const res = await getAphorisms({ query: { size: 100 } });
 
-    if (!isEmpty(params.category) && params.category !== 'all') {
-      cond['tags.machineName'] = params.category;
-    }
-
-    let resAphorisms: any = await getAphorisms();
-    // let resAphorisms = await aphorisms
-    //   .find(cond)
-    //   .select('-_id -__v')
-    //   .limit(size)
-    //   .lean();
-
-    // TODO: make populate
-    let { allCategories } = await settings
-      .findOne({ allCategories: { $exists: true } })
-      .lean()
-      .select('allCategories -_id');
-
-    resAphorisms.data['categories'] =
-      allCategories &&
-      allCategories
-        .map(({ machineName, name }) => ({ machineName, name }))
-        .sort(item => item.machineName === 'all')
-        .reverse();
-
-    if (params.category) {
-      return resAphorisms.data;
-    }
-
-    return h.view('aphorisms', { aphorisms: resAphorisms.data });
+    return h.view('aphorisms', { res });
   } catch (error) {
     logger.error('error', error);
   }
