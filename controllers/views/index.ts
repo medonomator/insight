@@ -6,9 +6,6 @@ import { getAphorisms } from '../../controllers/admin/aphorisms';
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
   const res = await getAphorisms({ query: { size: 8 } });
-  console.log('=============================');
-  console.log('logging', res);
-  console.log('=============================');
   return h.view('index', {
     res,
     notes: [],
@@ -19,7 +16,7 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getAphorismsPage = async (res, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const res = await getAphorisms({ query: { size: 100 } });
+    const res = await getAphorisms({ query: {} });
 
     return h.view('aphorisms', { res });
   } catch (error) {

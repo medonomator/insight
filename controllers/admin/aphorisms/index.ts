@@ -45,7 +45,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
-    const { size = 100, category, offset = 0 } = params.query;
+    const { size = 0, category, offset = 0 } = params.query;
     const cond = {};
 
     if (!isEmpty(category) && category !== 'all') {
@@ -73,7 +73,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
         .reverse();
 
     return {
-      data: shuffle(data),
+      data: shuffle(data).slice(0, 100),
       count,
       categories,
     };

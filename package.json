@@ -31,6 +31,7 @@
     "nats-hemera": "^7.0.1",
     "pino": "^5.12.2",
     "pino-pretty": "^2.6.0",
+    "redis": "^2.8.0",
     "vision": "^5.4.4"
   },
   "devDependencies": {

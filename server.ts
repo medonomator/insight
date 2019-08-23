@@ -9,6 +9,7 @@ import { swaggerOptions } from './config';
 import { setUpconnection } from './database/mongoConnection';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
+import redisClient from './database/redis';
 
 /** Routes  */
 import users from './routes/users';
