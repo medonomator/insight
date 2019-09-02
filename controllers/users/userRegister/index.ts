@@ -10,7 +10,6 @@ import { IParams, ResMongoUser } from './interfaces';
 
 export const userRegister = async (req: IParams) => {
   try {
-    logger.info('userRegister');
     const { email, password, name } = req.payload;
     const oldUser = <ResMongoUser>await users.findOne({ email });
     if (oldUser) {
@@ -30,8 +29,7 @@ export const userRegister = async (req: IParams) => {
       name,
     };
 
-    const newUser = await users.insertMany(payload);
-
+    const newUser = await users.create(payload);
     if (!newUser) {
       throw new Error({
         status: ErrorStatus.internalServerError,
@@ -39,6 +37,7 @@ export const userRegister = async (req: IParams) => {
       });
     }
 
+    logger.info(`NewUser with Email: ${newUser['email']} and Name: ${newUser['name']} was created`)
     return { ...prepareTokens(payload) };
   } catch (err) {
     logger.error(err);

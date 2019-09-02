@@ -43,22 +43,27 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  * Get All Aphorisms
  * @return Array
  */
+let dataCache: IAphorisms[] | any = [];
 export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
     const { size = 0, category, offset = 0 } = params.query;
     const cond = {};
+    logger.info('Get aphorisms')
 
     if (!isEmpty(category) && category !== 'all') {
       cond['tags.machineName'] = category;
     }
 
-    const data: IAphorisms[] | any = await aphorisms
-      .find(cond)
-      .select('-__v')
-      .sort({ createdAt: -1 })
-      .limit(size)
-      .skip(offset)
-      .lean();
+    if (isEmpty(dataCache) || !!category) {
+      dataCache = await aphorisms
+        .find(cond)
+        .select('-__v')
+        .sort({ createdAt: -1 })
+        .limit(size)
+        .skip(offset)
+        .lean();
+    }
+
     const count = await aphorisms.countDocuments();
 
     const { allCategories } = await settings
@@ -73,7 +78,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
         .reverse();
 
     return {
-      data: shuffle(data).slice(0, 100),
+      data: shuffle(dataCache).slice(0, 100),
       count,
       categories,
     };

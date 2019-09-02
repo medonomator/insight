@@ -10,9 +10,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
     handler: createAphorism,
     options: {
       // ...users.registerUser,
-      // auth: {
-      //   strategies: [AuthStrategies.USER]
-      // }
+      auth: {
+        strategy: 'users'
+      },
       validate: {
         payload: {
           author: Joi.string()
