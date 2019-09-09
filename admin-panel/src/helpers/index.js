@@ -1,3 +1,3 @@
 export const getBaseUrl = () => {
-  return 'http://localhost:5000' || window.location.origin;
+  return 'http://134.209.163.196';
 };
