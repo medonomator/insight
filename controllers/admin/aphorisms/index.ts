@@ -43,10 +43,9 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  * Get All Aphorisms
  * @return Array
  */
-let dataCache: IAphorisms[] | any = [];
 export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
-    const { size = 0, category, offset = 0 } = params.query;
+    const { limit = 0, offset = 0, category, author, body } = params.query;
     const cond = {};
     logger.info('Get aphorisms')
 
@@ -54,15 +53,23 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
       cond['tags.machineName'] = category;
     }
 
-    if (isEmpty(dataCache) || !!category) {
-      dataCache = await aphorisms
-        .find(cond)
-        .select('-__v')
-        .sort({ createdAt: -1 })
-        .limit(size)
-        .skip(offset)
-        .lean();
+    if (author) {
+      cond['author'] = { $regex: author }
     }
+
+    if (body) {
+      cond['body'] = { $regex: body }
+    }
+
+    console.log(cond);
+
+    const dataAphorisms = await aphorisms
+      .find(cond)
+      .select('-__v')
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(offset)
+      .lean();
 
     const count = await aphorisms.countDocuments();
 
@@ -78,7 +85,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
         .reverse();
 
     return {
-      data: shuffle(dataCache).slice(0, 100),
+      data: shuffle(dataAphorisms).slice(0, 100),
       count,
       categories,
     };

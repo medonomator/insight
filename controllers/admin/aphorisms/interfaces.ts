@@ -34,9 +34,11 @@ export interface IParamsDelete {
 
 export interface IParamsGet {
   query: {
-    size?: number;
+    limit?: number;
     offset?: number;
     category?: string;
+    author?: string;
+    body?: string;
   };
 }
 

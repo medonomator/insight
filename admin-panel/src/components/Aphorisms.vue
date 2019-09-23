@@ -5,6 +5,25 @@
     </div>
     <modal-form />
     <input v-on:click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
+    <ul class="aphorisms">
+      <div class="aphorisms-header">
+        <b>Автор</b>
+        <input @input="headerFilter" class="aphorisms-filter" type="text" />
+      </div>
+      <div class="aphorisms-header">
+        <b>Афоризм</b>
+        <input class="aphorisms-filter" type="text" />
+      </div>
+      <div class="aphorisms-header">
+        <b>limit</b>
+        <select>
+          <option>100</option>
+          <option>200</option>
+          <option>500</option>
+          <option>Все</option>
+        </select>
+      </div>
+    </ul>
     <ul class="aphorisms" v-for="item in this.aphorismData" :key="item._id">
       <li class="aphorisms-item">
         <span class="aphorisms-author">{{ item.author }}</span>
@@ -41,6 +60,9 @@ export default {
     });
   },
   methods: {
+    headerFilter: function(e) {
+      console.log(e.target.value);
+    },
     deleteAphorism: function(_id) {
       axios
         .delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } })
@@ -104,6 +126,9 @@ export default {
   text-align: left
   font-size: 20px
   margin: 10px 0
+ 
+  .aphorisms-header
+    display: flex
 
   &-item
     border-radius: 4px

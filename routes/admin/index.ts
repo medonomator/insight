@@ -41,6 +41,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
         query: {
           offset: Joi.number(),
           category: Joi.string().trim(),
+          limit: Joi.number(),
+          author: Joi.string(),
+          body: Joi.string(),
         },
       },
     },

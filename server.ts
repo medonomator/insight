@@ -17,7 +17,7 @@ import admin from './routes/admin';
 setUpconnection();
 
 export class Server {
-  constructor(private port: string) {}
+  constructor(private port: string) { }
 
   public async start() {
     try {

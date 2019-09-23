@@ -5,7 +5,7 @@ import { getAphorisms } from '../../controllers/admin/aphorisms';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
-  const res = await getAphorisms({ query: { size: 8 } });
+  const res = await getAphorisms({ query: { limit: 8 } });
   return h.view('index', {
     res,
     notes: [],
