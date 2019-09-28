@@ -16,7 +16,7 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getAphorismsPage = async (res, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const res = await getAphorisms({ query: {} });
+    const res = await getAphorisms({ query: { category: 'Мыслители, философы' } });
 
     return h.view('aphorisms', { res });
   } catch (error) {

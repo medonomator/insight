@@ -44,6 +44,28 @@ $(function() {
     return false;
   });
 
+  $('#filter-by-topic').on('click', function(event) {
+    funcRequest(`admin/aphorisms?topic=${event.target.value}`, ({ data }) => {
+      let replaceHtml =
+        '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+      data.forEach(item => {
+        replaceHtml += `<div class="aphorisms-item">
+                          <div class="aphorisms-item-top">
+                            <h2>${item.author}</h2>
+                          </div>
+                        
+                          <div class="aphorisms-item-body">
+                            <p>${item.body}</p>
+                          </div>
+                          <div class="aphorisms-tags">${item.tags[0] &&
+                            item.tags.map(item => `<span>${item.name}</span>`)}</div>
+                        </div>`;
+      });
+      replaceHtml += '</section>';
+      $('.aphorisms-container').replaceWith(replaceHtml);
+    });
+  });
+
   $('#filter-by-categories').on('click', function(event) {
     funcRequest(`admin/aphorisms?category=${event.target.value}`, ({ data }) => {
       let replaceHtml =

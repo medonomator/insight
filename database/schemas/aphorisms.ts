@@ -9,6 +9,10 @@ const aphorismsSchema = new Mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     tags: [
       {
         name: String,

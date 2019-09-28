@@ -25,21 +25,37 @@
     <div class="aphorisms-header">
       <h2>Фильтр</h2>
       <div class="filter-block">
-        <select id="filter-by-categories">
-          {{#each res.categories}}
-          <option value={{this.machineName}}>{{this.name}}</option>
-          {{/each}}
-        </select>
-        <select id="filter-by-topic">
-          <option value="философы, мыслители">Мыслители, философы</option>
-          <option value="Карлос кастанеда">Карлос кастанеда</option>
-        </select>
-        <select id="filter-by-author">
-          <option value="философы, мыслители">Ушинский</option>
-          <option value="Карлос кастанеда">Толстой</option>
-          <option value="Карлос кастанеда">Чехов</option>
-        </select>
-        <input type="button" class="shuffle-button" value="Перемешать">
+
+        <div class="filter-block-item">
+          <p>Категория</p>
+          <select id="filter-by-categories">
+            <option value="Мыслители, философы">Мыслители, философы</option>
+            <option value="Кастанеда">Карлос кастанеда</option>
+          </select>
+        </div>
+
+        <div class="filter-block-item">
+          <p>Топик</p>
+          <select id="filter-by-topic">
+            {{#each res.categories}}
+            <option value={{this.machineName}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="filter-block-item">
+          <p>Автор</p>
+          <select id="filter-by-author">
+            <option value="философы, мыслители">Ушинский</option>
+            <option value="Карлос кастанеда">Толстой</option>
+            <option value="Карлос кастанеда">Чехов</option>
+          </select>
+        </div>
+
+        <div>
+          <input type="button" class="shuffle-button" value="Перемешать">
+        </div>
+
       </div>
     </div>
 

@@ -44,6 +44,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
           limit: Joi.number(),
           author: Joi.string(),
           body: Joi.string(),
+          topic: Joi.string(),
         },
       },
     },

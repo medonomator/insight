@@ -5,16 +5,16 @@
     </div>
     <modal-form />
     <input v-on:click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
-    <ul class="aphorisms">
-      <div class="aphorisms-header">
+    <ul class="aphorisms-header">
+      <div class="aphorisms-header-item">
         <b>Автор</b>
-        <input @input="headerFilter" class="aphorisms-filter" type="text" />
+        <input name="author" @input="headerFilter" class="aphorisms-filter" type="text" />
       </div>
-      <div class="aphorisms-header">
+      <div class="aphorisms-header-item">
         <b>Афоризм</b>
-        <input class="aphorisms-filter" type="text" />
+        <input name="body" @input="headerFilter" class="aphorisms-filter" type="text" />
       </div>
-      <div class="aphorisms-header">
+      <div class="aphorisms-header-item">
         <b>limit</b>
         <select>
           <option>100</option>
@@ -53,15 +53,18 @@ export default {
   components: {
     "modal-form": ModalForm
   },
-  mounted() {
-    axios.get(`${getBaseUrl()}/admin/aphorisms`).then(res => {
-      this.aphorismData = res.data.data;
-      this.count = res.data.count;
-    });
+  async mounted() {
+    const res = await axios.get(`${getBaseUrl()}/admin/aphorisms`);
+    this.aphorismData = res.data.data;
+    this.count = res.data.count;
   },
   methods: {
-    headerFilter: function(e) {
-      console.log(e.target.value);
+    headerFilter: async function(e) {
+      const res = await axios.get(
+        `${getBaseUrl()}/admin/aphorisms?${e.target.name}=${e.target.value}`
+      );
+      this.aphorismData = res.data.data;
+      this.count = res.data.count;
     },
     deleteAphorism: function(_id) {
       axios
@@ -122,13 +125,17 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-.aphorisms 
+
+.aphorisms-header
+  margin: 20px 0
+  display: flex
+  &-item
+    display: flex
+ 
+.aphorisms
   text-align: left
   font-size: 20px
   margin: 10px 0
- 
-  .aphorisms-header
-    display: flex
 
   &-item
     border-radius: 4px

@@ -37,6 +37,7 @@ export interface IParamsGet {
     limit?: number;
     offset?: number;
     category?: string;
+    topic?: string;
     author?: string;
     body?: string;
   };

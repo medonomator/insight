@@ -45,21 +45,16 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
-    const { limit = 0, offset = 0, category, author, body } = params.query;
+    const { limit = 0, offset = 0, category, topic, author, body } = params.query;
     const cond = {};
-    logger.info('Get aphorisms')
+    logger.info('Get aphorisms');
 
-    if (!isEmpty(category) && category !== 'all') {
-      cond['tags.machineName'] = category;
-    }
+    console.log(category);
 
-    if (author) {
-      cond['author'] = { $regex: author }
-    }
-
-    if (body) {
-      cond['body'] = { $regex: body }
-    }
+    if (!isEmpty(topic) && topic !== 'all') cond['tags.machineName'] = topic;
+    if (author) cond['author'] = { $regex: author };
+    if (body) cond['body'] = { $regex: body };
+    if (category) cond['category'] = category;
 
     console.log(cond);
 
@@ -77,12 +72,15 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
       .findOne({ allCategories: { $exists: true } })
       .lean()
       .select('allCategories -_id');
+
     const categories =
       allCategories &&
       allCategories
         .map(({ machineName, name }) => ({ machineName, name }))
         .sort(item => item.machineName === 'all')
         .reverse();
+
+    console.log(dataAphorisms.length);
 
     return {
       data: shuffle(dataAphorisms).slice(0, 100),
