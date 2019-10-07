@@ -44,7 +44,7 @@ $(function() {
     return false;
   });
 
-  $('#filter-by-topic').on('click', function(event) {
+  $('#filter-by-topic').change(function(event) {
     funcRequest(`admin/aphorisms?topic=${event.target.value}`, ({ data }) => {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
@@ -66,7 +66,7 @@ $(function() {
     });
   });
 
-  $('#filter-by-categories').on('click', function(event) {
+  $('#filter-by-categories').change(function(event) {
     funcRequest(`admin/aphorisms?category=${event.target.value}`, ({ data }) => {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';

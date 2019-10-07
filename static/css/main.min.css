@@ -532,6 +532,7 @@ select#filter-by-author {
 
 .filter-block {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .filter-block p {
