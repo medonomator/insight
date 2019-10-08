@@ -2,6 +2,7 @@ import * as Vision from 'vision';
 import * as Hapi from 'hapi';
 import { logger } from '../../helpers/logger';
 import { getAphorisms } from '../../controllers/admin/aphorisms';
+import * as fs from 'fs';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');

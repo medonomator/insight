@@ -49,8 +49,6 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
     const cond = {};
     logger.info('Get aphorisms');
 
-    console.log(category);
-
     if (!isEmpty(topic) && topic !== 'all') cond['tags.machineName'] = topic;
     if (author) cond['author'] = { $regex: author };
     if (body) cond['body'] = { $regex: body };
@@ -79,8 +77,6 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
         .map(({ machineName, name }) => ({ machineName, name }))
         .sort(item => item.machineName === 'all')
         .reverse();
-
-    console.log(dataAphorisms.length);
 
     return {
       data: shuffle(dataAphorisms).slice(0, 100),
