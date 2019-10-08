@@ -21,6 +21,10 @@
   margin: 0;
   padding: 0;
 }
+select,
+input {
+  outline: none;
+}
 :after,
 :before {
   -webkit-box-sizing: border-box;
@@ -222,6 +226,7 @@ a {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  position: relative;
 }
 .aphorisms-container .aphorisms-item {
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -234,13 +239,14 @@ a {
 .aphorisms-container .aphorisms-item-top {
   -webkit-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
-  background: -webkit-linear-gradient(50deg, #45cafc, #303f9f);
-  background: -o-linear-gradient(50deg, #45cafc, #303f9f);
-  background: linear-gradient(40deg, #45cafc, #303f9f);
+  background: -webkit-linear-gradient(40deg, #50a4be, #330b0b);
+  background: -o-linear-gradient(40deg, #50a4be, #330b0b);
+  background: linear-gradient(40deg, #50a4be, #330b0b);
   padding: 5px 20px;
 }
 .aphorisms-container .aphorisms-item-top h2 {
   color: #fff;
+  font-size: 16px;
 }
 .aphorisms-container .aphorisms-item-body {
   text-align: center;
@@ -480,6 +486,119 @@ a {
   left: 0;
   right: 0;
   text-align: center;
-  background: linear-gradient(40deg, #ffffff, #7f7f7f);
+  /* background: linear-gradient(40deg, #ffffff, #7f7f7f); */
   border-radius: 0 0 5px 5px;
+}
+
+.aphorisms-tags span {
+  border-radius: 0 0 5px 5px;
+  padding: 5px 10px;
+  background: #deffa2;
+  color: #555;
+  border: 1px solid #aaa;
+}
+
+@media only screen and (max-width: 560px) {
+  .aphorisms-container {
+    justify-content: center;
+  }
+  .aphorisms-container .aphorisms-item {
+    width: 100%;
+  }
+}
+
+select#filter-by-categories,
+select#filter-by-topic,
+select#filter-by-author {
+  -webkit-appearance: button;
+  border-radius: 2px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  background-image: url('../img/customSelect.png'), -webkit-linear-gradient(#fafafa, #f4f4f4 40%, #e5e5e5);
+  background-position: 97% center;
+  background-repeat: no-repeat;
+  border: 1px solid #aaa;
+  color: #555;
+  font-size: inherit;
+  margin: 10px;
+  overflow: hidden;
+  padding: 5px 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+  margin-right: 40px;
+}
+
+.filter-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filter-block p {
+  padding-left: 13px;
+}
+
+.shuffle-button {
+  background: #fafafa;
+  color: #555;
+  border: 1px solid #aaa;
+  margin-left: 7px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  margin-top: 39px;
+}
+.shuffle-button:hover {
+  background: #eae7e7;
+}
+
+/** Loader */
+.lds-ring {
+  display: inline-block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  z-index: 100;
+  right: 0;
+  left: 0;
+  margin: auto;
+  top: 20px;
+  display: none;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #636363;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #636363 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.accent-color {
+  color: green;
+  font-weight: 600;
 }

@@ -2,94 +2,92 @@ import * as Hapi from 'hapi';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as HapiSwagger from 'hapi-swagger';
+import * as JWT from 'hapi-auth-jwt2';
+import * as AuthBearer from 'hapi-auth-bearer-token';
+import * as hapiAuthBasic from 'hapi-auth-basic';
 import { swaggerOptions } from './config';
 import { setUpconnection } from './database/mongoConnection';
 import { logger } from './helpers/logger';
-
+import userToken from './helpers/auth/user';
 /** Routes  */
 import users from './routes/users';
 import views from './routes/views';
-
+import admin from './routes/admin';
+/** Connect Mongodb */
 setUpconnection();
 
-export default class Server {
-  private port: string;
-  private _server: any;
-  constructor(port) {
-    this.port = port;
-  }
-  private async addPlugins() {
-    await this._server.register([
-      Inert,
-      Vision,
-      // AuthBearer,
-      // JWT,
-      {
-        plugin: HapiSwagger,
-        options: swaggerOptions,
-      },
-    ]);
-  }
-  public async init() {
+export class Server {
+  constructor(private port: string) { }
+
+  public async start() {
     try {
-      this._server = new Hapi.Server({
+      const server: Hapi.Server & Vision = new Hapi.Server(<Hapi.ServerOptions>{
+        debug: { request: ['error'] },
         port: this.port,
         routes: {
-          cors: { origin: ['*'] },
+          cors: {
+            origin: ['*'],
+            headers: [
+              'Access-Control-Allow-Origin',
+              'Accept',
+              'Authorization',
+              'Content-Type',
+              'If-None-Match',
+              'x-customer-ip',
+              'user-agent',
+            ],
+            credentials: true,
+          },
           validate: {
             failAction: async (req, h, err) => {
-              logger.error('invalid route', err);
               throw err;
             },
           },
         },
       });
 
-      await this.addPlugins();
+      await server.register([
+        Inert,
+        Vision,
+        AuthBearer,
+        JWT,
+        {
+          plugin: HapiSwagger,
+          options: swaggerOptions,
+        },
+        {
+          plugin: hapiAuthBasic,
+        },
+      ]);
 
-      this._server.views({
+      server.views({
         engines: {
           hbs: require('handlebars'),
         },
         relativeTo: __dirname,
         partialsPath: 'views/partials',
-        helpersPath: 'views/helpers',
         path: 'views',
         context: {
           path: '../static/',
         },
       });
 
-      this._server.state('data', {
-        ttl: null,
-        isSecure: true,
-        isHttpOnly: true,
-        encoding: 'base64json',
-        clearInvalid: true,
-        strictHeader: true,
+      server.auth.strategy('users', 'bearer-access-token', {
+        validate: userToken,
       });
 
-      // this._server.route([...users, ...views]);
-      this._server.route([...views]);
-    } catch (error) {
-      logger.error(error);
+      server.route([...users, ...views, ...admin]);
+
+      await server.start();
+      logger.info('Server running at:', server.info.uri);
+    } catch (err) {
+      logger.error(`Server start error: `, err.message, err.stack);
     }
-  }
-  public async start() {
-    await this._server.start();
-    logger.info(`Server running at ${this.server.info.uri}`);
-  }
-  get server() {
-    return this._server;
   }
 }
 
 const server = new Server(process.env.PORT || '5000');
-
-(async () => {
-  await server.init();
-  server.start();
-})();
+server.start();
 
 process.on('unhandledRejection', (error: Error) => {
   console.error(error.message);

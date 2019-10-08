@@ -1,7 +1,11 @@
 import * as Hapi from 'hapi';
-import * as Joi from 'joi';
-
-import { getMainPage, getAphorismsPage, getNotesPage, getTechniquesPage } from '../../handlers/views';
+import {
+  getMainPage,
+  getAphorismsPage,
+  getNotesPage,
+  getTechniquesPage,
+  getAdminBundle,
+} from '../../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
   {
@@ -22,15 +26,8 @@ const views: Hapi.ServerRoute[] = [
   },
   {
     method: 'GET',
-    path: '/aphorisms/{category?}',
+    path: '/aphorisms',
     handler: getAphorismsPage,
-    options: {
-      validate: {
-        params: {
-          category: Joi.string().trim(),
-        },
-      },
-    },
   },
   {
     method: 'GET',
@@ -41,6 +38,11 @@ const views: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/techniques',
     handler: getTechniquesPage,
+  },
+  {
+    method: 'GET',
+    path: '/admin/{path*}',
+    handler: getAdminBundle,
   },
 ];
 

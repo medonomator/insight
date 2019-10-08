@@ -13,6 +13,4 @@ const settingsSchema = new Mongoose.Schema({
   ],
 });
 
-Mongoose.set('debug', true);
-
 export const settings = Mongoose.model('settings', settingsSchema);
