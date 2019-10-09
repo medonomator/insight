@@ -12,6 +12,9 @@ hr
   margin-bottom: 30px
   color: #999
 
+select, input
+  outline: none
+
 h2
   font-size: 20px
   text-transform: uppercase
@@ -29,8 +32,6 @@ a
   margin-left: auto
   width: 1170px
   position: relative
-  min-height: 100vh
-  margin-bottom: 400px
 
 .h2
   text-transform: uppercase
@@ -99,47 +100,46 @@ a
     box-shadow: $md-box-shadow-1
     margin: 10px
     width: 250px
+    padding-bottom: 20px
     border-radius: 4px
     position: relative
+    margin-bottom: 40px
+
   .aphorisms-item-top
     border-radius: 4px 4px 0 0
     background: linear-gradient(40deg, #50a4be, #330b0b)
     padding: 5px 20px
     h2
       color: white
+      font-size: 15px
+      text-align: left
 
   .aphorisms-item-body
-    text-align: center
     padding: 10px
     font-family: 'Lora', sans-serif
-
-  .aphorisms-header
-    width: 100%
-    padding-bottom: 40px
-    padding-top: 20px
 
   .aphorisms-all
     display: flex
     justify-content: flex-end
     width: 100%
-    font-size: 20px
     padding: 10px
     text-shadow: 0 1px 2px $accent
 
   .aphorisms-tags
     position: absolute
     bottom: -10px
-    left: 0
-    right: 0
+    left: 10px
+
     text-align: center
     border-radius: 0 0 5px 5px
 
     span
       border-radius: 0 0 5px 5px
-      padding: 5px 10px
-      background: #deffa2
-      color: #555
+      padding: 4px 8px
+      background: #ffeb008c
+      color: #444
       border: 1px solid #aaa
+      font-size: 13px
 
 /*** notes  ***/
 .notes-container
@@ -206,6 +206,7 @@ select#filter-by-author
 .filter-block
   display: flex
   flex-wrap: wrap
+  margin-top: 30px
 
   & p
     padding-left: 13px
@@ -262,12 +263,37 @@ select#filter-by-author
 @keyframes lds-ring
   0%
     transform: rotate(0deg)
-
   100%
     transform: rotate(360deg)
 
-.accent-color
-  color: green
-  font-weight: 600
+.footer
+  background: #333333
+  padding: 100px 0
+  margin-top: 100px
+  .wrapper
+    display: flex
+    justify-content: space-between
+
+    .support-project
+      background: #fafa3b
+      padding: 8px 20px
+      border-radius: 4px
+      color: #333
+      font-family: Lora,sans-serif
+      font-weight: 600
+      transition: all .3s ease
+      &:hover
+        background: #cccc57
+
+    a
+      color: white
+      margin: 0 10px
+
+    i
+      font-size: 30px
+      transition: all .3s ease
+      &:hover
+        color: #fafa3b
+        cursor: pointer
 
 @import "media" // Всегда в конце

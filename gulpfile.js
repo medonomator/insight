@@ -70,12 +70,10 @@ gulp.task('styles', function() {
 gulp.task('js', function() {
   return (
     gulp
-      .src([
-        'static/js/common.js', // Always at the end
-      ])
-      .pipe(concat('scripts.min.js'))
+      .src(['static/libs/jquery/jquery.min.js', 'static/libs/masonry.min.js', 'static/js/common.js'])
+      .pipe(concat('common.js'))
       // .pipe(uglify()) // Mifify js (opt.)
-      .pipe(gulp.dest('static/js'))
+      .pipe(gulp.dest('dist/assets/js'))
       .pipe(browserSync.reload({ stream: true }))
   );
 });
