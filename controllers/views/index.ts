@@ -35,6 +35,16 @@ export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   return h.view('techniques', { techniques: [] });
 };
 
+export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getContactsPage request');
+  return h.view('contacts');
+};
+
+export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getGratitudePage request');
+  return h.view('gratitude');
+};
+
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('adminbundle request');
   return h.file('./static/vue/index.html');

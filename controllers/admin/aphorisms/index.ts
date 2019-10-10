@@ -54,8 +54,6 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
     if (body) cond['body'] = { $regex: body };
     if (category) cond['category'] = category;
 
-    console.log(cond);
-
     const dataAphorisms = await aphorisms
       .find(cond)
       .select('-__v')

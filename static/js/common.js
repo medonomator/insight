@@ -71,7 +71,7 @@ $(function() {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
       data.forEach(item => {
-        replaceHtml += `<div class="aphorisms-item">
+        replaceHtml += `<div style="${item.body.length > 180 ? 'width: 100%' : ''}" class="aphorisms-item">
                           <div class="aphorisms-item-top">
                             <h2>${item.author}</h2>
                           </div>
