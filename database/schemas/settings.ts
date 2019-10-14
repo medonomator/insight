@@ -11,6 +11,16 @@ const settingsSchema = new Mongoose.Schema({
       },
     },
   ],
+  allAuthors: [
+    {
+      name: {
+        type: String,
+      },
+      machineName: {
+        type: String,
+      },
+    },
+  ],
 });
 
 export const settings = Mongoose.model('settings', settingsSchema);

@@ -30,20 +30,14 @@ gulp.task('handlebars', function() {
       res: JSON.parse(data),
     },
     options = {
-      // ignorePartials: true, //ignores the unknown footer2 partial in the handlebars template, defaults to false
-      // partials: {
-      //   footer: '<footer>the end</footer>'
-      // },
       batch: ['./views/partials'],
       helpers: {
-        capitals: function(str) {
-          return str.toUpperCase();
-        },
+        aphorismsHelper: () => {},
       },
     };
 
   return gulp
-    .src('views/aphorisms.hbs')
+    .src('views/contacts.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));

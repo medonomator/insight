@@ -6,9 +6,3 @@ services:
     tty: true
     ports:
       - 27017:27017/tcp
-  redis:
-    image: 'bitnami/redis:latest'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - '6379:6379'

@@ -13,6 +13,7 @@ import userToken from './helpers/auth/user';
 import users from './routes/users';
 import views from './routes/views';
 import admin from './routes/admin';
+import tasks from './routes/tasks';
 /** Connect Mongodb */
 setUpconnection();
 
@@ -78,7 +79,7 @@ export class Server {
         validate: userToken,
       });
 
-      server.route([...users, ...views, ...admin]);
+      server.route([...users, ...views, ...admin, ...tasks]);
 
       await server.start();
       logger.info('Server running at:', server.info.uri);

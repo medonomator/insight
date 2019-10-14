@@ -54,5 +54,5 @@ export const cyrToLat = (symbols: string) => {
     .transform(symbols)
     .replace("'", '')
     .replace(',', '')
-    .replace(' ', '');
+    .replace(/ /g, '');
 };

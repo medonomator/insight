@@ -1,6 +1,5 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { users } from '../../config/docs';
 import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../../controllers/admin/aphorisms';
 
 const usersRoutes: Hapi.ServerRoute[] = [
@@ -45,6 +44,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
           author: Joi.string(),
           body: Joi.string(),
           topic: Joi.string(),
+          isAdmin: Joi.boolean(),
         },
       },
     },

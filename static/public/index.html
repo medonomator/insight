@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>FinanceSystem</title>
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta property="og:image" content="path/to/image.jpg" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="#" />
+    <link rel="apple-touch-icon" sizes="72x72" href="#" />
+    <link rel="apple-touch-icon" sizes="114x114" href="#" />
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#000" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#000" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#000" />
+    <base href="/" />
+    <link rel="stylesheet" href="static/public/css/normalize.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="static/public/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/public/css/global.css" />
+
+    <style>
+      .loader {
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        position: absolute;
+        top: 300px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: helvetica, arial, sans-serif;
+        text-transform: uppercase;
+        font-weight: 900;
+        color: #ce4233;
+        letter-spacing: 0.2em;
+      }
+      .loader::before,
+      .loader::after {
+        content: '';
+        display: block;
+        width: 15px;
+        height: 15px;
+        background: #ce4233;
+        position: absolute;
+        animation: load 0.7s infinite alternate ease-in-out;
+      }
+      .loader::before {
+        top: 0;
+      }
+      .loader::after {
+        bottom: 0;
+      }
+
+      @keyframes load {
+        0% {
+          left: 0;
+          height: 30px;
+          width: 15px;
+        }
+        50% {
+          height: 8px;
+          width: 40px;
+        }
+        100% {
+          left: 235px;
+          height: 30px;
+          width: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script src="static/public/bundle.js"></script>
+  </body>
+</html>

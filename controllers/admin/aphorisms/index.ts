@@ -45,12 +45,13 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
   try {
-    const { limit = 0, offset = 0, category, topic, author, body } = params.query;
+    const { limit = 0, offset = 0, category, topic, author, body, isAdmin } = params.query;
     const cond = {};
+    let count = 0;
     logger.info('Get aphorisms');
 
     if (!isEmpty(topic) && topic !== 'all') cond['tags.machineName'] = topic;
-    if (author) cond['author'] = { $regex: author };
+    if (author) cond['authorMachineName'] = { $regex: author };
     if (body) cond['body'] = { $regex: body };
     if (category) cond['category'] = category;
 
@@ -62,12 +63,14 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
       .skip(offset)
       .lean();
 
-    const count = await aphorisms.countDocuments();
+    if (isAdmin) {
+      count = await aphorisms.countDocuments();
+    }
 
-    const { allCategories } = await settings
-      .findOne({ allCategories: { $exists: true } })
+    const { allCategories, allAuthors } = await settings
+      .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
       .lean()
-      .select('allCategories -_id');
+      .select('allCategories allAuthors -_id');
 
     const categories =
       allCategories &&
@@ -76,9 +79,17 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
         .sort(item => item.machineName === 'all')
         .reverse();
 
+    const authors =
+      allAuthors &&
+      allAuthors
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
     return {
       data: shuffle(dataAphorisms).slice(0, 100),
       count,
+      authors,
       categories,
     };
   } catch (err) {

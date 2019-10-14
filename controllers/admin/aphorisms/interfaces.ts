@@ -8,6 +8,12 @@ export interface ICategories {
   machineName: string;
 }
 
+export interface IAuthors {
+  _id: string;
+  name: string;
+  machineName: string;
+}
+
 export interface IAphorisms {
   _id: string;
   author: string;
@@ -40,6 +46,7 @@ export interface IParamsGet {
     topic?: string;
     author?: string;
     body?: string;
+    isAdmin?: boolean;
   };
 }
 
@@ -47,6 +54,7 @@ export interface IResponseAphorisms {
   data: IAphorisms[];
   count: number;
   categories?: ICategories[];
+  authors?: IAuthors[];
 }
 
 export interface IResponseCreate {

@@ -1,8 +1,5 @@
 <template>
-  <div class="header">
-    <router-link to="/admin">Main</router-link>
-    <router-link to="/admin/aphorisms">Aphorisms</router-link>
-  </div>
+  <div>Authorization</div>
 </template>
 
 <script>

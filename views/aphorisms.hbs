@@ -45,9 +45,9 @@
         <div class="filter-block-item">
           <p>Автор</p>
           <select id="filter-by-author">
-            <option value="философы, мыслители">Ушинский</option>
-            <option value="Карлос кастанеда">Толстой</option>
-            <option value="Карлос кастанеда">Чехов</option>
+            {{#each res.authors}}
+            <option value={{this.machineName}}>{{this.name}}</option>
+            {{/each}}
           </select>
         </div>
 

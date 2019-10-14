@@ -87,4 +87,26 @@ $(function() {
       $('.aphorisms-container').replaceWith(replaceHtml);
     });
   });
+
+  $('#filter-by-author').change(function(event) {
+    funcRequest(`admin/aphorisms?author=${event.target.value}`, ({ data }) => {
+      let replaceHtml =
+        '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+      data.forEach(item => {
+        replaceHtml += `<div style="${item.body.length > 180 ? 'width: 100%' : ''}" class="aphorisms-item">
+                          <div class="aphorisms-item-top">
+                            <h2>${item.author}</h2>
+                          </div>
+                        
+                          <div class="aphorisms-item-body">
+                            <p>${item.body}</p>
+                          </div>
+                          <div class="aphorisms-tags">${item.tags[0] &&
+                            item.tags.map(item => `<span>${item.name}</span>`)}</div>
+                        </div>`;
+      });
+      replaceHtml += '</section>';
+      $('.aphorisms-container').replaceWith(replaceHtml);
+    });
+  });
 });

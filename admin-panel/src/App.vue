@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <div class="header">
-      <router-link to="/admin">Main</router-link>
-      <router-link to="/admin/aphorisms">Aphorisms</router-link>
-    </div>
     <router-view />
   </div>
 </template>
