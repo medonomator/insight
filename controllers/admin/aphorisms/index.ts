@@ -1,7 +1,7 @@
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { settings } from '../../../database/schemas/settings';
 import { logger } from '../../../helpers/logger';
-import { ErrorStatus } from '../../../interfaces';
+import { ErrorCode } from '../../../interfaces';
 import {
   IParamsCreate,
   IParamsUpdate,
@@ -34,7 +34,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
   } catch (err) {
     logger.error(err);
     return {
-      status: err.status || ErrorStatus.internalServerError,
+      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
       message: err.message,
     };
   }
@@ -95,7 +95,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
   } catch (err) {
     logger.error(err);
     return {
-      status: err.status || ErrorStatus.internalServerError,
+      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
       message: err.message,
     };
   }
@@ -120,7 +120,7 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
   } catch (err) {
     logger.error(err);
     return {
-      status: err.status || ErrorStatus.internalServerError,
+      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
       message: err.message,
     };
   }
@@ -138,7 +138,7 @@ export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => 
   } catch (err) {
     logger.error(err);
     return {
-      status: err.status || ErrorStatus.internalServerError,
+      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
       message: err.message,
     };
   }

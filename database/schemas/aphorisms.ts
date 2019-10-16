@@ -14,7 +14,6 @@ const aphorismsSchema = new Mongoose.Schema(
     },
     category: {
       type: String,
-      required: true,
     },
     tags: [
       {

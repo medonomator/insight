@@ -1,37 +1,32 @@
 import * as Hapi from 'hapi';
+import * as Boom from 'boom';
 import { users } from '../../../database/schemas/users';
-import { logger } from '../../../helpers/logger'
-import { ErrorStatus } from '../../../interfaces';
-import Error from '../../../helpers/error'
+import { logger } from '../../../helpers/logger';
+import { ErrorCode } from '../../../interfaces';
 import { prepareTokens } from '../../../helpers/index';
 import { encryptData } from '../../../helpers';
-import { IParams, IUser } from './interfaces';
+import { IParams, IUserType } from './interfaces';
 
 export const userLogin = async (req: IParams, h: Hapi.ResponseToolkit) => {
   try {
     const { email, password } = req.payload;
-    const client: IUser | null = <any>await users.findOne({ email });
+    const resUser: IUserType = <IUserType>await users.findOne({ email });
 
-    if (!client || client.password !== encryptData(password, email.toLowerCase())) {
-      throw new Error({
-        status: ErrorStatus.internalServerError,
-        message: 'Неверный логин или пароль',
-      });
+    if (!resUser || resUser.password !== encryptData(password, email.toLowerCase())) {
+      return Boom.badRequest('Неверный логин или пароль');
     }
 
-    logger.info('Client successfully logged in, clientId=', client.userId);
+    logger.info('Client successfully logged in, clientId=', resUser.userId);
     return {
       error: null,
-      ...prepareTokens(client)
+      ...prepareTokens(resUser),
     };
-
   } catch (err) {
     logger.error(err);
     return {
       error: {
-        status: err.status || ErrorStatus.internalServerError,
+        status: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
         message: err.message,
-        data: err.data || {},
       },
     };
   }

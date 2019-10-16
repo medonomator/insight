@@ -4,16 +4,19 @@ import { settings } from '../../database/schemas/settings';
 import { uniqBy } from 'lodash';
 import { cyrToLat } from '../../helpers';
 import { logger } from '../../helpers/logger';
-import { ErrorStatus } from '../../interfaces';
+import { ErrorCode } from '../../interfaces';
+import { docsTasks } from '../../config/docs';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
     method: 'POST',
     path: '/task/synchronizationAuthor',
-    // ...users.registerUser,
-    // auth: {
-    //   strategy: 'users'
-    // },
+    options: {
+      ...docsTasks.synchronizationAuthor,
+      auth: {
+        strategy: 'users',
+      },
+    },
     handler: async () => {
       try {
         const allAuthors = await aphorisms.find({}).select('-_id author');
@@ -35,7 +38,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       } catch (err) {
         logger.error(err);
         return {
-          status: err.status || ErrorStatus.internalServerError,
+          code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
           message: err.message,
         };
       }
@@ -44,29 +47,29 @@ const usersRoutes: Hapi.ServerRoute[] = [
   {
     method: 'POST',
     path: '/task/dynamic',
-    // ...users.registerUser,
-    // auth: {
-    //   strategy: 'users'
-    // },
+    options: {
+      ...docsTasks.dynamicTask,
+      auth: {
+        strategy: 'users',
+      },
+    },
     handler: async () => {
       try {
+        const authors: any = await aphorisms.find({}).select('-_id author');
 
-        
-        // const authors: any = await aphorisms.find({}).select('-_id author');
-
-        // for (const item of authors) {
-        //   await aphorisms.update(
-        //     { author: item.author },
-        //     { $set: { authorMachineName: cyrToLat(item.author) } },
-        //     { multi: true },
-        //   );
-        // }
+        for (const item of authors) {
+          await aphorisms.update(
+            { author: item.author },
+            { $set: { authorMachineName: cyrToLat(item.author) } },
+            { multi: true },
+          );
+        }
 
         return 'ok';
       } catch (err) {
         logger.error(err);
         return {
-          status: err.status || ErrorStatus.internalServerError,
+          code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
           message: err.message,
         };
       }

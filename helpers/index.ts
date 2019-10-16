@@ -1,5 +1,6 @@
-import * as jsonwebtoken from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
+import { TOKEN_SIGN_KEY, REFRESH_TOKEN_SIGN_KEY } from '../config'
 const CyrToLat = require('cyrillic-to-translit-js');
 
 interface ITokens {
@@ -17,23 +18,25 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
   const refreshTokenExpirationSeconds = 60 * 60 * 24 * 7; // week
 
   return {
-    token: jsonwebtoken.sign(
+    token: jwt.sign(
       {
         userId: obj.userId,
         email: obj.email,
+        tokenSignKey: TOKEN_SIGN_KEY,
       },
-      process.env.TOKEN_SIGN_KEY || 'NeverShareYourSecret',
+      TOKEN_SIGN_KEY,
       {
         algorithm: 'HS256',
         expiresIn: tokenExpirationSeconds,
       },
     ),
-    refreshToken: jsonwebtoken.sign(
+    refreshToken: jwt.sign(
       {
         userId: obj.userId,
         refresh: true,
+        tokenSignKey: REFRESH_TOKEN_SIGN_KEY,
       },
-      process.env.REFRESH_TOKEN_SIGN_KEY || 'NeverShareYourSecret',
+      REFRESH_TOKEN_SIGN_KEY,
       {
         algorithm: 'HS256',
         expiresIn: Math.floor(tokenExpirationSeconds + refreshTokenExpirationSeconds),

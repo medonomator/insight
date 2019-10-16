@@ -7,7 +7,7 @@ export interface IParams {
   payload: {
     email: string;
     password: string;
-  }
+  };
 }
 
 export interface IUser {
@@ -18,7 +18,7 @@ export interface IUser {
   _id: string;
   birthDate: string;
   sex: string;
-  regDate: Date,
+  regDate: Date;
   about: string;
   interests: string;
   activity: string;
@@ -28,3 +28,5 @@ export interface IUser {
   age: number | null;
   avatarUrl: string;
 }
+
+export type IUserType = IUser | null;

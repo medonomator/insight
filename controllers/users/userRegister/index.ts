@@ -3,8 +3,8 @@ import { users } from '../../../database/schemas/users';
 import * as uuid from 'uuid';
 import { logger } from '../../../helpers/logger';
 import { encryptData } from '../../../helpers';
-import { ErrorStatus } from '../../../interfaces';
-import Error from '../../../helpers/error';
+import { ErrorCode } from '../../../interfaces';
+import SystemError from '../../../helpers/systemError';
 import { prepareTokens } from '../../../helpers/index';
 import { IParams, ResMongoUser } from './interfaces';
 
@@ -15,7 +15,7 @@ export const userRegister = async (req: IParams) => {
     if (oldUser) {
       return {
         error: {
-          status: ErrorStatus.badRequest,
+          code: ErrorCode.BAD_REQUEST,
           message: `Пользователь с логином ${email} уже зарегистрирован в системе`,
         },
       };
@@ -31,18 +31,18 @@ export const userRegister = async (req: IParams) => {
 
     const newUser = await users.create(payload);
     if (!newUser) {
-      throw new Error({
-        status: ErrorStatus.internalServerError,
+      throw new SystemError({
+        code: ErrorCode.INTERNAL_SERVER_ERROR,
         message: 'Произошла ошибка на сервере при создании пользователя',
       });
     }
 
-    logger.info(`NewUser with Email: ${newUser['email']} and Name: ${newUser['name']} was created`)
+    logger.info(`NewUser with Email: ${newUser['email']} and Name: ${newUser['name']} was created`);
     return { ...prepareTokens(payload) };
   } catch (err) {
     logger.error(err);
     return {
-      status: err.status || ErrorStatus.internalServerError,
+      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
       message: err.message,
     };
   }

@@ -23,28 +23,7 @@ export class Server {
   public async start() {
     try {
       const server: Hapi.Server & Vision = new Hapi.Server(<Hapi.ServerOptions>{
-        debug: { request: ['error'] },
         port: this.port,
-        routes: {
-          cors: {
-            origin: ['*'],
-            headers: [
-              'Access-Control-Allow-Origin',
-              'Accept',
-              'Authorization',
-              'Content-Type',
-              'If-None-Match',
-              'x-customer-ip',
-              'user-agent',
-            ],
-            credentials: true,
-          },
-          validate: {
-            failAction: async (req, h, err) => {
-              throw err;
-            },
-          },
-        },
       });
 
       await server.register([
@@ -77,6 +56,7 @@ export class Server {
 
       server.auth.strategy('users', 'bearer-access-token', {
         validate: userToken,
+        unauthorized: () => logger.error('user strategy error'),
       });
 
       server.route([...users, ...views, ...admin, ...tasks]);
