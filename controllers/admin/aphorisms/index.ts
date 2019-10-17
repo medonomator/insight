@@ -63,9 +63,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseApho
       .skip(offset)
       .lean();
 
-    if (isAdmin) {
-      count = await aphorisms.countDocuments();
-    }
+    count = await aphorisms.countDocuments();
 
     const { allCategories, allAuthors } = await settings
       .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
