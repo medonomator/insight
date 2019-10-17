@@ -1,17 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { withRouter, Route } from 'react-router-dom';
+import TopPanel from '../src/components/TopPanel';
 import api from './helpers/api';
+// Pages
+import MainPage from './Pages/MainPage';
+import AphorismsPage from './Pages/AphorismsPage';
+import AffirmationPage from './Pages/AffirmationPage';
 
-function App() {
-  useEffect(() => {
-    api('user/auth', 'POST', { email: 'email', password: 'password' })
-      .then(res => {
-        console.log('=============================');
-        console.log('logging', res);
-        console.log('=============================');
-      })
-      .catch(error => console.log(error));
+function App({ history }) {
+  React.useEffect(() => {
+    const fetchAuth = async () => {
+      const data = await api('user/auth', 'GET');
+      if (data.status !== 200) history.push('login');
+    };
+    fetchAuth();
   }, []);
-  return <div className="App">aasdasdasds</div>;
+
+  return (
+    <div className="root">
+      <TopPanel />
+      <Route exact path="/admin" component={MainPage} />
+      <Route path="/admin/aphorisms" component={AphorismsPage} />
+      <Route path="/admin/affirmation" component={AffirmationPage} />
+    </div>
+  );
 }
 
-export default App;
+export default withRouter(App);

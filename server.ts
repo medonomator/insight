@@ -24,6 +24,13 @@ export class Server {
     try {
       const server: Hapi.Server & Vision = new Hapi.Server(<Hapi.ServerOptions>{
         port: this.port,
+        routes: {
+          cors: {
+            origin: ['*'],
+            headers: ['Access-Control-Allow-Origin', 'Accept', 'Authorization', 'Content-Type', 'user-agent'],
+            credentials: true,
+          },
+        },
       });
 
       await server.register([
