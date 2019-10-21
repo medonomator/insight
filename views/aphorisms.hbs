@@ -36,7 +36,7 @@
         <div class="filter-block-item">
           <p>Топик</p>
           <select id="filter-by-topic">
-            {{#each res.categories}}
+            {{#each categories}}
             <option value={{this.machineName}}>{{this.name}}</option>
             {{/each}}
           </select>
@@ -45,7 +45,7 @@
         <div class="filter-block-item">
           <p>Автор</p>
           <select id="filter-by-author">
-            {{#each res.authors}}
+            {{#each authors}}
             <option value={{this.machineName}}>{{this.name}}</option>
             {{/each}}
           </select>
@@ -65,7 +65,7 @@
         <div></div>
         <div></div>
       </div>
-      {{#each res.data}}
+      {{#each aphorisms}}
       <div style="{{aphorismsHelper this.body}}" class="aphorisms-item">
         <div class="aphorisms-item-top">
           <h2>{{this.author}}</h2>

@@ -1,24 +1,49 @@
 import * as Vision from 'vision';
 import * as Hapi from 'hapi';
 import { logger } from '../../helpers/logger';
-import { getAphorisms } from '../../controllers/admin/aphorisms';
+import { settings } from '../../database/schemas/settings';
+import { takeAphorisms } from '../../helpers/aphorisms';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getMainPage request');
-  const res = await getAphorisms({ query: { limit: 8 } });
+  const params = {
+    limit: 8,
+  };
+  const aphorisms = takeAphorisms(h.aphorisms, params);
   return h.view('index', {
-    res,
-    notes: [],
-    techniques: [],
+    aphorisms,
   });
 };
 
-export const getAphorismsPage = async (res, h: Vision<Hapi.ResponseToolkit>) => {
+export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const res = await getAphorisms({ query: { category: 'Мыслители, философы' } });
+    const aphorisms = takeAphorisms(h.aphorisms, {});
 
-    return h.view('aphorisms', { res });
+    const { allCategories, allAuthors } = await settings
+      .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
+      .lean()
+      .select('allCategories allAuthors -_id');
+
+    const categories =
+      allCategories &&
+      allCategories
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
+    const authors =
+      allAuthors &&
+      allAuthors
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
+    return h.view('aphorisms', {
+      authors,
+      categories,
+      aphorisms,
+    });
   } catch (error) {
     logger.error('error', error);
   }

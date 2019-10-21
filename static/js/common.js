@@ -45,7 +45,7 @@ $(function() {
   });
 
   $('#filter-by-topic').change(function(event) {
-    funcRequest(`admin/aphorisms?topic=${event.target.value}`, ({ data }) => {
+    funcRequest(`admin/aphorisms?topic=${event.target.value}&random=false`, ({ data }) => {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
       data.forEach(item => {
@@ -67,7 +67,7 @@ $(function() {
   });
 
   $('#filter-by-categories').change(function(event) {
-    funcRequest(`admin/aphorisms?category=${event.target.value}`, ({ data }) => {
+    funcRequest(`admin/aphorisms?category=${event.target.value}&random=false`, ({ data }) => {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
       data.forEach(item => {
@@ -89,7 +89,7 @@ $(function() {
   });
 
   $('#filter-by-author').change(function(event) {
-    funcRequest(`admin/aphorisms?author=${event.target.value}`, ({ data }) => {
+    funcRequest(`admin/aphorisms?author=${event.target.value}&random=false`, ({ data }) => {
       let replaceHtml =
         '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
       data.forEach(item => {

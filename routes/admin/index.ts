@@ -43,6 +43,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
           body: Joi.string(),
           topic: Joi.string(),
           isAdmin: Joi.boolean(),
+          random: Joi.boolean()
         },
       },
     },

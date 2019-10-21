@@ -1,5 +1,4 @@
 import { aphorisms } from '../../../database/schemas/aphorisms';
-import { settings } from '../../../database/schemas/settings';
 import { logger } from '../../../helpers/logger';
 import { ErrorCode } from '../../../interfaces';
 import {
@@ -8,11 +7,12 @@ import {
   IParamsDelete,
   IResponse,
   IGetResponseAphorisms,
-  IAphorisms,
   IParamsGet,
 } from './interfaces';
 import { cyrToLat } from '../../../helpers';
-import { isEmpty, shuffle } from 'lodash';
+import { isEmpty } from 'lodash';
+import { takeAphorisms } from '../../../helpers/aphorisms';
+
 /**
  * Create New Aphorism
  * @param {IParams} params
@@ -40,55 +40,15 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
   }
 };
 /**
- * Get All Aphorisms
+ * Get Aphorisms
  * @return Array
  */
-export const getAphorisms = async (params: IParamsGet): Promise<IGetResponseAphorisms> => {
+export const getAphorisms = async (params: IParamsGet, h): Promise<IGetResponseAphorisms> => {
   try {
-    const { limit = 0, offset = 0, category, topic, author, body, isAdmin } = params.query;
-    const cond = {};
-    let count = 0;
     logger.info('Get aphorisms');
-
-    if (!isEmpty(topic) && topic !== 'all') cond['tags.machineName'] = topic;
-    if (author) cond['authorMachineName'] = { $regex: author };
-    if (body) cond['body'] = { $regex: body };
-    if (category) cond['category'] = category;
-
-    const dataAphorisms = await aphorisms
-      .find(cond)
-      .select('-__v')
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .skip(offset)
-      .lean();
-
-    count = await aphorisms.countDocuments();
-
-    const { allCategories, allAuthors } = await settings
-      .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
-      .lean()
-      .select('allCategories allAuthors -_id');
-
-    const categories =
-      allCategories &&
-      allCategories
-        .map(({ machineName, name }) => ({ machineName, name }))
-        .sort(item => item.machineName === 'all')
-        .reverse();
-
-    const authors =
-      allAuthors &&
-      allAuthors
-        .map(({ machineName, name }) => ({ machineName, name }))
-        .sort(item => item.machineName === 'all')
-        .reverse();
-
     return {
-      data: shuffle(dataAphorisms).slice(0, 100),
-      count,
-      authors,
-      categories,
+      data: takeAphorisms(h.aphorisms, params.query),
+      count: h.aphorisms.length,
     };
   } catch (err) {
     logger.error(err);

@@ -6,16 +6,18 @@ import * as JWT from 'hapi-auth-jwt2';
 import * as AuthBearer from 'hapi-auth-bearer-token';
 import * as hapiAuthBasic from 'hapi-auth-basic';
 import { swaggerOptions } from './config';
-import { setUpconnection } from './database/mongoConnection';
+import mongoConnection from './database/mongoConnection';
+import redisConnection from './database/redisConnection';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
-/** Routes  */
+// Routes
 import users from './routes/users';
 import views from './routes/views';
 import admin from './routes/admin';
 import tasks from './routes/tasks';
-/** Connect Mongodb */
-setUpconnection();
+import { aphorisms } from './database/schemas/aphorisms';
+// Connect Mongodb
+mongoConnection();
 
 export class Server {
   constructor(private port: string) {}
@@ -67,6 +69,13 @@ export class Server {
       });
 
       server.route([...users, ...views, ...admin, ...tasks]);
+
+      const data = await aphorisms
+        .find({})
+        .select('-__v -createdAt -updatedAt')
+        .sort({ createdAt: -1 })
+        .lean();
+      server.decorate('toolkit', 'aphorisms', data);
 
       await server.start();
       logger.info('Server running at:', server.info.uri);
