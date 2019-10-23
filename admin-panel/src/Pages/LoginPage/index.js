@@ -3,7 +3,7 @@ import { Button, Box, Input, FormGroup } from '@material-ui/core';
 import styles from './LoginPage.module.sass';
 import api from '../../helpers/api';
 import setAuthorizationToken from '../../helpers/setAuthorizationToken';
-import { setToken } from '../../helpers/token';
+import { setToken, getToken } from '../../helpers/token';
 import { withRouter } from 'react-router-dom';
 
 const LoginPage = ({ history }) => {
@@ -11,11 +11,13 @@ const LoginPage = ({ history }) => {
   const [password, setPassword] = React.useState('');
 
   React.useEffect(() => {
-    const fetchAuth = async () => {
-      const data = await api('user/auth', 'GET');
-      if (data.status === 200) history.push('admin');
-    };
-    fetchAuth();
+    if (getToken()) {
+      const fetchAuth = async () => {
+        const data = await api('user/auth', 'GET');
+        if (data.status === 200) history.push('admin');
+      };
+      fetchAuth();
+    }
   }, []);
 
   const auth = () => {

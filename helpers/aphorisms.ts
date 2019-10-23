@@ -1,5 +1,6 @@
 import { IAphorisms } from '../controllers/admin/aphorisms/interfaces';
 import { cyrToLat } from '../helpers';
+import { sortBy } from 'lodash';
 
 interface IParams {
   limit?: number;
@@ -28,20 +29,27 @@ export const takeAphorisms = (aphorisms: IAphorisms[], params: IParams) => {
     aphorisms = aphorisms.filter((_, index) => index === randomList[index]);
   }
 
-  // filter
-  if (author) {
+  // filters
+  if (author && author !== 'all') {
+    aphorisms = aphorisms.filter(item => cyrToLat(item.author) === author);
+  }
+  if (body) {
+    const bodyRegExp = new RegExp(body, 'g');
+    aphorisms = aphorisms.filter(item => bodyRegExp.test(item.body));
+  }
+  if (topic && topic !== 'all') {
     aphorisms = aphorisms.filter(item => {
-      if (cyrToLat(item.author) === author) {
-        return item;
+      for (const tag of item.tags) {
+        if (tag.machineName === topic) {
+          return item;
+        }
       }
     });
   }
-  if (body) {
-    // your code here...
-  }
-  if (topic) {
-    // your code here...
-  }
+
+  aphorisms = sortBy(aphorisms, item => {
+    return item.body.length > 180;
+  });
 
   return aphorisms;
 };

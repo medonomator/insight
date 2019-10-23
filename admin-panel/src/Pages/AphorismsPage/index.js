@@ -1,69 +1,54 @@
 import React from 'react';
 import api from '../../helpers/api';
 import AphorismsTable from '../../components/AphorismsTable';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-
-const useStyles = makeStyles(theme => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+import { Button } from '@material-ui/core';
+import ModalForm from '../../components/ModalForm';
 
 const AphorismsPage = () => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [aphorisms, setAphorisms] = React.useState({});
+  const [isOpen, inverter] = React.useState(false);
+  const [aphorisms, setAphorisms] = React.useState({ data: [] });
+
   React.useEffect(() => {
     const fetchAuth = async () => {
-      const res = await api('/admin/aphorisms?isAdmin=true', 'GET');
+      const res = await api('/admin/aphorisms?random=false', 'GET');
       setAphorisms(res.data);
     };
     fetchAuth();
   }, []);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const inverterModalForm = () => inverter(!isOpen);
+
+  const addNewAphorism = async ({ author, body, tags }) => {
+    try {
+      const res = await api('/admin/aphorisms', 'POST', { author, body, tags: tags.split(',') });
+      const newAphorisms = {
+        _id: res._id,
+        author,
+        body,
+        tags: tags.split(','),
+      };
+
+      setAphorisms(oldState => {
+        const newArr = [...oldState.data];
+        newArr.unshift(newAphorisms);
+        return { ...oldState, data: newArr };
+      });
+    } catch (error) {
+      // TODO: Обработать ошибку
+      console.log(error);
+    }
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const getDataFromModalForm = data => {
+    addNewAphorism(data);
   };
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <Button onClick={inverterModalForm} style={{ margin: '20px' }} variant="contained">
         Добавить афоризм
-      </button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
-          </div>
-        </Fade>
-      </Modal>
+      </Button>
+      <ModalForm getDataFromModalForm={getDataFromModalForm} inverterModalForm={inverterModalForm} isOpen={isOpen} />
       <div>AforismsFilter</div>
       <AphorismsTable aphorisms={aphorisms} />
     </div>
