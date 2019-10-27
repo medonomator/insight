@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AphorismsTable = ({ aphorisms }) => {
+const AphorismsTable = ({ aphorisms, deleteAphorism }) => {
   const classes = useStyles();
 
   return (
@@ -49,7 +49,9 @@ const AphorismsTable = ({ aphorisms }) => {
                 </TableCell>
                 <TableCell>
                   <Create className={styles.icon} htmlColor="green" />
-                  <DeleteForever className={styles.icon} htmlColor="red" />
+                  <span className="deleteIcon" onClick={deleteAphorism} id={item._id}>
+                    <DeleteForever className={styles.icon} htmlColor="red" />
+                  </span>
                 </TableCell>
               </TableRow>
             ))}

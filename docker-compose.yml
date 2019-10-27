@@ -1,8 +1,12 @@
 version: '2'
 services:
-  mongo:
-    image: mongo:3.6.4
-    stdin_open: true
-    tty: true
+  # mongo:
+  #   image: mongo:3.6.4
+  #   stdin_open: true
+  #   tty: true
+  #   ports:
+  #     - 27017:27017/tcp
+  tarantool:
+    image: tarantool/tarantool:1.10.2
     ports:
-      - 27017:27017/tcp
+      - '3301:3301'

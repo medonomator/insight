@@ -33,14 +33,22 @@ const AphorismsPage = () => {
         newArr.unshift(newAphorisms);
         return { ...oldState, data: newArr };
       });
+      return true;
     } catch (error) {
       // TODO: Обработать ошибку
       console.log(error);
     }
   };
 
-  const getDataFromModalForm = data => {
-    addNewAphorism(data);
+  const getDataFromModalForm = async data => {
+    return await addNewAphorism(data);
+  };
+
+  const deleteAphorism = async e => {
+    if (e.target.closest('.deleteIcon')) {
+      const _id = e.target.closest('.deleteIcon').id;
+      const res = await api('/admin/aphorisms', 'DELETE', { _id });
+    }
   };
 
   return (
@@ -50,7 +58,7 @@ const AphorismsPage = () => {
       </Button>
       <ModalForm getDataFromModalForm={getDataFromModalForm} inverterModalForm={inverterModalForm} isOpen={isOpen} />
       <div>AforismsFilter</div>
-      <AphorismsTable aphorisms={aphorisms} />
+      <AphorismsTable aphorisms={aphorisms} deleteAphorism={deleteAphorism} />
     </div>
   );
 };

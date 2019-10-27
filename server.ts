@@ -7,7 +7,6 @@ import * as AuthBearer from 'hapi-auth-bearer-token';
 import * as hapiAuthBasic from 'hapi-auth-basic';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
-import redisConnection from './database/redisConnection';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
 // Routes
@@ -15,7 +14,9 @@ import users from './routes/users';
 import views from './routes/views';
 import admin from './routes/admin';
 import tasks from './routes/tasks';
-import { aphorisms } from './database/schemas/aphorisms';
+
+import { insertDataToRedis } from './database/insertDataToRedis';
+
 // Connect Mongodb
 mongoConnection();
 
@@ -68,14 +69,9 @@ export class Server {
         unauthorized: () => logger.error('user strategy error'),
       });
 
-      server.route([...users, ...views, ...admin, ...tasks]);
+      await insertDataToRedis();
 
-      const data = await aphorisms
-        .find({})
-        .select('-__v -createdAt -updatedAt')
-        .sort({ createdAt: -1 })
-        .lean();
-      server.decorate('toolkit', 'aphorisms', data);
+      server.route([...users, ...views, ...admin, ...tasks]);
 
       await server.start();
       logger.info('Server running at:', server.info.uri);
@@ -85,7 +81,7 @@ export class Server {
   }
 }
 
-const server = new Server(process.env.PORT || '5000');
+export const server = new Server(process.env.PORT || '5000');
 server.start();
 
 process.on('unhandledRejection', (error: Error) => {

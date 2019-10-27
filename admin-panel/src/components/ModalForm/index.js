@@ -1,11 +1,10 @@
 import React from 'react';
-import api from '../../helpers/api';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Input, Button, TextareaAutosize } from '@material-ui/core';
-// import styles from './AphorismsPage.module.sass';
+import styles from './ModalForm.module.sass';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -30,21 +29,10 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm }) => {
   const [body, setBody] = React.useState('');
   const [tags, setTags] = React.useState('');
 
-  React.useEffect(() => {
-    const fetchAuth = async () => {
-      const res = await api('/admin/aphorisms?random=false', 'GET');
-      // setAphorisms(res.data);
-    };
-    fetchAuth();
-  }, []);
-
-  const getDataFromThisForm = () => {
-    const res = getDataFromModalForm({ author, body, tags });
-
-    console.log('=============================');
-    console.log('logging', res);
-    console.log('=============================');
+  const getDataFromThisForm = async () => {
+    const res = await getDataFromModalForm({ author, body, tags });
     if (res) {
+      inverterModalForm();
       setAuthor('');
       setBody('');
       setTags('');
@@ -70,17 +58,17 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm }) => {
             <Input
               onChange={e => setAuthor(e.target.value)}
               value={author}
-              // className={styles.inputs}
+              className={styles.inputs}
               placeholder="author"
             />
             <TextareaAutosize
-              rows={6}
+              rows={10}
               onChange={e => setBody(e.target.value)}
               value={body}
-              // className={styles.inputs}
+              className={styles.inputs}
               placeholder="body"
             />
-            <Input onChange={e => setTags(e.target.value)} value={tags} placeholder="tags" />
+            <Input onChange={e => setTags(e.target.value)} value={tags} className={styles.inputs} placeholder="tags" />
             <Button onClick={getDataFromThisForm} variant="contained" color="primary">
               Добавить афоризм
             </Button>

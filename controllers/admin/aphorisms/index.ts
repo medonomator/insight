@@ -12,6 +12,7 @@ import {
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';
+import { redisClient } from '../../../database/redis';
 
 /**
  * Create New Aphorism
@@ -21,11 +22,13 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
   try {
     const { author, body, tags } = req.payload;
     const tagsToWrite: any = [];
+
     if (tags) {
       tags.forEach(name => {
         tagsToWrite.push({ name, machineName: cyrToLat(name) });
       });
     }
+
     const res = await aphorisms.insertMany({ author, body, tags: tagsToWrite });
 
     return {
@@ -45,6 +48,12 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (params: IParamsGet, h): Promise<IGetResponseAphorisms> => {
   try {
+    const key = await redisClient.keys('*Aa-Zz*');
+
+    console.log('=============================');
+    console.log('logging', key);
+    console.log('=============================');
+
     logger.info('Get aphorisms');
     return {
       data: takeAphorisms(h.aphorisms, params.query),
@@ -87,10 +96,11 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
  * Delete Aphorism by id
  * @params {IParams} params
  */
-export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => {
+export const deleteAphorism = async (req, h): Promise<IResponse> => {
   try {
     const { _id } = req.payload;
     await aphorisms.deleteOne({ _id });
+    logger.info(`aphorisms id: ${_id} deleted`);
 
     return 'ok';
   } catch (err) {

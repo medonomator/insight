@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
-import { TOKEN_SIGN_KEY, REFRESH_TOKEN_SIGN_KEY } from '../config'
+import { TOKEN_SIGN_KEY, REFRESH_TOKEN_SIGN_KEY } from '../config';
 const CyrToLat = require('cyrillic-to-translit-js');
 
 interface ITokens {
@@ -14,7 +14,7 @@ interface IPrepareTokensParams {
 }
 
 export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
-  const tokenExpirationSeconds = 60 * 60 * 24; // 1 day
+  const tokenExpirationSeconds = 60 * 60 * 24 * 7; // make 1 week temporary for testing
   const refreshTokenExpirationSeconds = 60 * 60 * 24 * 7; // week
 
   return {
