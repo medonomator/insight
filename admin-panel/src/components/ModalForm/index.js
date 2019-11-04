@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm }) => {
+const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm, textButton }) => {
   const classes = useStyles();
   const [author, setAuthor] = React.useState('');
   const [body, setBody] = React.useState('');
@@ -70,7 +70,7 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm }) => {
             />
             <Input onChange={e => setTags(e.target.value)} value={tags} className={styles.inputs} placeholder="tags" />
             <Button onClick={getDataFromThisForm} variant="contained" color="primary">
-              Добавить афоризм
+              {textButton}
             </Button>
           </div>
         </Fade>

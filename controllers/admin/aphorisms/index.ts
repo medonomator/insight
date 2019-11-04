@@ -8,11 +8,12 @@ import {
   IResponse,
   IGetResponseAphorisms,
   IParamsGet,
+  IAphorisms,
 } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';
-import { redisClient } from '../../../database/redis';
+import { deleteElement } from '../../../database/redis';
 
 /**
  * Create New Aphorism
@@ -48,16 +49,12 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
  */
 export const getAphorisms = async (params: IParamsGet, h): Promise<IGetResponseAphorisms> => {
   try {
-    const key = await redisClient.keys('*Aa-Zz*');
-
-    console.log('=============================');
-    console.log('logging', key);
-    console.log('=============================');
-
     logger.info('Get aphorisms');
+
+    const data = <IAphorisms[]>await takeAphorisms(params.query);
     return {
-      data: takeAphorisms(h.aphorisms, params.query),
-      count: h.aphorisms.length,
+      data,
+      count: data.length,
     };
   } catch (err) {
     logger.error(err);
@@ -102,6 +99,7 @@ export const deleteAphorism = async (req, h): Promise<IResponse> => {
     await aphorisms.deleteOne({ _id });
     logger.info(`aphorisms id: ${_id} deleted`);
 
+    deleteElement('mongoIds', _id);
     return 'ok';
   } catch (err) {
     logger.error(err);

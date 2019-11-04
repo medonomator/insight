@@ -1,4 +1,4 @@
-import { IError } from '../../../interfaces';
+import { ISystemError } from '../../../interfaces';
 /**
  * GRUD for aphorisms
  */
@@ -61,5 +61,5 @@ export interface IResponseCreate {
   _id: string;
 }
 
-export type IResponse = IError | 'ok' | IResponseCreate;
-export type IGetResponseAphorisms = IError | IResponseAphorisms;
+export type IResponse = ISystemError | 'ok' | IResponseCreate;
+export type IGetResponseAphorisms = ISystemError | IResponseAphorisms;

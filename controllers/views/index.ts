@@ -5,20 +5,24 @@ import { settings } from '../../database/schemas/settings';
 import { takeAphorisms } from '../../helpers/aphorisms';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getMainPage request');
-  const params = {
-    limit: 8,
-  };
-  const aphorisms = takeAphorisms(h.aphorisms, params);
-  return h.view('index', {
-    aphorisms,
-  });
+  try {
+    logger.info('getMainPage request');
+    const params = {
+      limit: 8,
+    };
+    const aphorisms = await takeAphorisms(params);
+    return h.view('index', {
+      aphorisms,
+    });
+  } catch (error) {
+    logger.error(error);
+  }
 };
 
 export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const aphorisms = takeAphorisms(h.aphorisms, {});
+    const aphorisms = await takeAphorisms({});
 
     const { allCategories, allAuthors } = await settings
       .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })

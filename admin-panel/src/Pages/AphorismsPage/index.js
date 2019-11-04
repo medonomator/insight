@@ -1,6 +1,7 @@
 import React from 'react';
 import api from '../../helpers/api';
 import AphorismsTable from '../../components/AphorismsTable';
+import AphorismsFilter from '../../components/AphorismsFilter';
 import { Button } from '@material-ui/core';
 import ModalForm from '../../components/ModalForm';
 
@@ -47,8 +48,29 @@ const AphorismsPage = () => {
   const deleteAphorism = async e => {
     if (e.target.closest('.deleteIcon')) {
       const _id = e.target.closest('.deleteIcon').id;
-      const res = await api('/admin/aphorisms', 'DELETE', { _id });
+      try {
+        const res = await api('/admin/aphorisms', 'DELETE', { _id });
+
+        if (res.status === 200) {
+          setAphorisms(oldState => {
+            let newArr = [...oldState.data];
+            newArr = newArr.filter(item => item._id !== _id);
+            return { ...oldState, data: newArr };
+          });
+        }
+      } catch (error) {
+        // TODO: Обработать ошибку
+        console.log(error);
+      }
     }
+  };
+
+  const handlerInput = async data => {
+    const currentInput = Object.keys(data);
+    const checkIsEmpty = data[currentInput] ? `&${currentInput}=${data[currentInput]}` : '';
+    const builtUrl = `/admin/aphorisms?random=false${checkIsEmpty}`;
+    const res = await api(builtUrl, 'GET');
+    setAphorisms(res.data);
   };
 
   return (
@@ -56,8 +78,14 @@ const AphorismsPage = () => {
       <Button onClick={inverterModalForm} style={{ margin: '20px' }} variant="contained">
         Добавить афоризм
       </Button>
-      <ModalForm getDataFromModalForm={getDataFromModalForm} inverterModalForm={inverterModalForm} isOpen={isOpen} />
-      <div>AforismsFilter</div>
+      <ModalForm
+        textButton="Добавить"
+        getDataFromModalForm={getDataFromModalForm}
+        inverterModalForm={inverterModalForm}
+        isOpen={isOpen}
+      />
+      <AphorismsFilter handlerInput={handlerInput} />
+
       <AphorismsTable aphorisms={aphorisms} deleteAphorism={deleteAphorism} />
     </div>
   );
