@@ -1,9 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import api from '../../helpers/api';
 import AphorismsTable from '../../components/AphorismsTable';
 import AphorismsFilter from '../../components/AphorismsFilter';
 import { Button } from '@material-ui/core';
 import ModalForm from '../../components/ModalForm';
+import { ModalContainer, ModalRoute } from 'react-router-modal';
+import { Link } from 'react-router-dom';
+import 'react-router-modal/css/react-router-modal.css';
+
+const LinkModal = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const AphorismsPage = () => {
   const [isOpen, inverter] = React.useState(false);
@@ -75,9 +80,21 @@ const AphorismsPage = () => {
 
   return (
     <div>
-      <Button onClick={inverterModalForm} style={{ margin: '20px' }} variant="contained">
+      <ModalRoute path="/admin/aphorisms/modal-test" parentPath="/admin/aphorisms">
+        Hello
+      </ModalRoute>
+      <ModalContainer />
+
+      <Button
+        // onClick={inverterModalForm}
+        component={LinkModal}
+        to="/admin/aphorisms/modal-test"
+        style={{ margin: '20px' }}
+        variant="contained"
+      >
         Добавить афоризм
       </Button>
+
       <ModalForm
         textButton="Добавить"
         getDataFromModalForm={getDataFromModalForm}

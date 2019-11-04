@@ -61,6 +61,6 @@
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
     "ts-node": "^5.0.1",
-    "typescript": "^2.8.1"
+    "typescript": "^3.6.4"
   }
 }
