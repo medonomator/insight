@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { removeToken } from './token';
+// import { removeToken } from './token';
 
 export default function setAuthorizationToken(token) {
   const decodedToken = jwt.decode(token);

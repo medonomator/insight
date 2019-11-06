@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { getToken } from './helpers/token';
 import setAuthorizationToken from './helpers/setAuthorizationToken';
-import App from './App';
+import App from './App.tsx';
 import LoginPage from './Pages/LoginPage';
 import './assets/global.module.sass';
 
