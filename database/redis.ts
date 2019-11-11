@@ -6,10 +6,10 @@ import { logger } from '../helpers/logger';
 export const redisClient = asyncRedis.createClient();
 
 redisClient.on('connect', function() {
-  console.log('connected');
+  logger.info('Redis connected');
 });
 redisClient.on('error', function(err) {
-  console.log('Connect Redis Error ' + err);
+  logger.error('Connect Redis Error ' + err);
 });
 
 export const getAllElementsByKey = async (key: string): Promise<IAphorisms[]> => {

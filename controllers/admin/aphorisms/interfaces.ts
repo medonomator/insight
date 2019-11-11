@@ -58,7 +58,9 @@ export interface IResponseAphorisms {
 }
 
 export interface IResponseCreate {
-  _id: string;
+  data: {
+    _id: string;
+  };
 }
 
 export type IResponse = ISystemError | 'ok' | IResponseCreate;

@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Input, Button, TextareaAutosize } from '@material-ui/core';
 import styles from './ModalForm.module.sass';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm, textButton }) => {
+const ModalForm = ({ getDataFromModalForm, textButton, history }) => {
   const classes = useStyles();
   const [author, setAuthor] = React.useState('');
   const [body, setBody] = React.useState('');
@@ -32,11 +33,14 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm, textButton
   const getDataFromThisForm = async () => {
     const res = await getDataFromModalForm({ author, body, tags });
     if (res) {
-      inverterModalForm();
       setAuthor('');
       setBody('');
       setTags('');
     }
+  };
+
+  const handlerOnClose = () => {
+    history.goBack();
   };
 
   return (
@@ -45,15 +49,15 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm, textButton
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className={classes.modal}
-        open={isOpen}
-        onClose={inverterModalForm}
         closeAfterTransition
         BackdropComponent={Backdrop}
+        onClose={handlerOnClose}
         BackdropProps={{
           timeout: 100,
         }}
+        open
       >
-        <Fade in={isOpen}>
+        <Fade in>
           <div className={classes.paper}>
             <Input
               onChange={e => setAuthor(e.target.value)}
@@ -79,4 +83,4 @@ const ModalForm = ({ isOpen, inverterModalForm, getDataFromModalForm, textButton
   );
 };
 
-export default ModalForm;
+export default withRouter(ModalForm);

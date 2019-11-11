@@ -1,5 +1,5 @@
 import * as Hapi from 'hapi';
-import * as Boom from 'boom';
+import Boom from 'boom';
 import { users } from '../../../database/schemas/users';
 import { logger } from '../../../helpers/logger';
 import { ErrorCode } from '../../../interfaces';

@@ -33,7 +33,9 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
     const res = await aphorisms.insertMany({ author, body, tags: tagsToWrite });
 
     return {
-      _id: res[0]._id,
+      data: {
+        _id: res[0]._id,
+      },
     };
   } catch (err) {
     logger.error(err);

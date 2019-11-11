@@ -1,4 +1,4 @@
-import * as Mongoose from 'mongoose';
+import Mongoose from 'mongoose';
 import { logger } from '../helpers/logger';
 
 const MONGO_URI = process.env.MONGO_URI || 'localhost';

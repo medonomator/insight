@@ -5,8 +5,10 @@ import * as HapiSwagger from 'hapi-swagger';
 import * as JWT from 'hapi-auth-jwt2';
 import * as AuthBearer from 'hapi-auth-bearer-token';
 import * as hapiAuthBasic from 'hapi-auth-basic';
+import Boom from 'boom';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
+import { pg } from './/database/pgConnect';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
 // Routes
@@ -16,12 +18,17 @@ import admin from './routes/admin';
 import tasks from './routes/tasks';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
-
+pg;
 // Connect Mongodb
 mongoConnection();
 
 export class Server {
   constructor(private port: string) {}
+
+  private getErrorFunction(message: string) {
+    logger.error('Error Authorization');
+    return Boom.unauthorized(message);
+  }
 
   public async start() {
     try {
@@ -66,7 +73,7 @@ export class Server {
 
       server.auth.strategy('users', 'bearer-access-token', {
         validate: userToken,
-        unauthorized: () => logger.error('user strategy error'),
+        unauthorized: this.getErrorFunction,
       });
 
       await insertDataToRedis();
