@@ -24,14 +24,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ModalForm = ({ getDataFromModalForm, textButton, history }) => {
+const ModalForm = ({ requestHandler, textButton, history }) => {
   const classes = useStyles();
   const [author, setAuthor] = React.useState('');
   const [body, setBody] = React.useState('');
   const [tags, setTags] = React.useState('');
 
   const getDataFromThisForm = async () => {
-    const res = await getDataFromModalForm({ author, body, tags });
+    const res = await requestHandler({ author, body, tags });
     if (res) {
       setAuthor('');
       setBody('');
@@ -72,7 +72,12 @@ const ModalForm = ({ getDataFromModalForm, textButton, history }) => {
               className={styles.inputs}
               placeholder="body"
             />
-            <Input onChange={e => setTags(e.target.value)} value={tags} className={styles.inputs} placeholder="tags" />
+            <Input
+              onChange={e => setTags(e.target.value)}
+              value={tags}
+              className={styles.inputs}
+              placeholder="tags"
+            />
             <Button onClick={getDataFromThisForm} variant="contained" color="primary">
               {textButton}
             </Button>

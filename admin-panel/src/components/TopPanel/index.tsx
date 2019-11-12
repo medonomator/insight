@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter, NavLink, RouteComponentProps } from 'react-router-dom';
 import styles from './TopPanel.module.sass';
 
 const useStyles = makeStyles(theme => ({
@@ -21,16 +21,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function TopPanel({ history }) {
+function TopPanel({ history }: RouteComponentProps) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenu = event => {
+  const handleMenu = (event: React.SyntheticEvent<any>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 

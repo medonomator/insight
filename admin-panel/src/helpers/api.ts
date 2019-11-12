@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosPromise, AxiosResponse, Method } from 'axios';
+import { baseURL } from '../constants/urls';
 /**
  * Request to api
  *
@@ -6,16 +7,21 @@ import axios from 'axios';
  * @param {srting} method
  * @param {Object} axios config
  * @param {Object} axios headers
- *
+ * @return {Promise} AxiosPromise<AxiosResponse>
  */
-const api = (url, method, data, headers) =>
+const api = (
+  url: string,
+  method: Method,
+  data?: object,
+  headers?: object,
+): AxiosPromise<AxiosResponse> =>
   axios({
     url,
     method,
     timeout: 30000,
     data,
-    baseURL: 'http://localhost:5000/',
-    // baseURL: PRODUCTION ? location.host : 'http://localhost:8081/',
+    headers,
+    baseURL,
     onUploadProgress: function(progressEvent) {
       console.log('загружаю');
     },

@@ -1,33 +1,45 @@
 import React from 'react';
 import { Button, Box, Input, FormGroup } from '@material-ui/core';
-import styles from './LoginPage.module.sass';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import api from '../../helpers/api';
 import setAuthorizationToken from '../../helpers/setAuthorizationToken';
 import { setToken, getToken } from '../../helpers/token';
-import { withRouter } from 'react-router-dom';
+import styles from './LoginPage.module.sass';
 
-const LoginPage = ({ history }) => {
+const LoginPage = ({ history }: RouteComponentProps) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const MIN_LENGTH = 4;
 
   React.useEffect(() => {
     if (getToken()) {
       const fetchAuth = async () => {
-        const data = await api('user/auth', 'GET');
-        if (data.status === 200) history.push('admin');
+        try {
+          const data: AxiosResponse = await api('user/auth', 'GET');
+          if (data.status === 200) history.push('admin');
+        } catch (error) {
+          // TODO: need throw error to global state `Errors`
+          console.log(error);
+        }
       };
       fetchAuth();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const auth = () => {
+    // TODO: remake on await as above
     api('/user/login', 'POST', { email, password })
-      .then(res => {
+      .then((res: AxiosResponse) => {
         setToken(res.data.token);
         setAuthorizationToken(res.data.token);
         history.push('admin');
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        // TODO: need throw error to global state `Errors`
+        console.log(error);
+      });
   };
   return (
     <div className={styles.loginPage}>
@@ -48,7 +60,12 @@ const LoginPage = ({ history }) => {
             placeholder="password"
           />
         </FormGroup>
-        <Button onClick={auth} disabled={email.length < 4 || password.length < 4} variant="contained" color="primary">
+        <Button
+          onClick={auth}
+          disabled={email.length < MIN_LENGTH || password.length < MIN_LENGTH}
+          variant="contained"
+          color="primary"
+        >
           Войти
         </Button>
       </Box>
