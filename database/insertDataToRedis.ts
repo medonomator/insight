@@ -7,11 +7,11 @@ export const insertDataToRedis = async () => {
     const weMongoIds = await redisClient.exists('mongoIds');
 
     if (!weMongoIds) {
-      const data = await aphorisms
+      const data = (await aphorisms
         .find({})
         .select('-__v -createdAt -updatedAt')
         .sort({ createdAt: -1 })
-        .lean();
+        .lean()) as any;
 
       const prepareToWriteRedis = {};
       data.map(item => {

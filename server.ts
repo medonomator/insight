@@ -8,7 +8,7 @@ import * as hapiAuthBasic from 'hapi-auth-basic';
 import Boom from 'boom';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
-import { pg } from './/database/pgConnect';
+// import { pg } from './/database/pgConnect';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
 // Routes
@@ -18,7 +18,7 @@ import admin from './routes/admin';
 import tasks from './routes/tasks';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
-pg;
+// pg;
 // Connect Mongodb
 mongoConnection();
 

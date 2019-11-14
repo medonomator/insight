@@ -6,7 +6,9 @@ services:
   #   tty: true
   #   ports:
   #     - 27017:27017/tcp
-  tarantool:
-    image: tarantool/tarantool:1.10.2
+  redis:
+    image: 'bitnami/redis:4.0'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - '3301:3301'
+      - '6379:6379'

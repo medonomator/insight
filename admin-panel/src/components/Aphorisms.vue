@@ -13,10 +13,11 @@
       <div class="aphorisms-header-item">
         <b>Афоризм</b>
         <input name="body" @input="headerFilter" class="aphorisms-filter" type="text" />
-      </div>
+      </div>e
       <div class="aphorisms-header-item">
         <b>limit</b>
         <select>
+          e
           <option>100</option>
           <option>200</option>
           <option>500</option>

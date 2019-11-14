@@ -24,10 +24,10 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
   try {
     const aphorisms = await takeAphorisms({});
 
-    const { allCategories, allAuthors } = await settings
+    const { allCategories, allAuthors } = (await settings
       .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
       .lean()
-      .select('allCategories allAuthors -_id');
+      .select('allCategories allAuthors -_id')) as any;
 
     const categories =
       allCategories &&
