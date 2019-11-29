@@ -11,4 +11,4 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
-      - '6380:6380'
+      - '6379:6379'
