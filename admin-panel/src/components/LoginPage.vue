@@ -10,6 +10,8 @@
 import axios from "axios";
 import { getBaseUrl, setAuthorizationToken, setToken } from "../helpers";
 import Vue from "vue";
+import { router } from "../router";
+
 export default {
   data: function() {
     return {
@@ -28,6 +30,7 @@ export default {
           const { token } = res.data;
           setAuthorizationToken(token);
           setToken(token);
+          router.push("/admin");
         })
         .catch(error => console.log(error));
     }

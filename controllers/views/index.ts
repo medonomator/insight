@@ -75,5 +75,5 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('adminbundle request');
-  return h.file('./static/build/index.html');
+  return h.file('./static/vue/index.html');
 };

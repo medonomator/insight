@@ -30,23 +30,20 @@ export const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!getToken() && to.path !== '/admin/login') {
-    next('/admin/login');
-  } else {
+  const goToPath = path => {
+    if (to.path !== path) next(path);
+    next();
+  };
+
+  if (getToken()) {
+    setAuthorizationToken(getToken());
     axios
       .get(`${getBaseUrl()}/user/auth`)
-      .then(res => {
-        if (to.path !== '/admin') {
-          next('/admin');
-        }
-      })
-      .catch(error => {
-        if (to.path !== '/admin/login') {
-          next('/admin/login');
-        }
-      });
+      .then(() => goToPath('/admin'))
+      .catch(() => goToPath('/admin/login'));
+  } else {
+    goToPath('/admin/login');
   }
 
-  // нельзя так делать так промис еше вверху делается...
-  next();
+  console.log('Routing...');
 });
