@@ -5,12 +5,12 @@ import { logger } from '../../../helpers/logger';
 import { ErrorCode } from '../../../interfaces';
 import { prepareTokens } from '../../../helpers/index';
 import { encryptData } from '../../../helpers';
-import { IParams, IUserType } from './interfaces';
+import { IParams, IUserType, IUser } from './interfaces';
 
 export const userLogin = async (req: IParams, h: Hapi.ResponseToolkit) => {
   try {
     const { email, password } = req.payload;
-    const resUser: IUserType = <IUserType>await users.findOne({ email });
+    const resUser: IUserType = <IUserType>await users.findOne({ email }).lean();
 
     if (!resUser || resUser.password !== encryptData(password, email.toLowerCase())) {
       return Boom.badRequest('Неверный логин или пароль');

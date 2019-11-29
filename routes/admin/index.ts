@@ -43,7 +43,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
           body: Joi.string(),
           topic: Joi.string(),
           isAdmin: Joi.boolean(),
-          random: Joi.boolean()
+          random: Joi.boolean(),
         },
       },
     },
@@ -90,6 +90,32 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .description('5d46debf5f7dff7ef9b79098')
             .required(),
         },
+      },
+    },
+  },
+  {
+    method: 'POST',
+    path: '/api/static',
+    handler: () => {
+      return 'ok';
+    },
+    options: {
+      // ...docsAphorisms.deleteAphorism,
+      auth: {
+        strategy: 'users',
+      },
+      validate: {
+        payload: {
+          files: Joi.array()
+            .items(Joi.object().type(Buffer))
+            .single()
+            .required(),
+        },
+      },
+      payload: {
+        output: 'stream',
+        parse: true,
+        allow: 'application/x-www-form-urlencoded',
       },
     },
   },
