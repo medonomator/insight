@@ -1,5 +1,3 @@
-import { IAphorisms } from '../controllers/admin/aphorisms/interfaces';
-import { cyrToLat } from '../helpers';
 import { sortBy } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
 
