@@ -1,15 +1,7 @@
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
 import { ErrorCode } from '../../../interfaces';
-import {
-  IParamsCreate,
-  IParamsUpdate,
-  IParamsDelete,
-  IResponse,
-  IGetResponseAphorisms,
-  IParamsGet,
-  IAphorisms,
-} from './interfaces';
+import { IParamsCreate, IParamsUpdate, IResponse, IGetResponseAphorisms, IParamsGet, IAphorisms } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';

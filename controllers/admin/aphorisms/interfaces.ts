@@ -19,6 +19,7 @@ export interface IAphorisms {
   author: string;
   body: string;
   tags: ICategories[];
+  category: string;
 }
 
 export interface IParamsCreate {

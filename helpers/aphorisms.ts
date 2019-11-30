@@ -17,7 +17,7 @@ export const takeAphorisms = async (params: IParams) => {
   try {
     let aphorisms = await getAllElementsByKey('mongoIds');
 
-    const { limit = 100, random = true, author, body, topic } = params;
+    const { limit = 100, random = true, author, body, topic, category } = params;
     if (random) {
       const generateRandomList = (lim: number, length = 0) => {
         const list = {};
@@ -32,14 +32,20 @@ export const takeAphorisms = async (params: IParams) => {
     }
 
     // filters
-    if (author && author !== 'all') {
+    if (author && author !== 'Все') {
       const authorRegExp = new RegExp(author, 'g');
       aphorisms = aphorisms.filter(item => authorRegExp.test(item.author));
     }
+
     if (body) {
       const bodyRegExp = new RegExp(body, 'g');
       aphorisms = aphorisms.filter(item => bodyRegExp.test(item.body));
     }
+
+    if (category) {
+      aphorisms = aphorisms.filter(item => item.category === category);
+    }
+
     if (topic && topic !== 'all') {
       aphorisms = aphorisms.filter(item => {
         for (const tag of item.tags) {
@@ -50,9 +56,7 @@ export const takeAphorisms = async (params: IParams) => {
       });
     }
 
-    aphorisms = sortBy(aphorisms, item => {
-      return item.body.length > 180;
-    });
+    aphorisms = sortBy(aphorisms, item => item.body.length > 180);
 
     return aphorisms;
   } catch (error) {
