@@ -16,6 +16,7 @@ import users from './routes/users';
 import views from './routes/views';
 import admin from './routes/admin';
 import tasks from './routes/tasks';
+import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
 // pg;
@@ -78,7 +79,7 @@ export class Server {
 
       await insertDataToRedis();
 
-      server.route([...users, ...views, ...admin, ...tasks]);
+      server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();
       logger.info('Server running at:', server.info.uri);

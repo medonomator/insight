@@ -1,8 +1,8 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { userRegister } from '../../controllers/users/userRegister';
-import { userLogin } from '../../controllers/users/userLogin';
-import { users } from '../../config/docs';
+import { userRegister } from '../controllers/users/userRegister';
+import { userLogin } from '../controllers/users/userLogin';
+import { users } from '../config/docs';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   // {

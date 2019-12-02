@@ -1,11 +1,11 @@
 import * as Hapi from 'hapi';
-import { aphorisms } from '../../database/schemas/aphorisms';
-import { settings } from '../../database/schemas/settings';
+import { aphorisms } from '../database/schemas/aphorisms';
+import { settings } from '../database/schemas/settings';
 import { uniqBy } from 'lodash';
-import { cyrToLat } from '../../helpers';
-import { logger } from '../../helpers/logger';
-import { ErrorCode } from '../../interfaces';
-import { docsTasks } from '../../config/docs';
+import { cyrToLat } from '../helpers';
+import { logger } from '../helpers/logger';
+import { ErrorCode } from '../interfaces';
+import { docsTasks } from '../config/docs';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {

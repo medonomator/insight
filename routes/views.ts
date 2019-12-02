@@ -7,7 +7,7 @@ import {
   getAdminBundle,
   getContactsPage,
   getGratitudePage,
-} from '../../controllers/views';
+} from '../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
   {

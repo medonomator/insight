@@ -1,7 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../../controllers/admin/aphorisms';
-import { docsAphorisms } from '../../config/docs';
+import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../controllers/admin/aphorisms';
+import { docsAphorisms } from '../config/docs';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -90,32 +90,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .description('5d46debf5f7dff7ef9b79098')
             .required(),
         },
-      },
-    },
-  },
-  {
-    method: 'POST',
-    path: '/api/static',
-    handler: () => {
-      return 'ok';
-    },
-    options: {
-      // ...docsAphorisms.deleteAphorism,
-      auth: {
-        strategy: 'users',
-      },
-      validate: {
-        payload: {
-          files: Joi.array()
-            .items(Joi.object().type(Buffer))
-            .single()
-            .required(),
-        },
-      },
-      payload: {
-        output: 'stream',
-        parse: true,
-        allow: 'application/x-www-form-urlencoded',
       },
     },
   },
