@@ -33,6 +33,7 @@ export const deleteElement = async (key: string, _id: string) => {
 
     await redisClient.del('mongoIds');
     await redisClient.hmset('mongoIds', prepareToWriteRedis);
+    await redisClient.expair('mongoIds', Infinity);
   } catch (error) {
     logger.error(error);
   }
