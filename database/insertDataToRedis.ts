@@ -19,6 +19,7 @@ export const insertDataToRedis = async () => {
       });
 
       await redisClient.hmset('mongoIds', prepareToWriteRedis);
+      await redisClient.expair('mongoIds', Infinity);
       logger.info('MongoIds recorded in the database');
     }
   } catch (error) {
