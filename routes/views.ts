@@ -5,7 +5,9 @@ import {
   getNotesPage,
   getTechniquesPage,
   getAdminBundle,
-} from '../../controllers/views';
+  getContactsPage,
+  getGratitudePage,
+} from '../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
   {
@@ -38,6 +40,16 @@ const views: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/techniques',
     handler: getTechniquesPage,
+  },
+  {
+    method: 'GET',
+    path: '/contacts',
+    handler: getContactsPage,
+  },
+  {
+    method: 'GET',
+    path: '/gratitude',
+    handler: getGratitudePage,
   },
   {
     method: 'GET',

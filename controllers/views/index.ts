@@ -1,26 +1,54 @@
 import * as Vision from 'vision';
 import * as Hapi from 'hapi';
+import Boom from 'boom';
 import { logger } from '../../helpers/logger';
-import { getAphorisms } from '../../controllers/admin/aphorisms';
+import { settings } from '../../database/schemas/settings';
+import { takeAphorisms } from '../../helpers/aphorisms';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getMainPage request');
-  const res = await getAphorisms({ query: { limit: 8 } });
-  return h.view('index', {
-    res,
-    notes: [],
-    techniques: [],
-  });
+  try {
+    logger.info('getMainPage request');
+    const aphorisms = await takeAphorisms({ limit: 8 });
+    return h.view('index', { aphorisms });
+  } catch (err) {
+    logger.error(err);
+    return Boom.badImplementation(err.message);
+  }
 };
 
-export const getAphorismsPage = async (res, h: Vision<Hapi.ResponseToolkit>) => {
+export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const res = await getAphorisms({ query: { category: 'Мыслители, философы' } });
+    const aphorisms = await takeAphorisms({});
 
-    return h.view('aphorisms', { res });
-  } catch (error) {
-    logger.error('error', error);
+    // borrow from other collections
+    const { allCategories, allAuthors } = (await settings
+      .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
+      .lean()
+      .select('allCategories allAuthors -_id')) as any;
+
+    const categories =
+      allCategories &&
+      allCategories
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
+    const authors =
+      allAuthors &&
+      allAuthors
+        .map(({ machineName, name }) => ({ machineName, name }))
+        .sort(item => item.machineName === 'all')
+        .reverse();
+
+    return h.view('aphorisms', {
+      authors,
+      categories,
+      aphorisms,
+    });
+  } catch (err) {
+    logger.error(err);
+    return Boom.badImplementation(err.message);
   }
 };
 
@@ -32,6 +60,16 @@ export const getNotesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getTechniquesPage request');
   return h.view('techniques', { techniques: [] });
+};
+
+export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getContactsPage request');
+  return h.view('contacts');
+};
+
+export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getGratitudePage request');
+  return h.view('gratitude');
 };
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {

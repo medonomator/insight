@@ -1,8 +1,14 @@
-import { IError } from '../../../interfaces';
+import { ISystemError } from '../../../interfaces';
 /**
  * GRUD for aphorisms
  */
 export interface ICategories {
+  _id: string;
+  name: string;
+  machineName: string;
+}
+
+export interface IAuthors {
   _id: string;
   name: string;
   machineName: string;
@@ -13,6 +19,7 @@ export interface IAphorisms {
   author: string;
   body: string;
   tags: ICategories[];
+  category: string;
 }
 
 export interface IParamsCreate {
@@ -40,6 +47,7 @@ export interface IParamsGet {
     topic?: string;
     author?: string;
     body?: string;
+    isAdmin?: boolean;
   };
 }
 
@@ -47,11 +55,14 @@ export interface IResponseAphorisms {
   data: IAphorisms[];
   count: number;
   categories?: ICategories[];
+  authors?: IAuthors[];
 }
 
 export interface IResponseCreate {
-  _id: string;
+  data: {
+    _id: string;
+  };
 }
 
-export type IResponse = IError | 'ok' | IResponseCreate;
-export type IGetResponseAphorisms = IError | IResponseAphorisms;
+export type IResponse = ISystemError | 'ok' | IResponseCreate;
+export type IGetResponseAphorisms = ISystemError | IResponseAphorisms;

@@ -17,8 +17,7 @@
         короткий срок будет наблюдаться трансформация личности. Можно сказать постепенное оздаровление личности, что в
         итоге
         приведет в более светлым и чистым мыслям.
-        А как известно, что мыслим то чувствуем, что чувствуем то и проживаем. Все что от вас требуется это
-        систематически читать, перечитывать афоризмы, ну и естественно открыть и готовность к изменения. Приятных
+        А как известно, что мыслим то чувствуем, что чувствуем то и проживаем. Приятных
         озарений...</p>
     </div>
 
@@ -37,7 +36,7 @@
         <div class="filter-block-item">
           <p>Топик</p>
           <select id="filter-by-topic">
-            {{#each res.categories}}
+            {{#each categories}}
             <option value={{this.machineName}}>{{this.name}}</option>
             {{/each}}
           </select>
@@ -46,9 +45,9 @@
         <div class="filter-block-item">
           <p>Автор</p>
           <select id="filter-by-author">
-            <option value="философы, мыслители">Ушинский</option>
-            <option value="Карлос кастанеда">Толстой</option>
-            <option value="Карлос кастанеда">Чехов</option>
+            {{#each authors}}
+            <option value={{this.name}}>{{this.name}}</option>
+            {{/each}}
           </select>
         </div>
 
@@ -66,8 +65,8 @@
         <div></div>
         <div></div>
       </div>
-      {{#each res.data}}
-      <div class="aphorisms-item">
+      {{#each aphorisms}}
+      <div style="{{aphorismsHelper this.body}}" class="aphorisms-item">
         <div class="aphorisms-item-top">
           <h2>{{this.author}}</h2>
         </div>

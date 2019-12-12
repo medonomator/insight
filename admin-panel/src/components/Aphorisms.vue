@@ -17,6 +17,7 @@
       <div class="aphorisms-header-item">
         <b>limit</b>
         <select>
+          e
           <option>100</option>
           <option>200</option>
           <option>500</option>

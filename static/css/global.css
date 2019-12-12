@@ -30,7 +30,6 @@ body {
   line-height: 1.65;
   overflow-x: hidden;
   color: #555;
-  background: #e8e8e8;
 }
 
 label {
@@ -50,10 +49,6 @@ p {
   margin: 0;
   padding: 0;
 }
-
-/* img {
-  width: 100%;
-} */
 
 a {
   transition: all 0.3s ease;
@@ -77,19 +72,6 @@ a:hover {
 .wrapper {
   margin: auto;
   width: 1170px;
-}
-
-.wrapper-main {
-  min-height: 85vh;
-}
-
-.ReactModal__Overlay {
-  background-color: rgba(62, 62, 62, 0.75) !important;
-}
-
-.particles-js-canvas-el {
-  position: fixed;
-  z-index: -1;
 }
 
 .loader {
@@ -144,4 +126,8 @@ a:hover {
     height: 30px;
     width: 15px;
   }
+}
+
+.accent-color {
+  color: green;
 }

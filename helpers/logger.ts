@@ -1,5 +1,5 @@
-import * as Pino from 'pino';
+const pino = require('pino');
 
-export const logger = Pino({
-  prettyPrint: true,
+export const logger = pino({
+  prettyPrint: { colorize: true },
 });

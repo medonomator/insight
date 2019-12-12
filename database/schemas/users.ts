@@ -63,6 +63,10 @@ const usersSchema = new Mongoose.Schema(
       type: String,
       default: '',
     },
+    refreshKey: {
+      type: String,
+      default: '',
+    },
   },
   { versionKey: false },
 );

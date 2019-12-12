@@ -6,10 +6,12 @@
     "module": "commonjs",
     "target": "es2017",
     "allowJs": false,
+    "resolveJsonModule": true,
     "declaration": true,
     "declarationDir": "./dist/types/",
+    "esModuleInterop": true,
     "baseUrl": "../../"
   },
-  "include": ["."],
+  "include": ["./src/ts/**/*"],
   "exclude": ["node_modules"]
 }

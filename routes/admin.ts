@@ -1,7 +1,7 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { users } from '../../config/docs';
-import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../../controllers/admin/aphorisms';
+import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../controllers/admin/aphorisms';
+import { docsAphorisms } from '../config/docs';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -9,10 +9,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/admin/aphorisms',
     handler: createAphorism,
     options: {
-      // ...users.registerUser,
-      // auth: {
-      //   strategy: 'users'
-      // },
+      ...docsAphorisms.createAphorism,
+      auth: {
+        strategy: 'users',
+      },
       validate: {
         payload: {
           author: Joi.string()
@@ -33,10 +33,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/admin/aphorisms',
     handler: getAphorisms,
     options: {
-      // ...users.registerUser,
-      // auth: {
-      //   strategy: 'users',
-      // },
+      ...docsAphorisms.getAphorisms,
       validate: {
         query: {
           offset: Joi.number(),
@@ -45,6 +42,8 @@ const usersRoutes: Hapi.ServerRoute[] = [
           author: Joi.string(),
           body: Joi.string(),
           topic: Joi.string(),
+          isAdmin: Joi.boolean(),
+          random: Joi.boolean(),
         },
       },
     },
@@ -54,10 +53,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/admin/aphorisms',
     handler: updateAphorism,
     options: {
-      // ...users.registerUser,
-      // auth: {
-      //   strategies: [AuthStrategies.USER]
-      // }
+      ...docsAphorisms.updateAphorism,
+      auth: {
+        strategy: 'users',
+      },
       validate: {
         payload: {
           _id: Joi.string()
@@ -80,10 +79,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/admin/aphorisms',
     handler: deleteAphorism,
     options: {
-      // ...users.registerUser,
-      // auth: {
-      //   strategies: [AuthStrategies.USER]
-      // }
+      ...docsAphorisms.deleteAphorism,
+      auth: {
+        strategy: 'users',
+      },
       validate: {
         payload: {
           _id: Joi.string()
