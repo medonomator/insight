@@ -9,7 +9,7 @@ import { IUser } from '../userRegister/interfaces';
 export const userLogin = async (req: IParams): Promise<IResponse | Boom> => {
   try {
     const { email, password } = req.payload;
-    const resUser: IUser = await users.findOne({ email }).lean();
+    const resUser: IUser | null = await users.findOne({ email }).lean();
 
     if (!resUser || resUser.password !== encryptData(password, email.toLowerCase())) {
       return Boom.badRequest('Invalid login or password');
