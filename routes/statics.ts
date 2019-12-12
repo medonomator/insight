@@ -1,6 +1,6 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { docsAphorisms } from '../config/docs';
+import { docsStatic } from '../config/docs';
 import { putFile } from '../controllers/static';
 
 const routersForStaticFolder: Hapi.ServerRoute[] = [
@@ -9,7 +9,7 @@ const routersForStaticFolder: Hapi.ServerRoute[] = [
     path: '/api/static',
     handler: putFile,
     options: {
-      // ...docsAphorisms.deleteAphorism,
+      ...docsStatic.staticUpload,
       auth: {
         strategy: 'users',
       },

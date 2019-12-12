@@ -1,6 +1,6 @@
 import { sortBy } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
-
+import Boom from 'boom';
 import { logger } from './logger';
 
 interface IParams {
@@ -59,8 +59,8 @@ export const takeAphorisms = async (params: IParams) => {
     aphorisms = sortBy(aphorisms, item => item.body.length > 180);
 
     return aphorisms;
-  } catch (error) {
-    logger.error(error);
-    // TODO: return error message and above processing
+  } catch (err) {
+    logger.error(err);
+    return Boom.badImplementation(err.message);
   }
 };

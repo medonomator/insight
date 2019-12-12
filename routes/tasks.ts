@@ -1,46 +1,64 @@
 import * as Hapi from 'hapi';
+import Boom from 'boom';
 import { aphorisms } from '../database/schemas/aphorisms';
-import { settings } from '../database/schemas/settings';
+import { authors } from '../database/schemas/authors';
+import { topics } from '../database/schemas/topics';
 import { uniqBy } from 'lodash';
 import { cyrToLat } from '../helpers';
 import { logger } from '../helpers/logger';
-import { ErrorCode } from '../interfaces';
+
 import { docsTasks } from '../config/docs';
+
+interface IItem {
+  name: string;
+  machineName: string;
+}
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
     method: 'POST',
-    path: '/task/synchronizationAuthor',
+    path: '/task/synchronizationData',
     options: {
-      ...docsTasks.synchronizationAuthor,
+      ...docsTasks.synchronizationData,
       auth: {
         strategy: 'users',
       },
     },
     handler: async () => {
       try {
-        const allAuthors = await aphorisms.find({}).select('-_id author');
-
-        const unuqAuthor = uniqBy(allAuthors, 'author').map(({ author }) => ({
-          name: author,
-          machineName: cyrToLat(author),
-        }));
-
-        // add default item
-        unuqAuthor.push({
+        const authorsAndCats = await aphorisms
+          .find()
+          .select('-_id author tags')
+          .lean();
+        const defaultItem = {
           name: 'Все',
           machineName: 'all',
+        };
+        const uniqAuthors: IItem[] = [];
+        let allTopics: IItem[] = [];
+
+        uniqBy(authorsAndCats, 'author').map(({ author, tags }) => {
+          uniqAuthors.push({
+            name: author,
+            machineName: cyrToLat(author),
+          });
+          allTopics = allTopics.concat(tags);
         });
 
-        await settings.update({ _id: '5d46e261d7dede08d8cbd839' }, { allAuthors: unuqAuthor }, { upsert: true });
+        const uniqTopics = uniqBy(allTopics, 'machineName');
+        uniqAuthors.push(defaultItem);
+        // With { ordered: false } all the same return an error 500 if there are duplicates
+        // but still write in the collection new items
+        // and execute asynchronyous
+        authors.insertMany(uniqAuthors, { ordered: false });
+        topics.insertMany(uniqTopics, { ordered: false });
+
+        logger.info('Synchronization was successful');
 
         return 'ok';
       } catch (err) {
         logger.error(err);
-        return {
-          code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-          message: err.message,
-        };
+        return Boom.badImplementation(err.message);
       }
     },
   },
@@ -55,23 +73,11 @@ const usersRoutes: Hapi.ServerRoute[] = [
     },
     handler: async () => {
       try {
-        const authors: any = await aphorisms.find({}).select('-_id author');
-
-        for (const item of authors) {
-          await aphorisms.update(
-            { author: item.author },
-            { $set: { authorMachineName: cyrToLat(item.author) } },
-            { multi: true },
-          );
-        }
-
+        // ...
         return 'ok';
       } catch (err) {
         logger.error(err);
-        return {
-          code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-          message: err.message,
-        };
+        return Boom.badImplementation(err.message);
       }
     },
   },
