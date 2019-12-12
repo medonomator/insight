@@ -1,24 +1,18 @@
-import * as Hapi from 'hapi';
-import { users } from '../../../database/schemas/users';
 import * as uuid from 'uuid';
+import Boom from 'boom';
+import { users } from '../../../database/schemas/users';
 import { logger } from '../../../helpers/logger';
 import { encryptData } from '../../../helpers';
-import { ErrorCode } from '../../../interfaces';
-import SystemError from '../../../helpers/systemError';
 import { prepareTokens } from '../../../helpers/index';
-import { IParams, ResMongoUser } from './interfaces';
+import { IParams, IResponse } from './interfaces';
 
-export const userRegister = async (req: IParams) => {
+export const userRegister = async (req: IParams): Promise<IResponse | Boom> => {
   try {
     const { email, password, name } = req.payload;
-    const oldUser = <ResMongoUser>await users.findOne({ email });
+    const oldUser = await users.findOne({ email }).lean();
+
     if (oldUser) {
-      return {
-        error: {
-          code: ErrorCode.BAD_REQUEST,
-          message: `Пользователь с логином ${email} уже зарегистрирован в системе`,
-        },
-      };
+      return Boom.badRequest(`the user >>> ${email} <<< is already in the system`);
     }
 
     const userId = uuid.v4();
@@ -30,20 +24,10 @@ export const userRegister = async (req: IParams) => {
     };
 
     const newUser = await users.create(payload);
-    if (!newUser) {
-      throw new SystemError({
-        code: ErrorCode.INTERNAL_SERVER_ERROR,
-        message: 'Произошла ошибка на сервере при создании пользователя',
-      });
-    }
-
     logger.info(`NewUser with Email: ${newUser['email']} and Name: ${newUser['name']} was created`);
-    return { ...prepareTokens(payload) };
+    return prepareTokens(payload);
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };

@@ -13,7 +13,7 @@ interface IParams {
   random?: boolean;
 }
 
-export const takeAphorisms = async (params: IParams) => {
+export const takeAphorisms = async (params?: IParams) => {
   try {
     let aphorisms = await getAllElementsByKey('mongoIds');
 

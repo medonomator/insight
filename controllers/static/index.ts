@@ -1,29 +1,21 @@
 import { logger } from '../../helpers/logger';
-import { ErrorCode } from '../../interfaces';
-import { promises } from 'fs';
-
+import Boom from 'boom';
+import { writeFile } from '../../helpers/workingWithFIles';
 /**
- * Create New Aphorism
+ * Put on file to static/temp folder
  * @param {IParams} params
  */
-export const putFile = async (req: any): Promise<any> => {
+export const putFile = async (req: any): Promise<'ok' | Boom> => {
   try {
     const { file } = req.payload;
 
     file.on('data', async data => {
-      try {
-        await promises.writeFile(`${process.cwd()}/static/temp/${file.hapi.filename}`, data, { encoding: 'utf8' });
-      } catch (e) {
-        logger.error(e.stack);
-      }
+      await writeFile(`${process.cwd()}/static/temp/${file.hapi.filename}`, data);
     });
 
     return 'ok';
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };

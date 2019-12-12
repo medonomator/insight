@@ -1,8 +1,7 @@
 /**
- * Вход клиента в ЛК
- * В ответ возвращаются токены, если credentials верные
+ * Customer entry in LC
+ * In response are returned tokens if the credentials are correct
  */
-
 export interface IParams {
   payload: {
     email: string;
@@ -10,23 +9,7 @@ export interface IParams {
   };
 }
 
-export interface IUser {
-  email: string;
-  password: string;
-  userId: string;
-  name: string;
-  _id: string;
-  birthDate: string;
-  sex: string;
-  regDate: Date;
-  about: string;
-  interests: string;
-  activity: string;
-  city: string;
-  status: string;
-  role: string;
-  age: number | null;
-  avatarUrl: string;
+export interface IResponse {
+  token: string;
+  refreshToken: string;
 }
-
-export type IUserType = IUser | null;

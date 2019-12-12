@@ -1,5 +1,5 @@
 /**
- * Регистрация клиента
+ * Registration Customer
  * В ответ возвращаются токены, если регистрация успешна, или ошибка
  */
 export interface IParams {
@@ -29,4 +29,8 @@ export interface IUser {
   avatarUrl: string;
 }
 
-export type ResMongoUser = IUser | null;
+export interface IResponse {
+  token: string;
+  refreshToken: string;
+}
+

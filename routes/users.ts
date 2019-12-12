@@ -29,7 +29,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/user/login',
     handler: userLogin,
     options: {
-      // ...users.loginUser,
+      ...users.loginUser,
       validate: {
         payload: {
           email: Joi.string()
@@ -55,8 +55,3 @@ const usersRoutes: Hapi.ServerRoute[] = [
 ];
 
 export default usersRoutes;
-
-// TODO:
-// path: '/user/password/reset',
-// path: '/user/password/new',
-// path: '/user/refreshToken',

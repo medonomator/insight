@@ -1,5 +1,6 @@
 import * as Vision from 'vision';
 import * as Hapi from 'hapi';
+import Boom from 'boom';
 import { logger } from '../../helpers/logger';
 import { settings } from '../../database/schemas/settings';
 import { takeAphorisms } from '../../helpers/aphorisms';
@@ -7,23 +8,20 @@ import { takeAphorisms } from '../../helpers/aphorisms';
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     logger.info('getMainPage request');
-    const params = {
-      limit: 8,
-    };
-    const aphorisms = await takeAphorisms(params);
-    return h.view('index', {
-      aphorisms,
-    });
-  } catch (error) {
-    logger.error(error);
+    const aphorisms = await takeAphorisms({ limit: 8 });
+    return h.view('index', { aphorisms });
+  } catch (err) {
+    logger.error(err);
+    return Boom.badImplementation(err.message);
   }
 };
 
 export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getAphorismsPage request');
   try {
-    const aphorisms = await takeAphorisms({});
+    const aphorisms = await takeAphorisms();
 
+    // borrow from other collections
     const { allCategories, allAuthors } = (await settings
       .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
       .lean()
@@ -48,8 +46,9 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
       categories,
       aphorisms,
     });
-  } catch (error) {
-    logger.error('error', error);
+  } catch (err) {
+    logger.error(err);
+    return Boom.badImplementation(err.message);
   }
 };
 
