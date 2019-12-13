@@ -11,7 +11,6 @@ export default async function tokenStrategy(request, token: string) {
           reject(err.message);
           return;
         }
-
         resolve(decoded.userId);
       });
     });

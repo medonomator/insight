@@ -2,54 +2,61 @@
  * documentation for hapi-swagger
  * @type {Object}
  */
-
-const noAuth = 'Без авторизации';
-const userAuth = 'Авторизация по токену пользователя';
+const noAuth = 'Without authorization';
+const userAuth = 'Authorization by user token';
 
 export const users = {
   registerUser: {
-    description: 'Регистрация пользователя',
-    notes: 'Без авторизации',
+    description: 'Register user',
+    notes: userAuth,
     tags: ['api', 'user'],
   },
   loginUser: {
-    description: 'Вход в систему пользователя (получение токена и всей информации о пользователе)',
-    notes: 'Без авторизации',
+    description: 'Enter on system user (Get all information about user)',
+    notes: userAuth,
     tags: ['api', 'user'],
   },
 };
 
 export const docsAphorisms = {
   createAphorism: {
-    description: 'Создать афоризм',
+    description: 'Create Aphorism',
     notes: userAuth,
     tags: ['api', 'user'],
   },
   getAphorisms: {
-    description: 'Получить афоризмы',
+    description: 'Get Aphorisms',
     notes: noAuth,
     tags: ['api', 'user'],
   },
   updateAphorism: {
-    description: 'Обновить данные афоризма',
+    description: 'Update aphorism',
     notes: userAuth,
     tags: ['api', 'user'],
   },
   deleteAphorism: {
-    description: 'Удалить афоризм',
+    description: 'Delete aphorism',
     notes: userAuth,
     tags: ['api', 'user'],
   },
 };
 
 export const docsTasks = {
-  synchronizationAuthor: {
-    description: 'Сихронизация новых авторов',
+  synchronizationData: {
+    description: 'Synchronization data for authors and categorires',
     notes: userAuth,
     tags: ['api', 'user'],
   },
   dynamicTask: {
-    description: 'Динамическая задача',
+    description: 'Dynamic task',
+    notes: userAuth,
+    tags: ['api', 'user'],
+  },
+};
+
+export const docsStatic = {
+  staticUpload: {
+    description: 'Upload file to static/temp',
     notes: userAuth,
     tags: ['api', 'user'],
   },

@@ -24,6 +24,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .required()
             .min(10),
           tags: Joi.array(),
+          category: Joi.string()
+            .trim()
+            .required()
+            .allow(''),
         },
       },
     },
@@ -61,7 +65,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
         payload: {
           _id: Joi.string()
             .trim()
-            .description('5d46debf5f7dff7ef9b79098')
             .required(),
           author: Joi.string()
             .trim()
@@ -87,7 +90,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
         payload: {
           _id: Joi.string()
             .trim()
-            .description('5d46debf5f7dff7ef9b79098')
             .required(),
         },
       },
