@@ -78,7 +78,6 @@ export class Server {
       });
 
       await insertDataToRedis();
-
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();

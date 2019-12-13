@@ -2,16 +2,17 @@ import { aphorisms } from './schemas/aphorisms';
 import { redisClient } from './redis';
 import { logger } from '../helpers/logger';
 
+const ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
+
 export const insertDataToRedis = async () => {
   try {
-    const weMongoIds = await redisClient.exists('mongoIds');
-
-    if (!weMongoIds) {
-      const data = (await aphorisms
-        .find({})
+    const isMongoIds = await redisClient.exists('mongoIds');
+    if (!isMongoIds) {
+      const data: any = await aphorisms
+        .find()
         .select('-__v -createdAt -updatedAt')
         .sort({ createdAt: -1 })
-        .lean()) as any;
+        .lean();
 
       const prepareToWriteRedis = {};
       data.map(item => {
@@ -19,7 +20,7 @@ export const insertDataToRedis = async () => {
       });
 
       await redisClient.hmset('mongoIds', prepareToWriteRedis);
-      await redisClient.expair('mongoIds', Infinity);
+      await redisClient.expire('mongoIds', ONE_YEAR);
       logger.info('MongoIds recorded in the database');
     }
   } catch (error) {

@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
-import { IParamsCreate, IParamsUpdate, IResponse, IParamsGet, IAphorisms, IParamsDelete } from './interfaces';
+import { IParamsCreate, IParamsUpdate, IResponse, IParamsGet, IParamsDelete } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';
@@ -46,6 +46,7 @@ export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
     const data: any = await takeAphorisms(params.query);
     return {
       data,
+      // нужно отдавать полный count
       count: data.length,
     };
   } catch (err) {
@@ -61,14 +62,14 @@ export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
 export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
     const { _id, author, body, tags } = req.payload;
-    const tagsToWrite: IItemNameMachine[] = [];
+    const inMachineName: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
       tags.forEach((name: any) => {
-        tagsToWrite.push({ name, machineName: cyrToLat(name) });
+        inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: tagsToWrite } });
+    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName } });
 
     return 'ok';
   } catch (err) {
