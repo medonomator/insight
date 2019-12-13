@@ -11,3 +11,9 @@ export interface ISystemError {
   code: ErrorCode;
   message: string;
 }
+
+export interface IItemNameMachine {
+  _id?: string;
+  name: string;
+  machineName: string;
+}

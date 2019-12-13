@@ -1,71 +1,67 @@
+import Boom from 'boom';
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
-import { ErrorCode } from '../../../interfaces';
-import { IParamsCreate, IParamsUpdate, IResponse, IGetResponseAphorisms, IParamsGet, IAphorisms } from './interfaces';
+import { IParamsCreate, IParamsUpdate, IResponse, IParamsGet, IAphorisms, IParamsDelete } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';
 import { deleteElement } from '../../../database/redis';
-
+import { IItemNameMachine } from '../../../interfaces';
 /**
  * Create New Aphorism
- * @param {IParams} params
+ * @param {IParamsCreate} params
+ * @return Promise<{IResponse}>
  */
 export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => {
   try {
-    const { author, body, tags } = req.payload;
-    const tagsToWrite: any = [];
+    const { author, body, tags, category } = req.payload;
+    const inMachineName: IItemNameMachine[] = [];
+    const duplicate = await aphorisms.findOne({ body });
+
+    if (duplicate) {
+      return Boom.conflict('The aphorism with such a body already exists');
+    }
 
     if (tags) {
       tags.forEach(name => {
-        tagsToWrite.push({ name, machineName: cyrToLat(name) });
+        inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
 
-    const res = await aphorisms.insertMany({ author, body, tags: tagsToWrite });
-
-    return {
-      data: {
-        _id: res[0]._id,
-      },
-    };
+    return aphorisms.create({ author, body, tags: inMachineName, category }) as any;
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };
 /**
  * Get Aphorisms
- * @return Array
+ * @param {IParamsGet} params
+ * @return Promise<{IResponse}>
  */
-export const getAphorisms = async (params: IParamsGet, h): Promise<IGetResponseAphorisms> => {
+export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
     logger.info('Get aphorisms');
-
-    const data = <IAphorisms[]>await takeAphorisms(params.query);
+    // need correct interface
+    const data: any = await takeAphorisms(params.query);
     return {
       data,
       count: data.length,
     };
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };
 /**
  * Update Aphorism
- * @params {IParams} params
+ * @param {IParamsUpdate} params
+ * @return Promise<{IResponse}>
  */
 export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
     const { _id, author, body, tags } = req.payload;
-    const tagsToWrite: any = [];
+    const tagsToWrite: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
       tags.forEach((name: any) => {
@@ -77,17 +73,15 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
     return 'ok';
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };
 /**
  * Delete Aphorism by id
- * @params {IParams} params
+ * @param {IParamsDelete} params
+ * @return Promise<{IResponse}>
  */
-export const deleteAphorism = async (req, h): Promise<IResponse> => {
+export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => {
   try {
     const { _id } = req.payload;
     await aphorisms.deleteOne({ _id });
@@ -97,9 +91,6 @@ export const deleteAphorism = async (req, h): Promise<IResponse> => {
     return 'ok';
   } catch (err) {
     logger.error(err);
-    return {
-      code: err.status || ErrorCode.INTERNAL_SERVER_ERROR,
-      message: err.message,
-    };
+    return Boom.badImplementation(err.message);
   }
 };

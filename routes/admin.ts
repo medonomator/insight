@@ -24,6 +24,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .required()
             .min(10),
           tags: Joi.array(),
+          category: Joi.string()
+            .trim()
+            .required()
+            .allow(''),
         },
       },
     },

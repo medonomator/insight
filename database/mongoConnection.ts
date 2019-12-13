@@ -10,6 +10,11 @@ const mongoConnection = async () => {
   } catch (error) {
     logger.error(error);
   }
+
+  if (process.env.NODE_ENV === 'development') {
+    logger.debug('Mongo', 'debug mode true');
+    Mongoose.set('debug', true);
+  }
 };
 
 export default mongoConnection;

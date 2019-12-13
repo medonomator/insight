@@ -6,13 +6,8 @@ import { topics } from '../database/schemas/topics';
 import { uniqBy } from 'lodash';
 import { cyrToLat } from '../helpers';
 import { logger } from '../helpers/logger';
-
+import { IItemNameMachine } from '../interfaces';
 import { docsTasks } from '../config/docs';
-
-interface IItem {
-  name: string;
-  machineName: string;
-}
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -34,8 +29,8 @@ const usersRoutes: Hapi.ServerRoute[] = [
           name: 'Все',
           machineName: 'all',
         };
-        const uniqAuthors: IItem[] = [];
-        let allTopics: IItem[] = [];
+        const uniqAuthors: IItemNameMachine[] = [];
+        let allTopics: IItemNameMachine[] = [];
 
         uniqBy(authorsAndCats, 'author').map(({ author, tags }) => {
           uniqAuthors.push({
