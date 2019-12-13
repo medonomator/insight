@@ -4,7 +4,7 @@ import { logger } from '../helpers/logger';
 
 const ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
 
-export const insertDataToRedis = async () => {
+export const insertDataToRedis = async (): Promise<void> => {
   try {
     const isMongoIds = await redisClient.exists('mongoIds');
     if (!isMongoIds) {

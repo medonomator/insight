@@ -21,7 +21,7 @@ export const getAllElementsByKey = async (key: string): Promise<IAphorisms[]> =>
 };
 
 //  I dont know how to remove the element from array from redis so i write this stuff...
-export const deleteElement = async (key: string, _id: string) => {
+export const deleteElement = async (key: string, _id: string): Promise<void> => {
   try {
     let allElements = await getAllElementsByKey(key);
     allElements = allElements.filter(item => item._id !== _id);
