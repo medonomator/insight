@@ -19,6 +19,7 @@ import tasks from './routes/tasks';
 import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
+import { insertDataToRAM } from './helpers/insertDataToMemory';
 // pg;
 // Connect Mongodb
 mongoConnection();
@@ -77,7 +78,8 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
-      await insertDataToRedis();
+      await insertDataToRAM();
+      // await insertDataToRedis();
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();

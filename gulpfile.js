@@ -21,13 +21,13 @@ gulp.task('imagemin', () =>
   gulp
     .src('static/img/**/*')
     .pipe(imagemin())
-    .pipe(gulp.dest('dist/assets')),
+    .pipe(gulp.dest('dist/assets/img')),
 );
 
 gulp.task('handlebars', function() {
   var templateData = {
       path: 'assets/',
-      res: JSON.parse(data),
+      aphorisms: JSON.parse(data),
     },
     options = {
       batch: ['./views/partials'],
@@ -37,7 +37,7 @@ gulp.task('handlebars', function() {
     };
 
   return gulp
-    .src('views/contacts.hbs')
+    .src('views/index.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));
