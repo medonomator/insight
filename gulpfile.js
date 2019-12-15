@@ -15,7 +15,7 @@ var gulp = require('gulp'),
   rename = require('gulp-rename');
 
 // MOCK DATA
-const data = require('./config/data/aphorisms');
+const aphorisms = require('./config/data/aphorisms');
 
 gulp.task('imagemin', () =>
   gulp
@@ -27,7 +27,7 @@ gulp.task('imagemin', () =>
 gulp.task('handlebars', function() {
   var templateData = {
       path: 'assets/',
-      aphorisms: JSON.parse(data),
+      aphorisms
     },
     options = {
       batch: ['./views/partials'],
@@ -37,7 +37,7 @@ gulp.task('handlebars', function() {
     };
 
   return gulp
-    .src('views/index.hbs')
+    .src('views/aphorisms.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));

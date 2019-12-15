@@ -26,171 +26,13 @@ a
   text-decoration: none
   color: #333
 
-.bg
-  background: url('../img/whale.png') no-repeat
-  background-size: cover
-  position: absolute
-  background-position: center
-  width: 100%
-  height: 80vh
+h1
+  font-size: 36px
+  padding-top: 80px
 
-.hover-color
-  color: $accent
-  transition: all .3s ease
-
-.wrapper
-  margin-right: auto
-  margin-left: auto
-  width: 1170px
-  position: relative
-  min-height: 100vh
-
-.h2
-  text-transform: uppercase
-  text-align: center
-  margin: 40px 0
-
-// header
-.header
-  display: flex
-  justify-content: space-between
-  .logo
-    width: 48px
-    margin-top: 30px
-
-  .sky
-    width: 250px
-    margin-top: 20px
-    margin-left: 40px
-  .soon
-    width: 250px
-    margin-top: -50px
-
-.main-menu
-  margin-top: -20px
-  ul
-    display: flex
-    justify-content: center
-  li
-    margin-right: 30px
-    text-transform: uppercase
-    font-family: 'Lora', sans-serif
-    font-weight: 600
-    font-size: 18px
-  a
-    color: #FCFCFD
-    &:hover
-      @extend .hover-color
-
-/*** about  ***/
-.about
-  padding: 35px 0
-  padding-bottom: 70px
-  text-align: center
-  text-shadow: 0 1px 1px $accent
-
-.header-text
-  margin-top: 20px
-  color: white
-  border-radius: 4px
-  padding: 10px 30px
-  p
-    text-indent: 20px
-    padding-bottom: 20px
-  a
-    color: blue
-
-/*** aphorisms  ***/
-.aphorisms-container
-  display: flex
-  justify-content: space-between
-  flex-wrap: wrap
-  position: relative
-
-  .aphorisms-item
-    box-shadow: $md-box-shadow-1
-    margin: 10px
-    width: 250px
-    padding-bottom: 20px
-    border-radius: 4px
-    position: relative
-    margin-bottom: 40px
-
-  .aphorisms-item-top
-    border-radius: 4px 4px 0 0
-    background: linear-gradient(40deg, #50a4be, #330b0b)
-    padding: 5px 20px
-    h2
-      color: white
-      font-size: 15px
-      text-align: left
-
-  .aphorisms-item-body
-    padding: 10px
-    font-family: 'Lora', sans-serif
-
-  .aphorisms-all
-    display: flex
-    justify-content: flex-end
-    width: 100%
-    padding: 10px
-    text-shadow: 0 1px 2px $accent
-
-  .aphorisms-tags
-    position: absolute
-    bottom: -10px
-    left: 10px
-
-    text-align: center
-    border-radius: 0 0 5px 5px
-
-    span
-      border-radius: 0 0 5px 5px
-      padding: 4px 8px
-      background: #ffeb008c
-      color: #444
-      border: 1px solid #aaa
-      font-size: 13px
-
-/*** notes  ***/
-.notes-container
-  display: flex
-
-  justify-content: space-between
-  flex-wrap: wrap
-
-  .notes-item
-    box-shadow: $md-box-shadow-1
-    margin: 10px
-    width: 250px
-    border-radius: 4px
-  .notes-item-top
-    border-radius: 4px 4px 0 0
-    background: linear-gradient(40deg,#ffd86f,#fc6262)
-    padding: 5px 20px
-    h2
-      color: white
-
-  .notes-item-body
-    text-align: center
-    padding: 10px
-    font-family: 'Lora', sans-serif
-
-  .notes-header
-    width: 100%
-    padding-bottom: 40px
-    padding-top: 20px
-    h2
-      text-transform: uppercase
-      text-align: center
-
-  .notes-all
-    display: flex
-    justify-content: flex-end
-    width: 100%
-    font-size: 20px
-    padding: 10px
-    text-shadow: 0 1px 2px $accent
+body
+  background: #E5E5E5
+  font-family: 'Museosanscyrl' , sans-serif
 
 select#filter-by-categories,
 select#filter-by-topic,
@@ -214,30 +56,133 @@ select#filter-by-author
   width: 250px
   margin-right: 40px
 
-.filter-block
-  display: flex
-  flex-wrap: wrap
-  margin-top: 30px
+.bg
+  background: url('../img/whale.png') no-repeat
+  background-size: cover
+  position: absolute
+  background-position: center
+  width: 100%
+  height: 650px
 
-  & p
-    padding-left: 13px
+.hover-color
+  color: silver
+  transition: all .3s ease
+
+.wrapper
+  margin-right: auto
+  margin-left: auto
+  width: 1170px
+  position: relative
+  min-height: 100vh
+
+/*** header  ***/
+.header
+  display: flex
+  justify-content: space-between
+  padding-top: 25px
+
+  .logo
+    width: 48px
+
+  .main-menu
+    ul
+      display: flex
+    li
+      margin-right: 40px
+      margin-top: 3px
+      text-transform: uppercase
+      font-family: 'Museosanscyrl' , sans-serif
+      font-weight: 600
+      font-size: 16px
+    a
+      color: #FCFCFD
+      &:hover
+        @extend .hover-color
+
+/*** about  ***/
+.about
+  padding: 35px 0
+  padding-bottom: 70px
+  text-align: center
+  text-shadow: 0 1px 1px $accent
+
+.header-text
+  color: white
+  padding-top: 20px
+  font-size: 16px
+  line-height: 26px
+  margin-right: 400px
+
+.regular-page
+  display: flex
+  margin-top: 150px
+
+/*** aphorisms  ***/
+.aphorisms
+  &-item
+    background: #FFFFFF
+    box-shadow: 0px 2px 14px rgba(135, 135, 135, 0.25)
+    border-radius: 2px
+    margin-bottom: 24px
+    padding: 16px 20px
+
+  &-item-body
+    p
+      font-weight: 300
+      font-size: 16px
+      line-height: 26px
+      padding-top: 20px
+
+  &-tags
+    span
+      background: #F0F4FF
+      border-radius: 2px
+      font-weight: 600
+      font-size: 10px
+      line-height: 16px
+      text-transform: uppercase
+      color: #3753E7
+      margin-right: 12px
+      padding: 7px 10px
+
+  &-authors
+    padding-top: 20px
+    span
+
+      font-weight: 600
+      font-size: 18px
+      line-height: 26px
+      color: #2C3047
+  &-item-bottom
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+  &-icons
+    font-size: 26px
+    padding: 5px
+    color: #3753E7
+    margin-top: 25px
+    margin-bottom: -5px
+    i
+      padding-left: 15px
+      cursor: pointer
+      transition: all .3s ease
+      &:hover
+        color: lighten(#3753E7, 10%)
+
+.filter-block
+  background: #211974
+  margin-left: 20px
+  border-radius: 2px
+  color: white
+  width: 304px
+  height: 345px
+  padding: 20px
 
 .shuffle-button
-  background: #fafafa
-  color: #555
-  border: 1px solid #aaa
-  margin-left: 7px
-  font-size: 16px
-  border-radius: 4px
-  cursor: pointer
-  padding: 5px 10px
-  transition: all 0.3s ease
-  margin-top: 39px
 
-  &:hover
-    background: #eae7e7
-
-/** Loader */
+/** Loader ***/
 .lds-ring
   display: inline-block
   position: absolute
@@ -279,7 +224,7 @@ select#filter-by-author
     transform: rotate(360deg)
 
 .footer
-  background: #333333
+  background: #140d4e
   padding: 100px 0
   margin-top: 100px
 

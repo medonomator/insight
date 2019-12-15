@@ -1,3 +1,4 @@
+// TODO: need add describe for every events, handlers...
 $(function() {
   $(document)
     .ajaxStart(function() {
@@ -109,4 +110,15 @@ $(function() {
       $('.aphorisms-container').replaceWith(replaceHtml);
     });
   });
+
+  const faClone = document.querySelectorAll('.fa-clone');
+  const faShare = document.querySelectorAll('.fa-share-alt');
+
+  faClone.forEach(item => {
+    item.addEventListener('click', e => alert('В разработке...'))
+  });
+  faShare.forEach(item => {
+    item.addEventListener('click', e => alert('В разработке...'))
+  });
 });
+
