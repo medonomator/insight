@@ -104,7 +104,7 @@ process.on('uncaughtException', (error: Error) => {
 
 const Telegraf = require('telegraf');
 
-const bot = new Telegraf('1056515171:AAEWFWcC00yWDTV8mv9TEneS4WC6gwp49q4');
+const bot = new Telegraf('1056515171:AAHTs2J8E09FoVMpIreuZu8WPKPUHQk3IiA');
 bot.start(ctx => ctx.reply('Welcome'));
 bot.help(ctx => ctx.reply('Send me a sticker'));
 bot.on('sticker', ctx => ctx.reply('👍'));
