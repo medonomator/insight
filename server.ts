@@ -20,7 +20,6 @@ import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
 import { insertDataToRAM } from './helpers/insertDataToMemory';
-import { telegramBotLauncher } from './helpers/telegramBotLauncher';
 import { serverHelthCheck } from './helpers/serverHelthCheck';
 // pg;
 // Connect Mongodb
@@ -82,7 +81,6 @@ export class Server {
 
       // await insertDataToRAM();
       await insertDataToRedis();
-      await telegramBotLauncher();
       serverHelthCheck();
 
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
