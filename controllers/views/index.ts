@@ -10,9 +10,6 @@ import { IItemNameMachine } from '../../interfaces';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    console.log('=============================');
-    console.log('logging', global.aphorismsData);
-    console.log('=============================');
     logger.info('getMainPage');
     const resTakeAphorisms = (await takeAphorisms({ limit: 8 })) as IResTakeAphorisms;
     return h.view('index', { aphorisms: global.aphorismsData });
