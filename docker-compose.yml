@@ -2,7 +2,6 @@ version: '2'
 services:
   mongo:
     image: mongo:3.6.4
-    stdin_open: true
     ports:
       - 27017:27017/tcp
   redis:

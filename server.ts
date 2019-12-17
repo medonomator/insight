@@ -20,6 +20,8 @@ import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
 import { insertDataToRAM } from './helpers/insertDataToMemory';
+import { telegramBotLauncher } from './helpers/telegramBotLauncher';
+import { serverHelthCheck } from './helpers/serverHelthCheck';
 // pg;
 // Connect Mongodb
 mongoConnection();
@@ -80,6 +82,9 @@ export class Server {
 
       await insertDataToRAM();
       // await insertDataToRedis();
+      await telegramBotLauncher();
+      await serverHelthCheck();
+
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();
@@ -101,12 +106,3 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
-
-const Telegraf = require('telegraf');
-
-const bot = new Telegraf('1056515171:AAHTs2J8E09FoVMpIreuZu8WPKPUHQk3IiA');
-bot.start(ctx => ctx.reply('Welcome'));
-bot.help(ctx => ctx.reply('Send me a sticker'));
-bot.on('sticker', ctx => ctx.reply('👍'));
-bot.hears('hi', ctx => ctx.reply('Hey there'));
-bot.launch();
