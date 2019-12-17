@@ -80,10 +80,10 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
-      await insertDataToRAM();
-      // await insertDataToRedis();
+      // await insertDataToRAM();
+      await insertDataToRedis();
       await telegramBotLauncher();
-      await serverHelthCheck();
+      serverHelthCheck();
 
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
