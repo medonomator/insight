@@ -4,15 +4,11 @@ import { spawn } from 'child_process';
 import { logger } from '../helpers/logger';
 import { insertDataToRedis } from '../database/insertDataToRedis';
 import TelegramBot from './telegramBotLauncher';
+import { isEmpty } from 'lodash';
 
 const TIMELIFE_REQUEST = 10000;
-const TIME_UPDATE_CHECKER = 1000 * 10 * 60; //  1 minute
-const HOST_NAME = process.env.NODE_ENV === 'development' ? 'http://familyzorins.tk/' : os.hostname();
+const TIME_UPDATE_CHECKER = 1000 * 60 * 3; //  3 minute
 const BOT_ID = '409011202';
-
-console.log('=============================');
-console.log('logging', os.hostname());
-console.log('=============================');
 
 const telegramBot = new TelegramBot();
 telegramBot.launch();
@@ -26,7 +22,7 @@ export const serverHelthCheck = () => {
 
       const res = await axios.get('http://familyzorins.tk/admin/aphorism');
 
-      if (!res.data) {
+      if (isEmpty(res.data)) {
         await insertDataToRedis();
         telegramBot.sendMessage(BOT_ID, 'update data in redis');
       }
