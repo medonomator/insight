@@ -20,10 +20,10 @@ export const serverHelthCheck = () => {
         timeout: TIMELIFE_REQUEST,
       });
 
-      const res = await axios.get('http://familyzorins.tk/admin/aphorism');
+      const res = await axios.get('http://familyzorins.tk/admin/aphorisms');
 
       console.log('=============================');
-      console.log('logging', res);
+      console.log('logging', res.data);
       console.log('=============================');
 
       if (isEmpty(res.data)) {
