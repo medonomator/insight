@@ -12,7 +12,7 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     logger.info('getMainPage');
     const resTakeAphorisms = (await takeAphorisms({ limit: 8 })) as IResTakeAphorisms;
-    return h.view('index', { aphorisms: global.aphorismsData });
+    return h.view('index', { aphorisms: resTakeAphorisms });
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);

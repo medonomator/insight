@@ -16,7 +16,7 @@ interface IParams {
 
 export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms | Boom> => {
   try {
-    let aphorisms: IAphorisms[] = await getAllElementsByKey('mongoIds');
+    let aphorisms: IAphorisms[] = (await getAllElementsByKey('mongoIds')) || [];
     const count = aphorisms.length;
 
     const { limit = 100, random = true, author, body, topic, category } = params;
