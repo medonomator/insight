@@ -22,6 +22,10 @@ export const serverHelthCheck = () => {
 
       const res = await axios.get('http://familyzorins.tk/admin/aphorism');
 
+      console.log('=============================');
+      console.log('logging', res);
+      console.log('=============================');
+
       if (isEmpty(res.data)) {
         await insertDataToRedis();
         telegramBot.sendMessage(BOT_ID, 'update data in redis');
