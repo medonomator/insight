@@ -10,24 +10,27 @@ const TIME_UPDATE_CHECKER = 1000 * 10 * 60; //  1 minute
 const HOST_NAME = process.env.NODE_ENV === 'development' ? 'http://familyzorins.tk/' : os.hostname();
 const BOT_ID = '409011202';
 
+console.log('=============================');
+console.log('logging', os.hostname());
+console.log('=============================');
+
 const telegramBot = new TelegramBot();
 telegramBot.launch();
 
 export const serverHelthCheck = () => {
   setInterval(async () => {
     try {
-      await axios(HOST_NAME, {
+      await axios.get('http://familyzorins.tk/', {
         timeout: TIMELIFE_REQUEST,
       });
 
-      const res = await axios(`${HOST_NAME}/admin/aphorisms`, {
-        timeout: TIMELIFE_REQUEST,
-      });
+      const res = await axios.get('http://familyzorins.tk/admin/aphorism');
 
-      if (!res.data.length) {
+      if (!res.data) {
         await insertDataToRedis();
         telegramBot.sendMessage(BOT_ID, 'update data in redis');
       }
+      logger.info('Without failures');
     } catch (err) {
       telegramBot.sendMessage(BOT_ID, 'restart docker-compose');
       const ls = spawn('docker-compose', ['restart']);
