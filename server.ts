@@ -81,7 +81,7 @@ export class Server {
 
       // await insertDataToRAM();
       await insertDataToRedis();
-      serverHelthCheck();
+      // serverHelthCheck();
 
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
