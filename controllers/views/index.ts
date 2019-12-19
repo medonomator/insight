@@ -70,6 +70,10 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getGratitudePage');
   return h.view('gratitude');
 };
+export const devlopmentPlanPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('devlopmentPlanPage');
+  return h.view('developmentPlan');
+};
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('adminbundle');

@@ -16,6 +16,8 @@ var gulp = require('gulp'),
 
 // MOCK DATA
 const aphorisms = require('./config/data/aphorisms');
+const authors = require('./config/data/authors');
+const categories = require('./config/data/topics');
 
 gulp.task('imagemin', () =>
   gulp
@@ -27,7 +29,9 @@ gulp.task('imagemin', () =>
 gulp.task('handlebars', function() {
   var templateData = {
       path: 'assets/',
-      aphorisms
+      aphorisms,
+      authors,
+      categories,
     },
     options = {
       batch: ['./views/partials'],
