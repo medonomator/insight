@@ -24,15 +24,17 @@ export const serverHelthCheck = () => {
       if (isEmpty(res.data)) {
         await insertDataToRedis();
         telegramBot.sendMessage(BOT_ID, 'update data in redis');
+      } else {
+        logger.info('Without failures');
       }
-      logger.info('Without failures');
     } catch (err) {
-      telegramBot.sendMessage(BOT_ID, 'restart docker-compose');
-      const ls = spawn('docker-compose', ['restart mongo']);
-      ls.stdout.on('data', data => logger.info(`stdout: ${data}`));
-      ls.stderr.on('data', data => logger.error(`stderr: ${data}`));
-      ls.on('close', code => logger.info(`child process exited with code ${code}`));
-      logger.error(err);
+      telegramBot.sendMessage(BOT_ID, 'Again silent...');
+      // telegramBot.sendMessage(BOT_ID, 'restart docker-compose');
+      // const ls = spawn('docker-compose', ['restart mongo']);
+      // ls.stdout.on('data', data => logger.info(`stdout: ${data}`));
+      // ls.stderr.on('data', data => logger.error(`stderr: ${data}`));
+      // ls.on('close', code => logger.info(`child process exited with code ${code}`));
+      // logger.error(err);
     }
   }, TIME_UPDATE_CHECKER);
 };
