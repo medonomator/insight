@@ -1,7 +1,7 @@
 import Boom from 'boom';
 import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
-import { IParamsCreate, IParamsUpdate, IResponse, IParamsGet, IAphorisms, IParamsDelete } from './interfaces';
+import { IParamsCreate, IParamsUpdate, IResponse, IParamsGet, IParamsDelete, IResTakeAphorisms } from './interfaces';
 import { cyrToLat } from '../../../helpers';
 import { isEmpty } from 'lodash';
 import { takeAphorisms } from '../../../helpers/aphorisms';
@@ -42,11 +42,11 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
     logger.info('Get aphorisms');
-    // need correct interface
-    const data: any = await takeAphorisms(params.query);
+    const resTakeAphorisms = await takeAphorisms(params.query) as IResTakeAphorisms;
+
     return {
-      data,
-      count: data.length,
+      data: resTakeAphorisms.aphorisms,
+      count: resTakeAphorisms.count
     };
   } catch (err) {
     logger.error(err);
@@ -61,14 +61,14 @@ export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
 export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
     const { _id, author, body, tags } = req.payload;
-    const tagsToWrite: IItemNameMachine[] = [];
+    const inMachineName: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
       tags.forEach((name: any) => {
-        tagsToWrite.push({ name, machineName: cyrToLat(name) });
+        inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: tagsToWrite } });
+    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName } });
 
     return 'ok';
   } catch (err) {
@@ -85,9 +85,9 @@ export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => 
   try {
     const { _id } = req.payload;
     await aphorisms.deleteOne({ _id });
-    logger.info(`aphorisms id: ${_id} deleted`);
-
     deleteElement('mongoIds', _id);
+
+    logger.info(`aphorisms id: ${_id} deleted`);
     return 'ok';
   } catch (err) {
     logger.error(err);

@@ -19,6 +19,8 @@ import tasks from './routes/tasks';
 import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
+import { insertDataToRAM } from './helpers/insertDataToMemory';
+import { serverHelthCheck } from './helpers/serverHelthCheck';
 // pg;
 // Connect Mongodb
 mongoConnection();
@@ -77,7 +79,9 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
+      // await insertDataToRAM();
       await insertDataToRedis();
+      serverHelthCheck();
 
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 

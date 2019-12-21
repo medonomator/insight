@@ -9,8 +9,13 @@ export interface IAphorisms {
   body: string;
   tags: IItemNameMachine[];
   category: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IResTakeAphorisms {
+  aphorisms: IAphorisms[];
+  count: number;
 }
 
 export interface IParamsCreate {

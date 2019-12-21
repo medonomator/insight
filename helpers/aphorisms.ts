@@ -1,7 +1,8 @@
+import Boom from 'boom';
 import { sortBy } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
-import Boom from 'boom';
 import { logger } from './logger';
+import { IAphorisms, IResTakeAphorisms } from '../controllers/admin/aphorisms/interfaces';
 
 interface IParams {
   limit?: number;
@@ -13,9 +14,10 @@ interface IParams {
   random?: boolean;
 }
 
-export const takeAphorisms = async (params: IParams) => {
+export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms | Boom> => {
   try {
-    let aphorisms = await getAllElementsByKey('mongoIds');
+    let aphorisms: IAphorisms[] = (await getAllElementsByKey('mongoIds')) || [];
+    const count = aphorisms.length;
 
     const { limit = 100, random = true, author, body, topic, category } = params;
     if (random) {
@@ -58,7 +60,10 @@ export const takeAphorisms = async (params: IParams) => {
 
     aphorisms = sortBy(aphorisms, item => item.body.length > 180);
 
-    return aphorisms;
+    return {
+      aphorisms,
+      count,
+    };
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);

@@ -6,9 +6,11 @@
 </head>
 
 <body>
+  <div class="bg"></div>
   <div class="wrapper">
     {{>header}}
-    <div class="about">
+    <h1>Мудрость афоризмов</h1>
+    <div class="header-text">
       <p>Aфоризм - это житейская мудрость, краткая, емкая, законченная
         мысль, которая при должном употреблении может
         произвести
@@ -19,12 +21,44 @@
         приведет в более светлым и чистым мыслям.
         А как известно, что мыслим то чувствуем, что чувствуем то и проживаем. Приятных
         озарений...</p>
+      </p>
     </div>
 
-    <div class="aphorisms-header">
-      <h2>Фильтр</h2>
-      <div class="filter-block">
+    <div class="regular-page">
+      <section class="aphorisms-container">
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        {{#each aphorisms as |item index| }}
+        <div class="aphorisms-item">
+          <div class="aphorisms-tags">
+            {{#each this.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
+          </div>
+          <div class="aphorisms-item-body">
+            <p>{{this.body}}</p>
+          </div>
+          <div class="aphorisms-item-bottom">
+            <div class="aphorisms-authors">
+              <span>{{this.author}}</span>
+            </div>
+            <div class="aphorisms-icons">
+              <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
+              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{!-- <div class="aphorisms-all">
+        <a href="#">Читать все афоризмы...</a>
+      </div> --}}
+      </section>
 
+      <div class="filter-block">
         <div class="filter-block-item">
           <p>Категория</p>
           <select id="filter-by-categories">
@@ -54,38 +88,9 @@
         <div>
           <input type="button" class="shuffle-button" value="Перемешать">
         </div>
-
       </div>
     </div>
-
-    <section class="aphorisms-container">
-      <div class="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      {{#each aphorisms}}
-      <div style="{{aphorismsHelper this.body}}" class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>{{this.author}}</h2>
-        </div>
-
-        <div class="aphorisms-item-body">
-          <p>{{this.body}}</p>
-        </div>
-        <div class="aphorisms-tags">
-          {{#each this.tags}}
-          <span>{{this.name}}</span>
-          {{/each}}
-        </div>
-      </div>
-      {{/each}}
-      {{!-- <div class="aphorisms-all">
-        <a href="#">Читать все афоризмы...</a>
-      </div> --}}
-    </section>
-
+    <!-- end wrapper -->
   </div>
   {{>footer}}
 </body>

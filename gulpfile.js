@@ -15,19 +15,23 @@ var gulp = require('gulp'),
   rename = require('gulp-rename');
 
 // MOCK DATA
-const data = require('./config/data/aphorisms');
+const aphorisms = require('./config/data/aphorisms');
+const authors = require('./config/data/authors');
+const categories = require('./config/data/topics');
 
 gulp.task('imagemin', () =>
   gulp
     .src('static/img/**/*')
     .pipe(imagemin())
-    .pipe(gulp.dest('dist/assets')),
+    .pipe(gulp.dest('dist/assets/img')),
 );
 
 gulp.task('handlebars', function() {
   var templateData = {
       path: 'assets/',
-      res: JSON.parse(data),
+      aphorisms,
+      authors,
+      categories,
     },
     options = {
       batch: ['./views/partials'],
@@ -37,7 +41,7 @@ gulp.task('handlebars', function() {
     };
 
   return gulp
-    .src('views/contacts.hbs')
+    .src('views/aphorisms.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));

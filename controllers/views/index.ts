@@ -2,14 +2,17 @@ import * as Vision from 'vision';
 import * as Hapi from 'hapi';
 import Boom from 'boom';
 import { logger } from '../../helpers/logger';
-import { settings } from '../../database/schemas/settings';
+import { authors as authorsCollection } from '../../database/schemas/authors';
+import { topics as topicCollection } from '../../database/schemas/topics';
 import { takeAphorisms } from '../../helpers/aphorisms';
+import { IResTakeAphorisms } from '../admin/aphorisms/interfaces';
+import { IItemNameMachine } from '../../interfaces';
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    logger.info('getMainPage request');
-    const aphorisms = await takeAphorisms({ limit: 8 });
-    return h.view('index', { aphorisms });
+    logger.info('getMainPage');
+    const resTakeAphorisms = (await takeAphorisms({ limit: 8 })) as IResTakeAphorisms;
+    return h.view('index', { aphorisms: resTakeAphorisms });
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);
@@ -17,34 +20,30 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
 };
 
 export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getAphorismsPage request');
   try {
-    const aphorisms = await takeAphorisms({});
-
-    // borrow from other collections
-    const { allCategories, allAuthors } = (await settings
-      .findOne({ allCategories: { $exists: true } }, { allAuthors: { $exists: true } })
-      .lean()
-      .select('allCategories allAuthors -_id')) as any;
+    const resTakeAphorisms = (await takeAphorisms({})) as IResTakeAphorisms;
+    const allAuthors: IItemNameMachine[] = await authorsCollection.find().lean();
+    const allTopics: IItemNameMachine[] = await topicCollection.find().lean();
 
     const categories =
-      allCategories &&
-      allCategories
+      allTopics &&
+      allTopics
         .map(({ machineName, name }) => ({ machineName, name }))
-        .sort(item => item.machineName === 'all')
+        .sort((item): any => item.machineName === 'all')
         .reverse();
 
     const authors =
       allAuthors &&
       allAuthors
         .map(({ machineName, name }) => ({ machineName, name }))
-        .sort(item => item.machineName === 'all')
+        .sort((item): any => item.machineName === 'all')
         .reverse();
 
+    logger.info('getAphorismsPage');
     return h.view('aphorisms', {
       authors,
       categories,
-      aphorisms,
+      aphorisms: resTakeAphorisms.aphorisms,
     });
   } catch (err) {
     logger.error(err);
@@ -53,26 +52,30 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
 };
 
 export const getNotesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getNotesPage request');
+  logger.info('getNotesPage');
   return h.view('notes', { notes: [] });
 };
 
 export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getTechniquesPage request');
+  logger.info('getTechniquesPage');
   return h.view('techniques', { techniques: [] });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getContactsPage request');
+  logger.info('getContactsPage');
   return h.view('contacts');
 };
 
 export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getGratitudePage request');
+  logger.info('getGratitudePage');
   return h.view('gratitude');
+};
+export const devlopmentPlanPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('devlopmentPlanPage');
+  return h.view('developmentPlan');
 };
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('adminbundle request');
+  logger.info('adminbundle');
   return h.file('./static/vue/index.html');
 };
