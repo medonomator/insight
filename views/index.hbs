@@ -24,27 +24,35 @@
       </p>
     </div>
 
-    {{!-- <h2>Афоризмы</h2>
-    <section class="aphorisms-container">
-      {{#each aphorisms}}
-      <div class="aphorisms-item">
-        <div class="aphorisms-item-top">
-          <h2>{{this.author}}</h2>
-        </div>
 
-        <div class="aphorisms-item-body">
-          <p>{{this.body}}</p>
-        </div>
+    <section class="aphorisms-container aphorisms-container-main">
+      {{!-- <h2>Афоризмы</h2> --}}
+      {{#each aphorisms as |item index| }}
+
+      <div class="aphorisms-item">
         <div class="aphorisms-tags">
           {{#each this.tags}}
           <span>{{this.name}}</span>
           {{/each}}
         </div>
+        <div class="aphorisms-item-body">
+          <p>{{this.body}}</p>
+        </div>
+        <div class="aphorisms-item-bottom">
+          <div class="aphorisms-authors">
+            <span>{{this.author}}</span>
+          </div>
+          <div class="aphorisms-icons">
+            <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
+            <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+          </div>
+        </div>
       </div>
       {{/each}}
 
+      <a href="/aphorisms" type="button" class="more-button">Больше...</a>
     </section>
-    <h2>Аффирмации</h2> --}}
+    {{!-- <h2>Аффирмации</h2> --}}
   </div>
   {{>footer}}
 </body>

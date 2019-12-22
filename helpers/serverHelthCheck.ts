@@ -15,7 +15,7 @@ telegramBot.launch();
 export const serverHelthCheck = () => {
   setInterval(async () => {
     try {
-      await axios.get('http://familyzorins.tk/', {
+      await axios.get('http://134.209.163.196/', {
         timeout: TIMELIFE_REQUEST,
       });
 

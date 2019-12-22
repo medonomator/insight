@@ -17,13 +17,13 @@
 //  * Create Tables
 //  */
 // const tableAphorismAuthors = `CREATE TABLE IF NOT EXISTS
-//       aphorismAuthors(
+//       aphorism_authors(
 //         id SERIAL PRIMARY KEY,
 //         name VARCHAR(128) NOT NULL,
 //         machine_name VARCHAR(128) NOT NULL
 //       )`;
 // const tableAphorismCategories = `CREATE TABLE IF NOT EXISTS
-//       aphorismCategories(
+//       aphorism_categories(
 //         id SERIAL PRIMARY KEY,
 //         name VARCHAR(128) NOT NULL,
 //         machine_name VARCHAR(128) NOT NULL
