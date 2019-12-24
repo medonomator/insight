@@ -2,10 +2,11 @@ version: '2'
 services:
   mongo:
     image: mongo:4.2
+    stdin_open: true
     ports:
       - 27017:27017/tcp
   redis:
-    image: 'bitnami/redis:4.0'
+    image: 'bitnami/redis:latest'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
