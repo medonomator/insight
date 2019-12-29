@@ -33,10 +33,13 @@ export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms 
       aphorisms = aphorisms.filter((_, index) => index === randomList[index]);
     }
 
+    const withoutSpaces = (str: string) => {
+      return str.replace(/\. /, '.').replace(/\. /, '.');
+    };
     // filters
     if (author && author !== 'Все') {
       const authorRegExp = new RegExp(author, 'g');
-      aphorisms = aphorisms.filter(item => authorRegExp.test(item.author));
+      aphorisms = aphorisms.filter(item => authorRegExp.test(withoutSpaces(item.author)));
     }
 
     if (body) {

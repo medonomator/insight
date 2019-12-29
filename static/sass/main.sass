@@ -111,9 +111,31 @@ select#filter-by-author
   &:hover
     color: white
 
-// .top-arrow
-//   img
-//     width: 70px
+.more-button-aphorism
+  @extend .button
+  width: auto
+  padding: 0 30px
+  height: 40px
+  margin-left: 72%
+  display: block
+  font-size: 15px
+  display: block
+  font-size: 15px
+  &:hover
+    color: white
+
+.top-arrow
+  position: fixed
+  z-index: 1000
+  display: none
+  cursor: pointer
+  bottom: 60px
+  right: calc(50% - 350px)
+  transition: all .3s ease
+  &:hover
+    opacity: 0.8
+  img
+    width: 70px
 
 /*** header  ***/
 .header
@@ -139,6 +161,10 @@ select#filter-by-author
       color: #FCFCFD
       &:hover
         @extend .hover-color
+
+  .main-menu-active
+    display: block
+    animation: main-menu-active .3s ease
 
 /*** about  ***/
 .about
@@ -286,6 +312,13 @@ select#filter-by-author
 
   100%
     transform: rotate(360deg)
+
+@keyframes main-menu-active
+  0%
+    margin: -50px
+
+  100%
+    margin: 0px
 
 .footer
   background: #140d4e

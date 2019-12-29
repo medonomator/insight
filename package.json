@@ -20,6 +20,7 @@
     "boom": "^7.3.0",
     "cyrillic-to-translit-js": "^2.2.0",
     "faker": "^4.1.0",
+    "gulp-terser": "^1.2.0",
     "handlebars": "^4.1.2",
     "hapi": "^18.1.0",
     "hapi-auth-basic": "^5.0.0",
@@ -38,6 +39,7 @@
     "redis": "^2.8.0",
     "tarantool-driver": "^3.0.6",
     "telegraf": "^3.34.1",
+    "uglify-es": "^3.3.9",
     "vision": "^5.4.4"
   },
   "devDependencies": {
@@ -57,6 +59,7 @@
     "gulp-compile-handlebars": "^0.6.1",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^5.0.3",
+    "gulp-minify": "^3.1.0",
     "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-rsync": "0.0.8",

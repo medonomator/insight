@@ -15,5 +15,4 @@ const authorsSchema = new Mongoose.Schema(
   },
   { versionKey: false },
 );
-
 export const authors = Mongoose.model('authors', authorsSchema);
