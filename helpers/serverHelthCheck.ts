@@ -15,7 +15,7 @@ telegramBot.sendMessage(BOT_ID, 'update data in redis');
 export const serverHelthCheck = () => {
   setInterval(async () => {
     try {
-      await axios.get('http://134.209.163.196/', {
+      await axios.get('http://83.166.242.213/', {
         timeout: TIMELIFE_REQUEST,
       });
 
