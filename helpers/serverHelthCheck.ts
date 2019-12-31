@@ -19,7 +19,7 @@ export const serverHelthCheck = () => {
         timeout: TIMELIFE_REQUEST,
       });
 
-      const res = await axios.get('http://familyzorins.tk/admin/aphorisms');
+      const res = await axios.get('http://83.166.242.213/admin/aphorisms');
 
       if (isEmpty(res.data)) {
         await insertDataToRedis();
