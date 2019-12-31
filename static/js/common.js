@@ -1,10 +1,12 @@
 if (sessionStorage.getItem('mainMenu') === 'visible') {
+  import { aphorisms } from '../../database/schemas/aphorisms';
   hamburger.classList.toggle('change');
   mainMenu.classList.toggle('main-menu-active');
 }
 // GET data
 const funcRequest = (url, fn) => {
   preloader.style.display = 'block';
+  moreButtonAphorism.style.display = 'block';
   fetch(`${BASE_URL}/${url}`)
     .then(res => res.json())
     .then(data => {
@@ -54,6 +56,31 @@ const templateItemAphorism = data => {
   return replaceHtml;
 };
 
+const loadingTemplateAphorism = data => {
+  let replaceHtml;
+  data.forEach((item, index) => {
+    replaceHtml += `<div class="aphorisms-item">
+                      <div class="aphorisms-tags">${item.tags[0] &&
+                        item.tags.map(item => `<span>${item.name}</span>`).join('')}
+                      </div>
+                      <div class="aphorisms-item-body">
+                        <p>${item.body}</p>
+                      </div>
+                      <div class="aphorisms-item-bottom">
+                        <div class="aphorisms-authors">
+                          <span>${item.author}</span>
+                        </div>
+                        <div class="aphorisms-icons">
+                          <i name="${index}" id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
+                          <i name="${index}" id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </div>
+                      `;
+  });
+  return replaceHtml;
+};
+
 filterByTopic.addEventListener('change', () => {
   funcRequest(`admin/aphorisms?topic=${event.target.value}&random=false`, ({ data }) => {
     aphorismsContainer.innerHTML = templateItemAphorism(data);
@@ -67,6 +94,24 @@ filterByCategories.addEventListener('change', () => {
 filterByAuthor.addEventListener('change', () => {
   funcRequest(`admin/aphorisms?author=${event.target.value}&random=false`, ({ data }) => {
     aphorismsContainer.innerHTML = templateItemAphorism(data);
+  });
+});
+
+let counter = 0;
+moreButtonAphorism.addEventListener('click', () => {
+  counter++;
+  funcRequest(`admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, res => {
+    let aphorismsItems = document.createRange().createContextualFragment(loadingTemplateAphorism(res.data));
+    aphorismsContainer.appendChild(aphorismsItems);
+
+    if (res.count < 100) {
+      moreButtonAphorism.value = moreButtonAphorism.value.replace('100', res.count);
+      // insert counter in button text
+    }
+
+    if (!res.count) {
+      moreButtonAphorism.style.display = 'none';
+    }
   });
 });
 

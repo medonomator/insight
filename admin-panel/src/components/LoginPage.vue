@@ -2,7 +2,12 @@
   <div>
     <input name="email" v-model="email" class="input" type="text" />
     <input name="password" v-model="password" class="input" type="text" />
-    <input v-on:click="auth({ email, password })" type="button" value="Войти" class="auth" />
+    <input
+      v-on:click="auth({ email, password })"
+      type="button"
+      value="Войти"
+      class="auth"
+    />
   </div>
 </template>
 

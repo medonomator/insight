@@ -100,3 +100,43 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
+
+// import fs from 'fs';
+// const dropboxV2Api = require('dropbox-v2-api');
+// const dropbox = dropboxV2Api.authenticate({
+//   token: 'Jh75f1AAeZAAAAAAAAAG1j83OZtBo0kE4ViQz34AB2TpwtD7UhjcJs807ilKcVT5',
+// });
+
+// dropbox(
+//   {
+//     resource: 'files/upload',
+//     parameters: {
+//       path: '/backup/aphorisms.js',
+//     },
+//     readStream: fs.createReadStream('./static/css/global.css'),
+//   },
+//   (err, result, response) => {
+//     console.log('=============================');
+//     console.log('logging', result);
+//     // console.log('logging', response);
+//     console.log('=============================');
+//   },
+// );
+
+// const request = require('request');
+// request.get(
+//   {
+//     url: 'https://toster.ru/q/461924',
+//     proxy: '149.28.49.110::8080',
+//   },
+//   (err, res) => {
+//     console.log('=============================');
+//     console.log('logging', res);
+//     console.log('=============================');
+//     if (err) {
+//       console.log('ERROR', err);
+//     } else {
+//       console.log('OK', res);
+//     }
+//   },
+// );

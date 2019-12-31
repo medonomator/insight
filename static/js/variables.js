@@ -5,6 +5,7 @@ const hamburger = document.querySelector('.hamburger');
 const mainMenu = document.querySelector('.main-menu');
 const topArrow = document.querySelector('.top-arrow');
 const aphorismsContainer = document.querySelector('.aphorisms-container');
+const moreButtonAphorism = document.querySelector('.more-button-aphorism');
 // Ids
 const filterByTopic = document.getElementById('filter-by-topic');
 const filterByCategories = document.getElementById('filter-by-categories');

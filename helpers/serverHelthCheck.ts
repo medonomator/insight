@@ -11,7 +11,7 @@ const BOT_ID = '409011202';
 
 const telegramBot = new TelegramBot();
 telegramBot.launch();
-
+telegramBot.sendMessage(BOT_ID, 'update data in redis');
 export const serverHelthCheck = () => {
   setInterval(async () => {
     try {
