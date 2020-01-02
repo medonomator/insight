@@ -1,5 +1,6 @@
 import Boom from 'boom';
 import { users } from '../../../database/schemas/users';
+import { aphorisms } from '../../../database/schemas/aphorisms';
 import { logger } from '../../../helpers/logger';
 import { prepareTokens } from '../../../helpers/index';
 import { encryptData } from '../../../helpers';

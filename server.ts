@@ -104,7 +104,7 @@ process.on('uncaughtException', (error: Error) => {
 // import fs from 'fs';
 // const dropboxV2Api = require('dropbox-v2-api');
 // const dropbox = dropboxV2Api.authenticate({
-//   token: 'Jh75f1AAeZAAAAAAAAAG1j83OZtBo0kE4ViQz34AB2TpwtD7UhjcJs807ilKcVT5',
+// token: process.env.DROPBOX_TOKEN,
 // });
 
 // dropbox(
@@ -120,23 +120,5 @@ process.on('uncaughtException', (error: Error) => {
 //     console.log('logging', result);
 //     // console.log('logging', response);
 //     console.log('=============================');
-//   },
-// );
-
-// const request = require('request');
-// request.get(
-//   {
-//     url: 'https://toster.ru/q/461924',
-//     proxy: '149.28.49.110::8080',
-//   },
-//   (err, res) => {
-//     console.log('=============================');
-//     console.log('logging', res);
-//     console.log('=============================');
-//     if (err) {
-//       console.log('ERROR', err);
-//     } else {
-//       console.log('OK', res);
-//     }
 //   },
 // );

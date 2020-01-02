@@ -32,7 +32,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
         const uniqAuthors: IItemNameMachine[] = [];
         let allTopics: IItemNameMachine[] = [];
 
-        // Тут нужно переделать как раз два в одном уделать )))
         uniqBy(authorsAndCats, 'author').map(({ author, tags }) => {
           uniqAuthors.push({
             name: author,
