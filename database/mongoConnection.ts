@@ -1,7 +1,6 @@
 import Mongoose from 'mongoose';
 import { logger } from '../helpers/logger';
-
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/software';
+import { MONGO_URI } from '../constants';
 
 const mongoConnection = async (): Promise<void> => {
   try {

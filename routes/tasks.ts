@@ -1,5 +1,6 @@
 import * as Hapi from 'hapi';
 import Boom from 'boom';
+import fs from 'fs';
 import { aphorisms } from '../database/schemas/aphorisms';
 import { authors } from '../database/schemas/authors';
 import { topics } from '../database/schemas/topics';
@@ -8,6 +9,7 @@ import { cyrToLat } from '../helpers';
 import { logger } from '../helpers/logger';
 import { IItemNameMachine } from '../interfaces';
 import { docsTasks } from '../config/docs';
+import { dropboxUploadFile } from '../helpers/dropboxApi';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -61,13 +63,23 @@ const usersRoutes: Hapi.ServerRoute[] = [
   },
   {
     method: 'POST',
-    path: '/task/dynamic',
-    options: {
-      ...docsTasks.dynamicTask,
-      auth: {
-        strategy: 'users',
-      },
+    path: '/task/backup',
+    handler: async () => {
+      try {
+        const data = await aphorisms.find().select('-__v');
+
+        await fs.promises.writeFile('static/backup/aphorisms.json', JSON.stringify(data));
+        dropboxUploadFile();
+        return 'ok';
+      } catch (err) {
+        logger.error(err);
+        return Boom.badImplementation(err.message);
+      }
     },
+  },
+  {
+    method: 'POST',
+    path: '/task/dynamic',
     handler: async () => {
       try {
         // ...

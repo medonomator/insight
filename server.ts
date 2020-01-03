@@ -100,25 +100,3 @@ process.on('unhandledRejection', (error: Error) => {
 process.on('uncaughtException', (error: Error) => {
   console.error(`uncaughtException ${error.message}`);
 });
-
-// import fs from 'fs';
-// const dropboxV2Api = require('dropbox-v2-api');
-// const dropbox = dropboxV2Api.authenticate({
-// token: process.env.DROPBOX_TOKEN,
-// });
-
-// dropbox(
-//   {
-//     resource: 'files/upload',
-//     parameters: {
-//       path: '/backup/aphorisms.js',
-//     },
-//     readStream: fs.createReadStream('./static/css/global.css'),
-//   },
-//   (err, result, response) => {
-//     console.log('=============================');
-//     console.log('logging', result);
-//     // console.log('logging', response);
-//     console.log('=============================');
-//   },
-// );
