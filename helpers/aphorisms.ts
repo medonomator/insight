@@ -1,5 +1,4 @@
 import Boom from 'boom';
-import { sortBy } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
 import { logger } from './logger';
 import { IAphorisms, IResTakeAphorisms } from '../controllers/admin/aphorisms/interfaces';

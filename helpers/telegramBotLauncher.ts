@@ -1,24 +1,18 @@
 import Telegraf from 'telegraf';
+import SocksProxyAgent from 'socks-proxy-agent';
 // var HttpProxyAgent = require('http-proxy-agent');
 // var ProxyAgent = require('proxy-agent');
-var SocksProxyAgent = require('socks-proxy-agent');
+const PROXY_HOST = 'socks://50.116.38.201:1443';
+const BOT_ID = '409011202';
 
-const PROXY_HOST = 'socks://45.55.159.57:33820';
+const telegraf: any = new Telegraf(String(process.env.BOT_TOKEN), {
+  telegram: {
+    agent: new SocksProxyAgent(PROXY_HOST),
+  },
+});
 
-class TelegramBot {
-  public bot;
-  public launch() {
-    this.bot = new Telegraf(String(process.env.BOT_TOKEN), {
-      telegram: {
-        agent: new SocksProxyAgent(PROXY_HOST),
-      },
-    });
-    this.bot.launch();
-  }
+telegraf.launch();
 
-  public sendMessage(id: string, message: string) {
-    this.bot.telegram.sendMessage(id, message);
-  }
-}
-
-export default TelegramBot;
+export const telegramSendMessage = (message: string) => {
+  telegraf.telegram.sendMessage(BOT_ID, message);
+};
