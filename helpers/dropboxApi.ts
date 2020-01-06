@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { logger } from '../helpers/logger';
 import dropboxV2Api from 'dropbox-v2-api';
-import { telegramSendMessage } from './telegramBotLauncher';
+import TelegramBot from './telegramBotLauncher';
 
 const dropbox = dropboxV2Api.authenticate({
   token: process.env.DROPBOX_TOKEN,
@@ -19,9 +19,9 @@ export const dropboxUploadFile = () => {
     err => {
       if (err) {
         logger.error(err);
-        telegramSendMessage('Not save in Dropbox');
+        TelegramBot.sendMessage('Not save in Dropbox');
       }
-      telegramSendMessage('Backup was Successful');
+      TelegramBot.sendMessage('Backup was Successful');
     },
   );
 };

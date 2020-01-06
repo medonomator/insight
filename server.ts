@@ -92,11 +92,12 @@ export class Server {
 export const server = new Server(process.env.PORT || '5000');
 server.start();
 
-process.on('unhandledRejection', (error: Error) => {
-  console.error(error.message);
-  console.error(error.stack);
+process.on('unhandledRejection', (err: Error) => {
+  logger.error(`unhandledRejection: `, err.stack);
+  logger.error(`unhandledRejection: `, err.message);
 });
 
-process.on('uncaughtException', (error: Error) => {
-  console.error(`uncaughtException ${error.message}`);
+process.on('uncaughtException', (err: Error) => {
+  logger.error(`uncaughtException: `, err.stack);
+  logger.error(`uncaughtException: `, err.message);
 });

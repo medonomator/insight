@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { logger } from '../helpers/logger';
 import { insertDataToRedis } from '../database/insertDataToRedis';
-import { telegramSendMessage } from './telegramBotLauncher';
+import TelegramBot from './telegramBotLauncher';
 import { isEmpty } from 'lodash';
 
 const TIMELIFE_REQUEST = 1000 * 30; // 30 second
@@ -18,12 +18,12 @@ export const serverHelthCheck = () => {
 
       if (isEmpty(res.data)) {
         await insertDataToRedis();
-        telegramSendMessage('Update data in redis');
+        TelegramBot.sendMessage('Update data in redis');
       } else {
         logger.info('Without failures');
       }
     } catch (err) {
-      telegramSendMessage('Website not response!');
+      TelegramBot.sendMessage('Website not response!');
       // telegramBot.sendMessage(BOT_ID, 'restart docker-compose');
       // const ls = spawn('docker-compose', ['restart mongo']);
       logger.error(err);
