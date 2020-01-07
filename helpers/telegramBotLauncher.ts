@@ -1,15 +1,60 @@
 import Telegraf from 'telegraf';
-
+import SocksProxyAgent from 'socks-proxy-agent';
+import { logger } from './logger';
+import proxyList from '../config/data/proxyList';
+// var HttpProxyAgent = require('http-proxy-agent');
+// var ProxyAgent = require('proxy-agent');
+const BOT_ID = '409011202';
+// Singleton
 class TelegramBot {
-  public bot;
-  public launch() {
-    this.bot = new Telegraf(process.env.BOT_TOKEN || '1056515171:AAHTs2J8E09FoVMpIreuZu8WPKPUHQk3IiA');
-    this.bot.launch();
+  private static instance: TelegramBot;
+  private _bot;
+  private _proxyList: string[];
+  private _currentProxy = 0;
+  constructor() {
+    // TODO: in future need take proxy's from the database
+    this._proxyList = proxyList;
+    this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
+      telegram: {
+        agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
+      },
+    });
   }
 
-  public sendMessage(id: string, message: string) {
-    this.bot.telegram.sendMessage(id, message);
+  public static Init(): TelegramBot {
+    if (!TelegramBot.instance) {
+      TelegramBot.instance = new TelegramBot();
+    }
+    return TelegramBot.instance;
+  }
+
+  public sendMessage = async (message: string) => {
+    try {
+      await this._bot.telegram.sendMessage(BOT_ID, message);
+      logger.info(`Message >>> ${message} <<< was sended`);
+    } catch (err) {
+      this.reconnectNextProxy();
+      logger.error(err);
+    }
+  };
+
+  public reconnectNextProxy() {
+    if (this._currentProxy > this._proxyList.length) {
+      this._currentProxy = 0;
+    } else {
+      this._currentProxy = ++this._currentProxy;
+    }
+
+    this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
+      telegram: {
+        agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
+      },
+    });
+    const reconnectMessage = `Telegraf reconnecting with proxy: ${this._proxyList[this._currentProxy]}`;
+    logger.warn(reconnectMessage);
+    this.sendMessage(reconnectMessage);
   }
 }
 
-export default TelegramBot;
+export default TelegramBot.Init();
+TelegramBot.Init().sendMessage('Initialization');

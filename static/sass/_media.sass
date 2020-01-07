@@ -1,121 +1,119 @@
-@import "vars"
 
-/*==========  Desktop First  ==========*/
+ /*==========  Desktop First  ==========*/
 
-/* Large Devices, Wide Screens */
+ /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px)
- // header
-.wrapper
-  max-width: 100%
-  .about
-    margin: 0 15px
-    .card-container
-      margin: 0 10px
-
-/* Medium Devices, Desktops */
-@media only screen and (max-width : 992px)
-  /**/
-
-/* Small Devices, Tablets */
-@media only screen and (max-width : 768px)
   // header
-  .header
-    .soon
-      margin-top: -30px
-    .logo
-      width: 320px
-      margin-top: 30px
+  .wrapper
+    max-width: 100%
+    .about
+      margin: 0 15px
+      .card-container
+        margin: 0 10px
+
+  h1, .header-text
+    padding-left: 10px
+
+  .bg
+    height: 105vh
+
+@media only screen and (max-width : 992px)
+  .bg
+    height: 115vh
+
+@media only screen and (max-width : 768px)
+
   .main-menu
     display: none
-    margin-top: 0
-    ul
-      flex-direction: column
-      text-align: center
-      padding-left: 22px
-      margin-top: 10px
-    li
-      margin-top: 10px
+
   .hamburger
     display: flex
     flex-direction: column
     margin: auto
 
-  .card-container
+  .header
     flex-direction: column
-    .card
-      width: 100%
-      margin-bottom: 20px
-  .photo-container
-    display: flex
-    flex-wrap: wrap
-    justify-content: center
-    .photo
-      width: 90%
-  .articles
-    flex-direction: column
-    .article-img
-      width: 60%
-      margin: auto
-    .right-block
-      width: 90%
-      margin: auto
-      text-align: center
-    .h3
-      display: none
-    .h3-low
-      display: block
-  .description
-    margin: 20px
+    align-items: center
 
-@media only screen and (max-width: 560px)
-  .aphorisms-container
+  .logo
+    margin-bottom: 40px
+
+  h1
+    text-align: center
+
+  .header-text
+    margin-right: 50px
+
+  .main-menu
+    ul
+      flex-direction: column
+      text-align: center
+      margin-top: 20px
+    li
+      margin-right: 0!important
+      padding-top: 8px
+
+  .regular-page
+    flex-direction: column-reverse
+    margin-top: 100px
+    select
+      width: 100%!important
+
+  .filter-block
+    width: 97%
+    margin: 0 10px
+    margin-bottom: 40px
+
+  .shuffle-button-wrapper
+    display: flex
     justify-content: center
 
   .aphorisms-item
-    width: 100%!important
+    margin: 0 10px
+    margin-bottom: 24px
 
-/* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px)
-  // header
-  .header
-    justify-content: center
-    .soon
-      display: none
-    .sky
-      display: none
-    .logo
-      margin-top: 20px
+  .footer .wrapper
+    flex-direction: column
+    align-items: center
+
+    .subscribe
       margin-bottom: 20px
-  .articles
-    .article-img
-      width: 90%
-  .h3-low
-    line-height: 32px
-    font-size: 22px
+      margin-top: 20px
 
-/* Custom, iPhone Retina */
+  .h1-contacts
+    font-size: 30px
+
+@media only screen and (max-width: 560px)
+ //
+@media only screen and (max-width : 480px)
+  .h1-contacts
+    font-size: 26px
+
+  .bg
+    height: 185vh
+
+  .filter-block
+    width: 94%
 @media only screen and (max-width : 320px)
-  /**/
+ /**/
 
-/*==========  Mobile First  ==========*/
+ /*==========  Mobile First  ==========*/
 
-/* Custom, iPhone Retina */
+ /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px)
-  /**/
+ /**/
 
-/* Extra Small Devices, Phones */
+ /* Extra Small Devices, Phones */
 @media only screen and (min-width : 480px)
-  /**/
+ /**/
 
-/* Small Devices, Tablets */
 @media only screen and (min-width : 768px)
   .main-menu
     display: block!important
 
-/* Medium Devices, Desktops */
 @media only screen and (min-width : 992px)
-  /**/
+ /**/
 
-/* Large Devices, Wide Screens */
+ /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px)
-  /**/
+ /**/

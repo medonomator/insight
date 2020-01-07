@@ -42,11 +42,11 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
     logger.info('Get aphorisms');
-    const resTakeAphorisms = await takeAphorisms(params.query) as IResTakeAphorisms;
+    const resTakeAphorisms = (await takeAphorisms(params.query)) as IResTakeAphorisms;
 
     return {
       data: resTakeAphorisms.aphorisms,
-      count: resTakeAphorisms.count
+      count: resTakeAphorisms.count,
     };
   } catch (err) {
     logger.error(err);

@@ -1,12 +1,13 @@
 import Mongoose from 'mongoose';
 import { logger } from '../helpers/logger';
-
-const MONGO_URI = process.env.MONGO_URI || 'localhost';
+import { MONGO_URI } from '../constants';
 
 const mongoConnection = async (): Promise<void> => {
   try {
-    await Mongoose.connect(MONGO_URI, { useNewUrlParser: true });
-    logger.info(`Сonnected to ${MONGO_URI}`);
+    await Mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+    });
+    logger.info(`Сonnected to mongodb`);
 
     if (process.env.NODE_ENV === 'development') {
       logger.debug('Mongo', 'debug mode true');

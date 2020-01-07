@@ -1,13 +1,13 @@
-FROM mhart/alpine-node:10
+FROM node:12.13-alpine3.9
 
-WORKDIR /
+ARG WORKDIR=/usr/src/app
 
-COPY package.json .
-COPY . .
+WORKDIR ${WORKDIR}
 
-RUN apk update; apk upgrade; npm i --production;
+COPY package.json ./
+COPY ./dist ./
 
-ENV NODE_PATH /usr/src/app/dist
+RUN apk --no-cache add --virtual builds-deps build-base python && npm rebuild bcrypt --build-from-source
+RUN npm i --production
 
-ENTRYPOINT []
-CMD ["node", "server.ts"]
+CMD ["node", "./server.js"]

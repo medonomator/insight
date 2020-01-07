@@ -3,14 +3,7 @@ module.exports = {
     {
       name: 'aphorisms',
       script: 'server.ts',
-      watch: true,
-      restart_delay: 2000,
-      env: {
-        NODE_ENV: 'production',
-        MONGO_URI: 'mongodb://134.209.163.196/software',
-        PORT: '80',
-        PM2: 'true',
-      },
+      ignore_watch: ['admin-panel', 'static/backup'],
     },
   ],
 };

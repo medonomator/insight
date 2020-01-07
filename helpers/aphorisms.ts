@@ -1,5 +1,4 @@
 import Boom from 'boom';
-import { sortBy } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
 import { logger } from './logger';
 import { IAphorisms, IResTakeAphorisms } from '../controllers/admin/aphorisms/interfaces';
@@ -17,9 +16,8 @@ interface IParams {
 export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms | Boom> => {
   try {
     let aphorisms: IAphorisms[] = (await getAllElementsByKey('mongoIds')) || [];
-    const count = aphorisms.length;
 
-    const { limit = 100, random = true, author, body, topic, category } = params;
+    const { limit = 100, random = true, author, body, topic, category, offset } = params;
     if (random) {
       const generateRandomList = (lim: number, length = 0) => {
         const list = {};
@@ -33,10 +31,13 @@ export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms 
       aphorisms = aphorisms.filter((_, index) => index === randomList[index]);
     }
 
+    const withoutSpaces = (str: string) => {
+      return str.replace(/\. /, '.').replace(/\. /, '.');
+    };
     // filters
     if (author && author !== 'Все') {
       const authorRegExp = new RegExp(author, 'g');
-      aphorisms = aphorisms.filter(item => authorRegExp.test(item.author));
+      aphorisms = aphorisms.filter(item => authorRegExp.test(withoutSpaces(item.author)));
     }
 
     if (body) {
@@ -58,14 +59,31 @@ export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms 
       });
     }
 
-    aphorisms = sortBy(aphorisms, item => item.body.length > 180);
+    if (offset) {
+      aphorisms = aphorisms.slice(offset).slice(0, limit);
+    }
 
     return {
       aphorisms,
-      count,
+      count: aphorisms.length,
     };
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);
   }
 };
+
+// // содежимое index.js
+// const http = require('http');
+// const port = 2000;
+// const requestHandler = (request, response) => {
+//   console.log(request);
+//   response.end('Hello Node.js Server!');
+// };
+// const server = http.createServer(requestHandler);
+// server.listen(port, err => {
+//   if (err) {
+//     return console.log('something bad happened', err);
+//   }
+//   console.log(`server is listening on ${port}`);
+// });

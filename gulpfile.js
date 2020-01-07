@@ -5,7 +5,7 @@ var gulp = require('gulp'),
   sass = require('gulp-sass'),
   browserSync = require('browser-sync').create(),
   concat = require('gulp-concat'),
-  uglify = require('gulp-uglify'),
+  terser = require('gulp-terser'),
   cleancss = require('gulp-clean-css'),
   rename = require('gulp-rename'),
   autoprefixer = require('gulp-autoprefixer'),
@@ -66,14 +66,13 @@ gulp.task('styles', function() {
 });
 
 gulp.task('js', function() {
-  return (
-    gulp
-      .src(['static/libs/jquery/jquery.min.js', 'static/libs/masonry.min.js', 'static/js/common.js'])
-      .pipe(concat('common.js'))
-      // .pipe(uglify()) // Mifify js (opt.)
-      .pipe(gulp.dest('dist/assets/js'))
-      .pipe(browserSync.reload({ stream: true }))
-  );
+  return gulp
+    .src(['static/js/variables.js', 'static/js/common.js'])
+    .pipe(concat('scripts.min.js'))
+    .pipe(terser()) // Mifify js (opt.)
+    .pipe(gulp.dest('dist/assets/js'))
+    .pipe(gulp.dest('static/js'))
+    .pipe(browserSync.reload({ stream: true }));
 });
 
 gulp.task('watch', function() {

@@ -15,7 +15,7 @@ redisClient.on('error', function(err) {
 export const getAllElementsByKey = async (key: string): Promise<IAphorisms[]> => {
   const arrayForFilling: IAphorisms[] = [];
   Object.values(await redisClient.hgetall(key)).forEach((item: string) => {
-    arrayForFilling.push(JSON.parse(item));
+      arrayForFilling.push(JSON.parse(item));
   });
   return arrayForFilling;
 };

@@ -8,7 +8,6 @@ import * as hapiAuthBasic from 'hapi-auth-basic';
 import Boom from 'boom';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
-// import { pg } from './/database/pgConnect';
 import { logger } from './helpers/logger';
 import userToken from './helpers/auth/user';
 // Routes
@@ -19,9 +18,7 @@ import tasks from './routes/tasks';
 import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
-import { insertDataToRAM } from './helpers/insertDataToMemory';
 import { serverHelthCheck } from './helpers/serverHelthCheck';
-// pg;
 // Connect Mongodb
 mongoConnection();
 
@@ -79,7 +76,6 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
-      // await insertDataToRAM();
       await insertDataToRedis();
       serverHelthCheck();
 
@@ -96,11 +92,12 @@ export class Server {
 export const server = new Server(process.env.PORT || '5000');
 server.start();
 
-process.on('unhandledRejection', (error: Error) => {
-  console.error(error.message);
-  console.error(error.stack);
+process.on('unhandledRejection', (err: Error) => {
+  logger.error(`unhandledRejection: `, err.stack);
+  logger.error(`unhandledRejection: `, err.message);
 });
 
-process.on('uncaughtException', (error: Error) => {
-  console.error(`uncaughtException ${error.message}`);
+process.on('uncaughtException', (err: Error) => {
+  logger.error(`uncaughtException: `, err.stack);
+  logger.error(`uncaughtException: `, err.message);
 });

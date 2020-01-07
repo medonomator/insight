@@ -97,9 +97,45 @@ select#filter-by-author
   &:hover
     background: darken(#3753E7, 5%)
 
-// .top-arrow
-//   img
-//     width: 70px
+.more-button
+  @extend .button
+  width: 157px
+  height: 40px
+  margin-left: 84%
+  display: block
+  padding-top: 8px
+  padding-left: 43px
+  font-size: 15px
+  display: block
+  font-size: 15px
+  &:hover
+    color: white
+
+.more-button-aphorism
+  @extend .button
+  width: auto
+  padding: 0 30px
+  height: 40px
+  margin-left: 72%
+  display: block
+  font-size: 15px
+  display: block
+  font-size: 15px
+  &:hover
+    color: white
+
+.top-arrow
+  position: fixed
+  z-index: 1000
+  display: none
+  cursor: pointer
+  bottom: 60px
+  right: calc(50% - 350px)
+  transition: all .3s ease
+  &:hover
+    opacity: 0.8
+  img
+    width: 70px
 
 /*** header  ***/
 .header
@@ -126,6 +162,10 @@ select#filter-by-author
       &:hover
         @extend .hover-color
 
+  .main-menu-active
+    display: block
+    animation: main-menu-active .3s ease
+
 /*** about  ***/
 .about
   padding: 35px 0
@@ -145,6 +185,12 @@ select#filter-by-author
   margin-top: 150px
 
 /*** aphorisms  ***/
+
+.aphorisms-container-main
+  margin-top: 70px
+  h2
+    padding-bottom: 40px
+
 .aphorisms-container
   position: relative
 
@@ -267,6 +313,13 @@ select#filter-by-author
   100%
     transform: rotate(360deg)
 
+@keyframes main-menu-active
+  0%
+    margin: -50px
+
+  100%
+    margin: 0px
+
 .footer
   background: #140d4e
   padding: 80px 0
@@ -305,6 +358,7 @@ select#filter-by-author
       a
         text-decoration: underline
         margin-bottom: 10px
+        font-size: 17px
         transition: all .3s ease
         &:hover
           color: #a2acdf
@@ -343,7 +397,6 @@ select#filter-by-author
   padding-top: 20px
   padding-left: 20px
   padding-bottom: 20px
-
   a
     color: white
     font-size: 20px
