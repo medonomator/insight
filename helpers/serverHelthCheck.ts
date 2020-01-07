@@ -24,8 +24,6 @@ export const serverHelthCheck = () => {
       }
     } catch (err) {
       TelegramBot.sendMessage('Website not response!');
-      // telegramBot.sendMessage(BOT_ID, 'restart docker-compose');
-      // const ls = spawn('docker-compose', ['restart mongo']);
       logger.error(err);
     }
   }, TIME_UPDATE_CHECKER);
