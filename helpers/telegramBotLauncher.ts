@@ -57,4 +57,7 @@ class TelegramBot {
 }
 
 export default TelegramBot.Init();
-TelegramBot.Init().sendMessage('Initialization');
+
+if (process.env.NODE_ENV !== 'development') {
+  TelegramBot.Init().sendMessage('Bot initialization');
+}
