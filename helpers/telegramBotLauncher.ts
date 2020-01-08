@@ -2,6 +2,7 @@ import Telegraf from 'telegraf';
 import SocksProxyAgent from 'socks-proxy-agent';
 import { logger } from './logger';
 import proxyList from '../config/data/proxyList';
+import {  IS_DEVELOPMENT } from '../constants'
 // var HttpProxyAgent = require('http-proxy-agent');
 // var ProxyAgent = require('proxy-agent');
 const BOT_ID = '409011202';
@@ -57,4 +58,7 @@ class TelegramBot {
 }
 
 export default TelegramBot.Init();
-TelegramBot.Init().sendMessage('Initialization');
+
+if (!IS_DEVELOPMENT) {
+  TelegramBot.Init().sendMessage('Bot initialization');
+}

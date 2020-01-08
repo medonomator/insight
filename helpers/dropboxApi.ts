@@ -24,4 +24,20 @@ export const dropboxUploadFile = () => {
       TelegramBot.sendMessage('Backup was Successful');
     },
   );
+  dropbox(
+    {
+      resource: 'files/upload',
+      parameters: {
+        path: '/backup/subscribers.json',
+      },
+      readStream: fs.createReadStream('static/backup/subscribers.json'),
+    },
+    err => {
+      if (err) {
+        logger.error(err);
+        TelegramBot.sendMessage('Not save in Dropbox');
+      }
+      TelegramBot.sendMessage('Backup was Successful');
+    },
+  );
 };

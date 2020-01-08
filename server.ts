@@ -9,7 +9,9 @@ import Boom from 'boom';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
 import { logger } from './helpers/logger';
+import { syncDataForLocalMongo } from './helpers/syncDataForLocalMongo';
 import userToken from './helpers/auth/user';
+import { IS_DEVELOPMENT } from './constants';
 // Routes
 import users from './routes/users';
 import views from './routes/views';
@@ -75,6 +77,10 @@ export class Server {
         validate: userToken,
         unauthorized: this.getErrorFunction,
       });
+
+      if (IS_DEVELOPMENT) {
+        await syncDataForLocalMongo();
+      }
 
       await insertDataToRedis();
       serverHelthCheck();

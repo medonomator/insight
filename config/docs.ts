@@ -16,6 +16,11 @@ export const users = {
     notes: userAuth,
     tags: ['api', 'user'],
   },
+  subscribeEmail: {
+    description: 'Email subscription',
+    notes: noAuth,
+    tags: ['api', 'user'],
+  },
 };
 
 export const docsAphorisms = {
