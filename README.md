@@ -8,4 +8,4 @@
 
 ### Gulp
 
-Для удобной отладки или верстки запускаем Gulp указав в gulpfile.js `.src('views/{nameTemplateHbs}.hbs')` имя шаблона c котороым хотим работать
+Для удобной отладки или верстки запускаем Gulp указав в gulpfile.js `.src('views/{nameTemplateHbs}.hbs')` имя шаблона c которым хотим работать
