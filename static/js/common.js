@@ -1,5 +1,4 @@
 if (sessionStorage.getItem('mainMenu') === 'visible') {
-  import { aphorisms } from '../../database/schemas/aphorisms';
   hamburger.classList.toggle('change');
   mainMenu.classList.toggle('main-menu-active');
 }
