@@ -1,35 +1,56 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
 import Main from '@/components/Main';
 import Aphorisms from '@/components/Aphorisms';
+import Affirmation from '@/components/Affirmation';
+import Content from '@/components/Content';
+import Materials from '@/components/Materials';
+import Tasks from '@/components/Tasks';
 import LoginPage from '@/components/LoginPage';
 import axios from 'axios';
 import { getBaseUrl, getToken, setAuthorizationToken } from '../helpers';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export const router = new Router({
+const router = new VueRouter({
   routes: [
     {
       path: '/admin',
-      name: 'Main',
       component: Main,
+      beforeEnter: (to, from, next) => checkAuth(to, next),
+      children: [
+        {
+          path: 'content',
+          component: Content,
+        },
+        {
+          path: 'aphorisms',
+          component: Aphorisms,
+        },
+        {
+          path: 'affirmation',
+          component: Affirmation,
+        },
+        {
+          path: 'meterials',
+          component: Materials,
+        },
+        {
+          path: 'tasks',
+          component: Tasks,
+        },
+      ],
     },
     {
       path: '/admin/login',
-      name: 'LoginPage',
       component: LoginPage,
-    },
-    {
-      path: '/admin/aphorisms',
-      name: 'Aphorisms',
-      component: Aphorisms,
     },
   ],
   mode: 'history',
+  base: process.env.BASE_URL,
 });
 
-router.beforeEach((to, from, next) => {
+const checkAuth = (to, next) => {
   const goToPath = path => {
     if (to.path !== path) next(path);
     next();
@@ -44,6 +65,6 @@ router.beforeEach((to, from, next) => {
   } else {
     goToPath('/admin/login');
   }
+};
 
-  console.log('Routing...');
-});
+export default router;

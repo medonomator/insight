@@ -40,19 +40,19 @@
 </template>
 
 <script>
-import axios from "axios";
-import { getBaseUrl } from "../helpers";
-import ModalForm from "@/components/ModalForm";
+import axios from 'axios';
+import { getBaseUrl } from '../helpers';
+import ModalForm from '@/components/ModalForm';
 
 export default {
   data() {
     return {
       aphorismData: [],
-      count: 0
+      count: 0,
     };
   },
   components: {
-    "modal-form": ModalForm
+    'modal-form': ModalForm,
   },
   async mounted() {
     const res = await axios.get(`${getBaseUrl()}/admin/aphorisms`);
@@ -61,36 +61,30 @@ export default {
   },
   methods: {
     headerFilter: async function(e) {
-      const res = await axios.get(
-        `${getBaseUrl()}/admin/aphorisms?${e.target.name}=${e.target.value}`
-      );
+      const res = await axios.get(`${getBaseUrl()}/admin/aphorisms?${e.target.name}=${e.target.value}`);
       this.aphorismData = res.data.data;
       this.count = res.data.count;
     },
     deleteAphorism: function(_id) {
-      axios
-        .delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } })
-        .then(res => {
-          this.aphorismData = this.aphorismData.filter(
-            item => item._id !== _id
-          );
-        });
+      axios.delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } }).then(() => {
+        this.aphorismData = this.aphorismData.filter(item => item._id !== _id);
+      });
     },
     addAphorism: function({ author, body, tags }) {
       axios
         .post(`${getBaseUrl()}/admin/aphorisms`, {
           author,
           body,
-          tags: tags.split(", ")
+          tags: tags.split(', '),
         })
         .then(res => {
           this.aphorismData.unshift({
             author,
             body,
-            tags: tags.split(", ").map(item => ({ name: item })),
-            _id: res.data._id
+            tags: tags.split(', ').map(item => ({ name: item })),
+            _id: res.data._id,
           });
-          this.$modal.hide("add-aphorism");
+          this.$modal.hide('add-aphorism');
         });
     },
     updateAphorism: function({ author, body, tags, _id }) {
@@ -99,30 +93,30 @@ export default {
           _id,
           author,
           body,
-          tags: tags.split(",")
+          tags: tags.split(','),
         })
-        .then(res => {
+        .then(() => {
           this.aphorismData = this.aphorismData.map(item => {
             return item._id === _id
               ? {
                   ...item,
                   author,
                   body,
-                  tags: tags.split(", ").map(item => ({ name: item })),
-                  _id
+                  tags: tags.split(', ').map(item => ({ name: item })),
+                  _id,
                 }
               : item;
           });
-          this.$modal.hide("add-aphorism");
+          this.$modal.hide('add-aphorism');
         });
     },
     show(nameModal, item) {
-      this.$modal.show("add-aphorism", { func: this[nameModal], item });
+      this.$modal.show('add-aphorism', { func: this[nameModal], item });
     },
     hide() {
-      this.$modal.hide("add-aphorism");
-    }
-  }
+      this.$modal.hide('add-aphorism');
+    },
+  },
 };
 </script>
 <style lang="sass" scoped>
@@ -132,7 +126,7 @@ export default {
   display: flex
   &-item
     display: flex
- 
+
 .aphorisms
   text-align: left
   font-size: 20px
@@ -147,18 +141,18 @@ export default {
     transition: all .3s ease
     &:hover
       background: #534763
-    
+
   &-author
     width: 250px
     border-right: 1px solid
     align-self: center
     padding: 15px 5px
-   
+
   &-body
     flex: 1
     align-self: center
     padding-left: 10px
- 
+
   &-tags
     width: 200px
     border-left: 1px solid
@@ -191,9 +185,9 @@ export default {
   transition: all .3s ease
   &:hover
     background: lighten(#238000, 5%)
-    
-.icon-pencil 
-  align-self: center  
+
+.icon-pencil
+  align-self: center
   padding-right: 15px
   transition: all .3s ease
   &:hover

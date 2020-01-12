@@ -2,20 +2,9 @@
   <modal name="add-aphorism" @before-close="beforeClose" @before-open="beforeOpen">
     <div class="modal-form">
       <input v-model="aphorismInputData.author" type="text" placeholder="Автор" />
-      <textarea
-        v-model="aphorismInputData.body"
-        rows="10"
-        cols="45"
-        class="aphorism-textarea"
-        placeholder="Афоризм"
-      />
+      <textarea v-model="aphorismInputData.body" rows="10" cols="45" class="aphorism-textarea" placeholder="Афоризм" />
       <input v-model="aphorismInputData.tags" type="text" placeholder="Топик" />
-      <input
-        class="add-aphorism"
-        v-on:click="handler(aphorismInputData)"
-        type="button"
-        value="Добавить"
-      />
+      <input class="add-aphorism" v-on:click="handler(aphorismInputData)" type="button" value="Добавить" />
     </div>
   </modal>
 </template>
@@ -25,12 +14,12 @@ export default {
     return {
       count: 0,
       aphorismInputData: {
-        author: "",
-        body: "",
-        tags: "",
-        _id: ""
+        author: '',
+        body: '',
+        tags: '',
+        _id: '',
       },
-      handler: () => {}
+      handler: () => {},
     };
   },
   methods: {
@@ -41,7 +30,7 @@ export default {
       if (item) {
         this.aphorismInputData = {
           ...item,
-          tags: item.tags.map(({ name }) => name).join(", ")
+          tags: item.tags.map(({ name }) => name).join(', '),
         };
       }
 
@@ -49,12 +38,12 @@ export default {
     },
     beforeClose() {
       this.aphorismInputData = {
-        author: "",
-        body: "",
-        tags: ""
+        author: '',
+        body: '',
+        tags: '',
       };
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="sass">
@@ -66,10 +55,10 @@ export default {
     margin: 3px
     border-radius: 4px
     border: 1px solid silver
-    padding: 6px 10px 
+    padding: 6px 10px
     font-size: 16px
 
-.aphorism-textarea 
+.aphorism-textarea
   height: 100px
 
 .add-aphorism

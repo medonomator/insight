@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const getBaseUrl = () => {
-  return 'http://134.209.163.196';
-  // return 'localhost:5000';
+  return 'http://83.166.242.213';
+  // return 'http://localhost:5000';
 };
 
 export const setAuthorizationToken = token => {
