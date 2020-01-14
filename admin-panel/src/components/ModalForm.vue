@@ -46,7 +46,7 @@ export default {
   },
 };
 </script>
-<style lang="sass">
+<style lang="sass" scoped>
 .modal-form
   display: flex
   flex-direction: column
@@ -60,16 +60,4 @@ export default {
 
 .aphorism-textarea
   height: 100px
-
-.add-aphorism
-  border: none
-  color: white
-  background: #238000
-  border-radius: 4px
-  padding: 5px 20px
-  font-size: 16px
-  cursor: pointer
-  transition: all .3s ease
-  &:hover
-    background: lighten(#238000, 5%)
 </style>

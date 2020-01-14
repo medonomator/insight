@@ -5,15 +5,27 @@
   {{>head}}
 </head>
 
+
 <body>
   <div class="bg"></div>
   <div class="wrapper">
     {{>header}}
 
-    <div class="half-container">
-      <h1>В разработке...</h1>
-    </div>
+    <h1>
+      {{#if affirmationPage.headerH1}}
+      {{affirmationPage.headerH1}}
+      {{else}}
+      В разработке...
+      {{/if}}
 
+
+      <div class="header-text">
+        <p>
+          {{#if affirmationPage.headerText}}
+          {{affirmationPage.headerText}}
+          {{else}}
+          {{/if}}
+      </div>
   </div>
   {{>footer}}
 </body>

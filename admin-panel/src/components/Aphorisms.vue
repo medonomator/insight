@@ -205,18 +205,6 @@ export default {
   &:hover
     color: green
 
-.add-aphorism
-  border: none
-  color: white
-  background: #238000
-  border-radius: 4px
-  padding: 5px 20px
-  font-size: 16px
-  cursor: pointer
-  transition: all .3s ease
-  &:hover
-    background: lighten(#238000, 5%)
-
 .aphorisms-topic
   margin-right: 10px
 </style>
