@@ -52,14 +52,14 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
   }
 };
 
-export const getNotesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getNotesPage');
-  return h.view('notes', { notes: [] });
+export const getAffirmationPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getAffirmationPage');
+  return h.view('affirmation', { notes: [] });
 };
 
-export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getTechniquesPage');
-  return h.view('techniques', { techniques: [] });
+export const getMaterialsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+  logger.info('getMaterialsPage');
+  return h.view('materials', { materials: [] });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {

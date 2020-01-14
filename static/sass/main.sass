@@ -62,6 +62,10 @@ select#filter-by-author
   margin-bottom: 30px
   cursor: pointer
 
+.h1-contacts
+  font-size: 28px
+  width: 70%
+
 .bg
   background: url('../img/whale.png') no-repeat
   background-size: cover
@@ -98,29 +102,29 @@ select#filter-by-author
     background: darken(#3753E7, 5%)
 
 .more-button
-  @extend .button
-  width: 157px
-  height: 40px
-  margin-left: 84%
-  display: block
-  padding-top: 8px
-  padding-left: 43px
-  font-size: 15px
-  display: block
-  font-size: 15px
+  @extends .button
+    width: 157px
+    height: 40px
+    margin-left: 84%
+    display: block
+    padding-top: 8px
+    padding-left: 43px
+    font-size: 15px
+    display: block
+    font-size: 15px
   &:hover
     color: white
 
 .more-button-aphorism
-  @extend .button
-  width: auto
-  padding: 0 30px
-  height: 40px
-  margin-left: 72%
-  display: block
-  font-size: 15px
-  display: block
-  font-size: 15px
+  @extends .button
+    width: auto
+    padding: 0 30px
+    height: 40px
+    margin-left: 72%
+    display: block
+    font-size: 15px
+    display: block
+    font-size: 15px
   &:hover
     color: white
 
@@ -403,5 +407,4 @@ select#filter-by-author
     transition: all .3s ease
     &:hover
       color: darken(white, 20%)
-
 @import "media" // Всегда в конце

@@ -1,7 +1,8 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../controllers/admin/aphorisms';
-import { docsAphorisms } from '../config/docs';
+import { docsAphorisms, docsMainData } from '../config/docs';
+import { getMainData } from '../controllers/admin/mainData';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -92,6 +93,17 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .trim()
             .required(),
         },
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: '/admin/getMainData',
+    handler: getMainData,
+    options: {
+      ...docsMainData,
+      auth: {
+        strategy: 'users',
       },
     },
   },

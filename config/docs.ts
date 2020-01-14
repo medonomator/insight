@@ -66,3 +66,9 @@ export const docsStatic = {
     tags: ['api', 'user'],
   },
 };
+
+export const docsMainData = {
+  description: 'Get main data',
+  notes: userAuth,
+  tags: ['api', 'user'],
+};
