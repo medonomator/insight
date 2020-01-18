@@ -2,60 +2,122 @@
   <div class="content">
     <div class="block">
       <h1>Главная</h1>
-      <p class="headerH1">{{ mainData.mainPage && mainData.mainPage.headerH1 }}</p>
-      <p class="headerText">{{ mainData.mainPage && mainData.mainPage.headerText }}</p>
-      <input v-on:click="show('isChangeContent')" type="button" value="Изменить" class="add-aphorism" />
+      <v-text-field :disabled="isChangeMainPageData" v-model="mainPage.headerH1" />
+      <v-textarea :disabled="isChangeMainPageData" v-model="mainPage.headerText" />
+      <v-btn
+        :disabled="!isChangeMainPageData"
+        class="button"
+        color="#2196F3"
+        @click="isChangeMainPageData = !isChangeMainPageData"
+        >Редактировать</v-btn
+      >
+      <v-btn
+        :disabled="isChangeMainPageData"
+        class="button"
+        color="#64DD17"
+        @click="
+          saveData({ mainPage });
+          isChangeMainPageData = !isChangeMainPageData;
+        "
+        >Сохранить</v-btn
+      >
     </div>
-    <hr />
+
     <div class="block">
       <h1>Афоризмы</h1>
-      <p class="headerH1">{{ mainData.aphorismPage && mainData.aphorismPage.headerH1 }}</p>
-      <p class="headerText">{{ mainData.aphorismPage && mainData.aphorismPage.headerText }}</p>
-      <input v-on:click="show('isChangeContent')" type="button" value="Изменить" class="add-aphorism" />
+      <v-text-field :disabled="isChangeAphorismPageData" v-model="aphorismPage.headerH1" />
+      <v-textarea :disabled="isChangeAphorismPageData" v-model="aphorismPage.headerText" />
+
+      <v-btn class="button" color="#2196F3" @click="isChangeAphorismPageData = !isChangeAphorismPageData"
+        >Редактировать</v-btn
+      >
+      <v-btn
+        class="button"
+        color="#64DD17"
+        @click="
+          saveData({ aphorismPage });
+          isChangeAphorismPageData = !isChangeAphorismPageData;
+        "
+        >Сохранить</v-btn
+      >
     </div>
-    <hr />
+
     <div class="block">
       <h1>Аффирмации</h1>
-      <p class="headerH1">{{ mainData.affirmationPage && mainData.affirmationPage.headerH1 }}</p>
-      <p class="headerText">{{ mainData.affirmationPage && mainData.affirmationPage.headerText }}</p>
-      <input v-on:click="show('isChangeContent')" type="button" value="Изменить" class="add-aphorism" />
+      <v-text-field :disabled="isChangeAffirmationPageData" v-model="affirmationPage.headerH1" />
+      <v-textarea :disabled="isChangeAffirmationPageData" v-model="affirmationPage.headerText" />
+
+      <v-btn class="button" color="#2196F3" @click="isChangeAffirmationPageData = !isChangeAffirmationPageData"
+        >Редактировать</v-btn
+      >
+      <v-btn
+        class="button"
+        color="#64DD17"
+        @click="
+          saveData({ affirmationPage });
+          isChangeAffirmationPageData = !isChangeAffirmationPageData;
+        "
+        >Сохранить</v-btn
+      >
     </div>
-    <hr />
+
     <div class="block">
       <h1>Материалы</h1>
-      <p class="headerH1">{{ mainData.materialPage && mainData.materialPage.headerH1 }}</p>
-      <p class="headerText">{{ mainData.materialPage && mainData.materialPage.headerText }}</p>
-      <input v-on:click="show('isChangeContent')" type="button" value="Изменить" class="add-aphorism" />
+      <v-text-field :disabled="isChangeMaterialPageData" v-model="materialPage.headerH1" />
+      <v-textarea :disabled="isChangeMaterialPageData" v-model="materialPage.headerText" />
+
+      <v-btn class="button" color="#2196F3" @click="isChangeMaterialPageData = !isChangeMaterialPageData"
+        >Редактировать</v-btn
+      >
+      <v-btn
+        class="button"
+        color="#64DD17"
+        @click="
+          saveData({ materialPage });
+          isChangeMaterialPageData = !isChangeMaterialPageData;
+        "
+        >Сохранить</v-btn
+      >
     </div>
-    <modal-form />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { getBaseUrl } from '../helpers';
-import ModalForm from '@/components/ModalForm';
 export default {
   data() {
     return {
-      mainData: {},
-      count: 0,
-      isChangeContent: false,
+      mainPage: {},
+      aphorismPage: {},
+      affirmationPage: {},
+      materialPage: {},
+      isChangeMainPageData: true,
+      isChangeAphorismPageData: true,
+      isChangeAffirmationPageData: true,
+      isChangeMaterialPageData: true,
     };
   },
-  components: {
-    'modal-form': ModalForm,
-  },
   async mounted() {
-    const res = await axios.get(`${getBaseUrl()}/admin/getMainData`);
-    this.mainData = res.data;
-    console.log('=============================');
-    console.log('logging', this.mainData);
-    console.log('=============================');
+    try {
+      const { data } = await axios.get(`${getBaseUrl()}/admin/mainData`);
+      const { mainPage, aphorismPage, affirmationPage, materialPage } = data;
+
+      this.mainPage = mainPage || {};
+      this.aphorismPage = aphorismPage || {};
+      this.affirmationPage = affirmationPage || {};
+      this.materialPage = materialPage || {};
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
-    show(nameModal, item) {
-      this.$modal.show('add-aphorism', { func: this[nameModal], item });
+    async saveData(data) {
+      try {
+        await axios.put(`${getBaseUrl()}/admin/mainData`, data);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -77,5 +139,8 @@ h1 {
 .headerH1,
 .headerText {
   margin-bottom: 25px;
+}
+.button {
+  margin-right: 20px;
 }
 </style>

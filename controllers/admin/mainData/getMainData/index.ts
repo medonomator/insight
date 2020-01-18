@@ -1,6 +1,6 @@
 import Boom from 'boom';
-import { mainData } from '../../../database/schemas/mainData';
-import { logger } from '../../../helpers/logger';
+import { mainData } from '../../../../database/schemas/mainData';
+import { logger } from '../../../../helpers/logger';
 /**
  * Get main data
  * @param {}

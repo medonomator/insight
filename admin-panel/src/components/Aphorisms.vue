@@ -5,7 +5,7 @@
     </div>
     <modal-form />
 
-    <input v-on:click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
+    <input @click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
     <ul class="aphorisms-header">
       <div class="header-input-filter">
         <v-text-field @input="authorFilterHandler" label="Автор"></v-text-field>
@@ -33,18 +33,10 @@
             <span class="aphorisms-topic" v-for="(tag, index) in item.tags" :key="index">{{ tag.name }}</span>
           </td>
           <td>
-            <font-awesome-icon
-              v-on:click="show('updateAphorism', item)"
-              class="icon-pencil"
-              icon="pen"
-            ></font-awesome-icon>
+            <font-awesome-icon @click="show('updateAphorism', item)" class="icon-pencil" icon="pen"></font-awesome-icon>
           </td>
           <td>
-            <font-awesome-icon
-              v-on:click="deleteAphorism(item._id)"
-              class="icon-trash"
-              icon="trash"
-            ></font-awesome-icon>
+            <font-awesome-icon @click="deleteAphorism(item._id)" class="icon-trash" icon="trash"></font-awesome-icon>
           </td>
         </tr>
       </tbody>
