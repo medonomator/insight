@@ -28,10 +28,15 @@
       <v-text-field :disabled="isChangeAphorismPageData" v-model="aphorismPage.headerH1" />
       <v-textarea :disabled="isChangeAphorismPageData" v-model="aphorismPage.headerText" />
 
-      <v-btn class="button" color="#2196F3" @click="isChangeAphorismPageData = !isChangeAphorismPageData"
+      <v-btn
+        :disabled="!isChangeAphorismPageData"
+        class="button"
+        color="#2196F3"
+        @click="isChangeAphorismPageData = !isChangeAphorismPageData"
         >Редактировать</v-btn
       >
       <v-btn
+        :disabled="isChangeAphorismPageData"
         class="button"
         color="#64DD17"
         @click="
@@ -47,10 +52,15 @@
       <v-text-field :disabled="isChangeAffirmationPageData" v-model="affirmationPage.headerH1" />
       <v-textarea :disabled="isChangeAffirmationPageData" v-model="affirmationPage.headerText" />
 
-      <v-btn class="button" color="#2196F3" @click="isChangeAffirmationPageData = !isChangeAffirmationPageData"
+      <v-btn
+        :disabled="!isChangeAffirmationPageData"
+        class="button"
+        color="#2196F3"
+        @click="isChangeAffirmationPageData = !isChangeAffirmationPageData"
         >Редактировать</v-btn
       >
       <v-btn
+        :disabled="isChangeAffirmationPageData"
         class="button"
         color="#64DD17"
         @click="
@@ -66,10 +76,15 @@
       <v-text-field :disabled="isChangeMaterialPageData" v-model="materialPage.headerH1" />
       <v-textarea :disabled="isChangeMaterialPageData" v-model="materialPage.headerText" />
 
-      <v-btn class="button" color="#2196F3" @click="isChangeMaterialPageData = !isChangeMaterialPageData"
+      <v-btn
+        :disabled="!isChangeMaterialPageData"
+        class="button"
+        color="#2196F3"
+        @click="isChangeMaterialPageData = !isChangeMaterialPageData"
         >Редактировать</v-btn
       >
       <v-btn
+        :disabled="isChangeMaterialPageData"
         class="button"
         color="#64DD17"
         @click="
