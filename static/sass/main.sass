@@ -101,17 +101,20 @@ select#filter-by-author
   &:hover
     background: darken(#3753E7, 5%)
 
+.more-button-container
+  display: flex
+  margin-right: 330px
+  justify-content: flex-end
+
 .more-button
-  @extends .button
-    width: 157px
-    height: 40px
-    margin-left: 84%
-    display: block
-    padding-top: 8px
-    padding-left: 43px
-    font-size: 15px
-    display: block
-    font-size: 15px
+  width: 157px
+  height: 40px
+  display: block
+  padding-top: 8px
+  padding-left: 43px
+  font-size: 15px
+  display: block
+  font-size: 15px
   &:hover
     color: white
 
@@ -194,6 +197,8 @@ select#filter-by-author
   margin-top: 70px
   h2
     padding-bottom: 40px
+  .aphorisms-item
+    margin-right: 330px
 
 .aphorisms-container
   position: relative
@@ -390,6 +395,19 @@ select#filter-by-author
       &:hover
         color: #a2acdf
         cursor: pointer
+
+.development-page,
+p
+  color: white
+  font-size: 20px
+  padding-top: 40px
+
+.material-page
+  margin-top: 40px
+  p
+    color: white
+    font-size: 20px
+    font-size: 26px
 
 .page-contact
   color: white
