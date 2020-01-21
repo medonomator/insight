@@ -135,6 +135,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
             headerH1: Joi.string().allow(''),
             headerText: Joi.string().allow(''),
           }).optional(),
+          developmentPlanPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
         },
       },
     },

@@ -5,7 +5,6 @@
   {{>head}}
 </head>
 
-
 <body>
   <div class="bg"></div>
   <div class="wrapper">
@@ -17,97 +16,99 @@
       {{else}}
       Мудрость афоризмов
       {{/if}}
+    </h1>
 
-      <div class="header-text">
-        <p>
-          {{#if aphorismPage.headerText}}
-          {{aphorismPage.headerText}}
-          {{else}}
-          Если ты жаждешь глубинной трансформации, этот ресурс поможет тебе. Раз ты здесь, значит,
-          готов к переменам и
-          открыт для нового.
-          Рост счастья и состояние наполненности от простого бытия меняет даже мрачную реальность. Сама возможность Быть
-          уже является большим чудом и счастьем. Постигшему эту истину раскрывается мир неограниченных возможностей.
-          Хоть на секунду притормози и пристально посмотри на того, кто задыхается в серой реальности, кто не находит
-          себя
-          в этом мире. Может, это вовсе не ты? Давай вместе попробуем заглянуть внутрь измученной оболочки, стать ближе
-          к
-          лучшей версии тебя.
-          В каждом разделе мы собираем то, что способно изменить любого, кто к этому стремится. Дать ответ на нужный
-          вопрос, заставить задуматься или просто вдохновить на новый день.
-          Читай, размышляй и используй то, что тебе подойдет. Удачи!
-          {{/if}}
-      </div>
+    <div class="header-text">
+      <p>
+        {{#if aphorismPage.headerText}}
+        {{aphorismPage.headerText}}
+        {{else}}
+        Если ты жаждешь глубинной трансформации, этот ресурс поможет тебе. Раз ты здесь, значит,
+        готов к переменам и
+        открыт для нового.
+        Рост счастья и состояние наполненности от простого бытия меняет даже мрачную реальность. Сама возможность Быть
+        уже является большим чудом и счастьем. Постигшему эту истину раскрывается мир неограниченных возможностей.
+        Хоть на секунду притормози и пристально посмотри на того, кто задыхается в серой реальности, кто не находит
+        себя
+        в этом мире. Может, это вовсе не ты? Давай вместе попробуем заглянуть внутрь измученной оболочки, стать ближе
+        к
+        лучшей версии тебя.
+        В каждом разделе мы собираем то, что способно изменить любого, кто к этому стремится. Дать ответ на нужный
+        вопрос, заставить задуматься или просто вдохновить на новый день.
+        Читай, размышляй и используй то, что тебе подойдет. Удачи!
+        {{/if}}
+      </p>
+    </div>
 
-      <div class="regular-page">
-        <section class="aphorisms-container">
-          <div class="lds-ring">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+    <div class="regular-page">
+      <section class="aphorisms-container">
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        {{#each aphorisms as |item index| }}
+        <div class="aphorisms-item">
+          <div class="aphorisms-tags">
+            {{#each this.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
           </div>
-          {{#each aphorisms as |item index| }}
-          <div class="aphorisms-item">
-            <div class="aphorisms-tags">
-              {{#each this.tags}}
-              <span>{{this.name}}</span>
-              {{/each}}
+          <div class="aphorisms-item-body">
+            <p>{{this.body}}</p>
+          </div>
+          <div class="aphorisms-item-bottom">
+            <div class="aphorisms-authors">
+              <span>{{this.author}}</span>
             </div>
-            <div class="aphorisms-item-body">
-              <p>{{this.body}}</p>
+            <div class="aphorisms-icons">
+              <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
+              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
             </div>
-            <div class="aphorisms-item-bottom">
-              <div class="aphorisms-authors">
-                <span>{{this.author}}</span>
-              </div>
-              <div class="aphorisms-icons">
-                <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
-                <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
-              </div>
-            </div>
-          </div>
-          {{/each}}
-          <input type="button" class="more-button more-button-aphorism" value="Показать еще 100"></input>
-
-          <div class="top-arrow">
-            <img src="{{path}}/img/scrollToTop.png" alt="alt">
-          </div>
-        </section>
-
-        <div class="filter-block">
-          <div class="filter-block-item">
-            <p>Категория</p>
-            <select id="filter-by-categories">
-              <option value="Мыслители, философы">Мыслители, философы</option>
-              <option value="Кастанеда">Карлос кастанеда</option>
-            </select>
-          </div>
-
-          <div class="filter-block-item">
-            <p>Топик</p>
-            <select id="filter-by-topic">
-              {{#each categories}}
-              <option value={{this.machineName}}>{{this.name}}</option>
-              {{/each}}
-            </select>
-          </div>
-
-          <div class="filter-block-item">
-            <p>Автор</p>
-            <select id="filter-by-author">
-              {{#each authors}}
-              <option value={{this.name}}>{{this.name}}</option>
-              {{/each}}
-            </select>
-          </div>
-
-          <div class="shuffle-button-wrapper">
-            <input type="button" class="shuffle-button" value="Перемешать">
           </div>
         </div>
+        {{/each}}
+        <input type="button" class="more-button more-button-aphorism" value="Показать еще 100"></input>
+
+        <div class="top-arrow">
+          <img src="{{path}}/img/scrollToTop.png" alt="alt">
+        </div>
+      </section>
+
+      <div class="filter-block">
+        <div class="filter-block-item">
+          <p>Категория</p>
+          <select id="filter-by-categories">
+            <option value="Мыслители, философы">Мыслители, философы</option>
+            <option value="Кастанеда">Карлос кастанеда</option>
+          </select>
+        </div>
+
+        <div class="filter-block-item">
+          <p>Топик</p>
+          <select id="filter-by-topic">
+            {{#each categories}}
+            <option value={{this.machineName}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="filter-block-item">
+          <p>Автор</p>
+          <select id="filter-by-author">
+            {{#each authors}}
+            <option value={{this.name}}>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+
+        <div class="shuffle-button-wrapper">
+          <input type="button" class="shuffle-button" value="Перемешать">
+        </div>
       </div>
-      <!-- end wrapper -->
+    </div>
+    <!-- end wrapper -->
   </div>
   {{>footer}}
 </body>

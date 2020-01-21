@@ -27,6 +27,10 @@ interface ImainData {
     headerH1: string;
     headerText: string;
   };
+  developmentPlanPage?: {
+    headerH1: string;
+    headerText: string;
+  };
 }
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -82,9 +86,10 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
   return h.view('affirmation', { affirmationPage });
 };
 
-export const getMaterialsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const { materialPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
   logger.info('getMaterialsPage');
-  return h.view('materials', { materials: [] });
+  return h.view('materials', { materialPage });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -96,9 +101,10 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getGratitudePage');
   return h.view('gratitude');
 };
-export const devlopmentPlanPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+export const devlopmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const { developmentPlanPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
   logger.info('devlopmentPlanPage');
-  return h.view('developmentPlan');
+  return h.view('developmentPlan', { developmentPlanPage });
 };
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {

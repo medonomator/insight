@@ -8,7 +8,7 @@ import { logger } from '../../../../helpers/logger';
  */
 export const changeMainData = async req => {
   try {
-    const { mainPage, aphorismPage, affirmationPage, materialPage } = req.payload;
+    const { mainPage, aphorismPage, affirmationPage, materialPage, developmentPlanPage } = req.payload;
     const updater = {};
 
     if (mainPage) {
@@ -22,6 +22,9 @@ export const changeMainData = async req => {
     }
     if (materialPage) {
       updater['materialPage'] = materialPage;
+    }
+    if (developmentPlanPage) {
+      updater['developmentPlanPage'] = developmentPlanPage;
     }
 
     logger.info(`Get main data`);

@@ -38,6 +38,15 @@ const mainDataSchema = new Mongoose.Schema(
         type: String,
       },
     },
+    developmentPlanPage: {
+      type: Object,
+      headerH1: {
+        type: String,
+      },
+      headerText: {
+        type: String,
+      },
+    },
   },
   { versionKey: false },
 );

@@ -94,6 +94,29 @@
         >Сохранить</v-btn
       >
     </div>
+    <div class="block">
+      <h1>План Развития проекта</h1>
+      <v-text-field :disabled="isDevelopmentPlanPage" v-model="developmentPlanPage.headerH1" />
+      <v-textarea :disabled="isDevelopmentPlanPage" v-model="developmentPlanPage.headerText" />
+
+      <v-btn
+        :disabled="!isDevelopmentPlanPage"
+        class="button"
+        color="#2196F3"
+        @click="isDevelopmentPlanPage = !isDevelopmentPlanPage"
+        >Редактировать</v-btn
+      >
+      <v-btn
+        :disabled="isDevelopmentPlanPage"
+        class="button"
+        color="#64DD17"
+        @click="
+          saveData({ developmentPlanPage });
+          isDevelopmentPlanPage = !isDevelopmentPlanPage;
+        "
+        >Сохранить</v-btn
+      >
+    </div>
   </div>
 </template>
 
@@ -107,21 +130,24 @@ export default {
       aphorismPage: {},
       affirmationPage: {},
       materialPage: {},
+      developmentPlanPage: {},
       isChangeMainPageData: true,
       isChangeAphorismPageData: true,
       isChangeAffirmationPageData: true,
       isChangeMaterialPageData: true,
+      isDevelopmentPlanPage: true,
     };
   },
   async mounted() {
     try {
       const { data } = await axios.get(`${getBaseUrl()}/admin/mainData`);
-      const { mainPage, aphorismPage, affirmationPage, materialPage } = data;
+      const { mainPage, aphorismPage, affirmationPage, materialPage, developmentPlanPage } = data;
 
       this.mainPage = mainPage || {};
       this.aphorismPage = aphorismPage || {};
       this.affirmationPage = affirmationPage || {};
       this.materialPage = materialPage || {};
+      this.developmentPlanPage = developmentPlanPage || {};
     } catch (error) {
       console.log(error);
     }
