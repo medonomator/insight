@@ -1,7 +1,9 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
 import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../controllers/admin/aphorisms';
-import { docsAphorisms } from '../config/docs';
+import { docsAphorisms, docsMainData } from '../config/docs';
+import { getMainData } from '../controllers/admin/mainData/getMainData';
+import { changeMainData } from '../controllers/admin/mainData/changeMainData';
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -91,6 +93,52 @@ const usersRoutes: Hapi.ServerRoute[] = [
           _id: Joi.string()
             .trim()
             .required(),
+        },
+      },
+    },
+  },
+  {
+    method: 'GET',
+    path: '/admin/mainData',
+    handler: getMainData,
+    options: {
+      ...docsMainData.getMainData,
+      auth: {
+        strategy: 'users',
+      },
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/admin/mainData',
+    handler: changeMainData,
+    options: {
+      ...docsMainData.changeMainData,
+      auth: {
+        strategy: 'users',
+      },
+      validate: {
+        payload: {
+          mainPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
+          aphorismPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
+          affirmationPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
+          materialPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
+          developmentPlanPage: Joi.object({
+            headerH1: Joi.string().allow(''),
+            headerText: Joi.string().allow(''),
+          }).optional(),
         },
       },
     },
