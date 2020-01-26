@@ -41,7 +41,7 @@ gulp.task('handlebars', function() {
     };
 
   return gulp
-    .src('views/materials.hbs')
+    .src('views/aphorisms.hbs')
     .pipe(handlebars(templateData, options))
     .pipe(rename('index.html'))
     .pipe(gulp.dest('dist'));

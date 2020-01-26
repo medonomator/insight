@@ -56,7 +56,7 @@ const templateItemAphorism = data => {
 };
 
 const loadingTemplateAphorism = data => {
-  let replaceHtml;
+  let replaceHtml = '';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
                       <div class="aphorisms-tags">${item.tags[0] &&
@@ -104,11 +104,10 @@ if (moreButtonAphorism) {
     counter++;
     funcRequest(`admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, res => {
       let aphorismsItems = document.createRange().createContextualFragment(loadingTemplateAphorism(res.data));
-      aphorismsContainer.appendChild(aphorismsItems);
+      moreButtonAphorism.parentNode.insertBefore(aphorismsItems, moreButtonAphorism);
 
       if (res.count < 100) {
         moreButtonAphorism.value = moreButtonAphorism.value.replace('100', res.count);
-        // insert counter in button text
       }
 
       if (!res.count) {
@@ -123,12 +122,10 @@ if (topArrow) {
 
   window.addEventListener('click', function(e) {
     if (e.target.closest('.fa-clone')) {
-      console.log('=============================');
-      console.log('logging', e.target.closest('.fa-clone'));
-      console.log('=============================');
+      // TODO: ...
     }
   });
-  
+
   window.addEventListener('scroll', e => {
     if (window.pageYOffset > 600) {
       topArrow.style.display = 'block';
@@ -141,22 +138,33 @@ if (topArrow) {
   }
 }
 
-// Subscribe
-const subscribeInput = document.querySelector('.subscribe-input');
-const subscribeButton = document.querySelector('.subscribe-button');
+successSubscribeButton.addEventListener('click', event => {
+  thanksForSubscription.style.display = 'none';
+});
 
-subscribeButton.addEventListener('click', (event) => {
+subscribeButton.addEventListener('click', event => {
   event.preventDefault();
 
-  const sendData = {
-    'email': subscribeInput.value
-  }
+  if (!subscribeInput.value) {
+    errorElement.innerHTML = 'Заполните поле email';
+    errorElement.style.display = 'block';
+  } else {
+    fetch(`${BASE_URL}/user/subscribeEmail`, {
+      method: 'POST',
+      body: JSON.stringify({ email: subscribeInput.value }),
+    })
+      .then(res => {
+        if (res.status === 400) {
+          throw 'Неверный email';
+        }
 
-  fetch(`${BASE_URL}/user/subscribeEmail`, {
-    method: 'POST',
-    body: JSON.stringify(sendData)
-  })
-  .then(response => response.ok ? response : Promise.reject(response))
-  .then(() => alert('Подписка оформлена'))
-  .catch(() => alert('Произошла ошибка, попробуйте снова'))
-})
+        errorElement.style.display = 'none';
+        subscribeInput.value = '';
+        thanksForSubscription.style.display = 'flex';
+      })
+      .catch(error => {
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = error;
+      });
+  }
+});

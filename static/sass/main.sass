@@ -119,15 +119,15 @@ select#filter-by-author
     color: white
 
 .more-button-aphorism
-  @extends .button
-    width: auto
-    padding: 0 30px
-    height: 40px
-    margin-left: 72%
-    display: block
-    font-size: 15px
-    display: block
-    font-size: 15px
+
+  width: auto
+  padding: 0 30px
+  height: 40px
+  margin-left: 72%
+  display: block
+  font-size: 15px
+  display: block
+  font-size: 15px
   &:hover
     color: white
 
@@ -396,11 +396,11 @@ select#filter-by-author
         color: #a2acdf
         cursor: pointer
 
-.development-page,
-p
-  color: white
-  font-size: 20px
-  padding-top: 40px
+.development-page
+  p
+    color: white
+    font-size: 20px
+    padding-top: 40px
 
 .material-page
   margin-top: 40px
@@ -412,6 +412,46 @@ p
 .page-contact
   color: white
   margin-top: 80px
+
+.error-element
+  display: none
+  font-size: 16px
+  color: #f3a2a2
+
+.thanks-for-subscription
+  width: 300px
+  height: 150px
+  background: white
+  position: fixed
+  margin: auto
+  top: 200px
+  z-index: 100
+  top: 50%
+  left: 50%
+  margin-top: -75px
+  margin-left: -150px
+  border-radius: 2px
+  box-shadow: 0 2px 14px rgba(135,135,135,.25)
+  border: 1px solid silver
+  display: none
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  animation-duration: .4s
+  animation-name: show
+  transition: all .3s ease
+  p
+    font-size: 20px
+    padding-bottom: 20px
+  input
+    padding: 2px 45px
+    @extend .button
+
+@keyframes show
+  from
+    opacity: 0
+  to
+    opacity: 1
 
 // contacts
 .contacts

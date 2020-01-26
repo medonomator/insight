@@ -8,6 +8,7 @@ module.exports = {
       ignore_watch: ['admin-panel', 'static/backup'],
       env: {
         NODE_ENV: 'development',
+        PG_URI: 'development',
       },
     },
   ],
