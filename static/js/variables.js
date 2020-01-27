@@ -19,17 +19,4 @@ const thanksForSubscription = document.querySelector('.thanks-for-subscription')
 // helpers
 const preloaderNone = () => (preloader.style.display = 'none');
 
-// // const faClone = document.querySelectorAll('.fa-clone');
-// // const faShare = document.querySelectorAll('.fa-share-alt');
-// // const shuffleButton = document.querySelector('.shuffle-button');
-// // const subscribeButton = document.querySelector('.subscribe-button');
-
-// // faClone.forEach(item => {
-// //   item.addEventListener('click', e => alert('В разработке...'));
-// // });
-// // faShare.forEach(item => {
-// //   item.addEventListener('click', e => alert('В разработке...'));
-// // });
-
-// shuffleButton.addEventListener('click', e => alert('Подставить функцию перемешки.'));
-// subscribeButton.addEventListener('click', e => alert('Вы подписались на новости.'));
+const shuffleButton = document.querySelector('.shuffle-button');
