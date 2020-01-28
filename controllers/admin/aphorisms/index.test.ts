@@ -1,8 +1,8 @@
 import Boom from 'boom';
 import { aphorisms } from '../../../database/schemas/aphorisms';
+import { createAphorism, getAphorisms } from './index';
 
-import { createAphorism } from './index';
-
+jest.mock('../../../helpers');
 jest.mock('mongoose', () => {
   const Schema = jest.fn().mockImplementation(() => ({
     pre: jest.fn(),
@@ -16,67 +16,60 @@ jest.mock('mongoose', () => {
     disconnect: jest.fn().mockResolvedValue('Ok'),
     Schema,
     model: jest.fn(params => ({
-      collection: {
-        initializeOrderedBulkOp: jest.fn(() => {
-          switch (params) {
-            case 'stocks_1':
-              return {
-                insert: jest.fn(),
-                execute: jest.fn(),
-              };
-            case 'stocks_E':
-              throw new Error();
-          }
-        }),
-      },
-      find: jest.fn(() => ({
-        lean: jest.fn(() => {
-          return [];
-        }),
-      })),
+      findOne: jest.fn(({ body }) => {
+        switch (body) {
+          case 'dublicate':
+            return true;
+          case 'notDublicate':
+            return null;
+          case 'E':
+            throw new Error('Ошибка подключения к базе');
+        }
+      }),
+      create: jest.fn(() => {
+        return 'ok';
+      }),
     })),
   };
 });
 
-const bulk = db.stocks('orgId').collection.initializeOrderedBulkOp as jest.Mock;
-const find = db.stocks('orgId').find as jest.Mock;
-
-beforeAll(() => {
-  process.env = {
-    MONGOURI: 'mongodb://123',
-  };
-});
+const findOne = aphorisms.findOne as jest.Mock;
+const create = aphorisms.create as jest.Mock;
 
 beforeEach(() => {
-  bulk.mockClear();
-  find.mockClear();
+  findOne.mockClear();
+  create.mockClear();
 });
 
-const getRequest = (orgId: string) => ({
-  payload: [
-    {
-      store: 'nameStore',
-      uuid: 'faa91c0c-c3ed-11e9-aa8c-2a2ae2dbcce4',
-      quantity: 10,
-    },
-  ],
-  auth: {
-    credentials: { orgId },
+const getRequest = (body: string) => ({
+  payload: {
+    author: 'Д. Беллерс',
+    body,
+    tags: [{ name: 'Труд' }],
+    category: 'Мыслители, философы',
   },
 });
 
 describe('Тестирование удачных ответов', () => {
   test('Остатки успешно добавляются', async () => {
-    const request = getRequest('1');
-    const result = await controller(request as any);
+    const request = getRequest('notDublicate');
+    const result = await createAphorism(request as any);
     expect(result).toEqual('ok');
   });
 });
 
 describe('Обработка ошибок', () => {
   test('Ошибка подключения к базе', async () => {
+    const request = getRequest('dublicate');
+    const result = await createAphorism(request as any);
+    expect(result).toMatchObject(Boom.conflict('The aphorism with such a body already exists'));
+  });
+});
+
+describe('Обработка ошибок', () => {
+  test('Ошибка подключения к базе', async () => {
     const request = getRequest('E');
-    const result = await controller(request as any);
-    expect(result).toMatchObject(Boom.badRequest(errorMessages.UNKNOWMN));
+    const result = await createAphorism(request as any);
+    expect(result).toMatchObject(Boom.badImplementation('Ошибка подключения к базе'));
   });
 });
