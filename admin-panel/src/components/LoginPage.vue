@@ -1,27 +1,23 @@
 <template>
-  <div>
-    <input name="email" v-model="email" class="input" type="text" />
-    <input name="password" v-model="password" class="input" type="text" />
-    <input
-      v-on:click="auth({ email, password })"
-      type="button"
-      value="Войти"
-      class="auth"
-    />
-  </div>
+  <v-card class="v-card" max-width="344">
+    <v-card-text>
+      <v-text-field name="email" v-model="email" label="Login"></v-text-field>
+      <v-text-field name="password" v-model="password" label="Password"></v-text-field>
+    </v-card-text>
+    <v-btn v-on:click="auth({ email, password })">Enter</v-btn>
+  </v-card>
 </template>
 
 <script>
-import axios from "axios";
-import { getBaseUrl, setAuthorizationToken, setToken } from "../helpers";
-import Vue from "vue";
-import { router } from "../router";
+import axios from 'axios';
+import { getBaseUrl, setAuthorizationToken, setToken } from '../helpers';
+import router from '../router';
 
 export default {
   data: function() {
     return {
-      email: "",
-      password: ""
+      email: '',
+      password: '',
     };
   },
   methods: {
@@ -29,35 +25,29 @@ export default {
       axios
         .post(`${getBaseUrl()}/user/login`, {
           email,
-          password
+          password,
         })
         .then(res => {
           const { token } = res.data;
           setAuthorizationToken(token);
           setToken(token);
-          router.push("/admin");
+          router.push('/admin');
         })
-        .catch(error => console.log(error));
-    }
-  }
+        /* eslint-disable no-console */
+        .catch(error => {
+          alert(error.message);
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+<style lang="scss" scoped>
+.v-card {
+  margin: auto;
+  margin-top: 10%;
+  padding-bottom: 30px;
+  text-align: center;
 }
 </style>

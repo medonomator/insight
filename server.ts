@@ -12,6 +12,8 @@ import { logger } from './helpers/logger';
 import { syncDataForLocalMongo } from './helpers/syncDataForLocalMongo';
 import userToken from './helpers/auth/user';
 import { IS_DEVELOPMENT } from './constants';
+// import { sequelize } from './database/sequelize';
+// sequelize;
 // Routes
 import users from './routes/users';
 import views from './routes/views';

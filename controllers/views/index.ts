@@ -4,16 +4,42 @@ import Boom from 'boom';
 import { logger } from '../../helpers/logger';
 import { authors as authorsCollection } from '../../database/schemas/authors';
 import { topics as topicCollection } from '../../database/schemas/topics';
+import { mainData } from '../../database/schemas/mainData';
 import { takeAphorisms } from '../../helpers/aphorisms';
 import { IResTakeAphorisms } from '../admin/aphorisms/interfaces';
 import { IItemNameMachine } from '../../interfaces';
+import { ID_MAINDATA_DOCUMENT } from '../../constants';
+
+interface ImainData {
+  mainPage?: {
+    headerH1: string;
+    headerText: string;
+  };
+  aphorismPage?: {
+    headerH1: string;
+    headerText: string;
+  };
+  affirmationPage?: {
+    headerH1: string;
+    headerText: string;
+  };
+  materialPage?: {
+    headerH1: string;
+    headerText: string;
+  };
+  developmentPlanPage?: {
+    headerH1: string;
+    headerText: string;
+  };
+}
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     logger.info('getMainPage');
+    const { mainPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
     const resTakeAphorisms = (await takeAphorisms({ limit: 4 })) as IResTakeAphorisms;
 
-    return h.view('index', { aphorisms: resTakeAphorisms.aphorisms });
+    return h.view('index', { aphorisms: resTakeAphorisms.aphorisms, mainPage });
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);
@@ -25,6 +51,7 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
     const resTakeAphorisms = (await takeAphorisms({})) as IResTakeAphorisms;
     const allAuthors: IItemNameMachine[] = await authorsCollection.find().lean();
     const allTopics: IItemNameMachine[] = await topicCollection.find().lean();
+    const { aphorismPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
 
     const categories =
       allTopics &&
@@ -44,6 +71,7 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
     return h.view('aphorisms', {
       authors,
       categories,
+      aphorismPage,
       aphorisms: resTakeAphorisms.aphorisms,
     });
   } catch (err) {
@@ -52,14 +80,16 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
   }
 };
 
-export const getNotesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getNotesPage');
-  return h.view('notes', { notes: [] });
+export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const { affirmationPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
+  logger.info('getAffirmationPage');
+  return h.view('affirmation', { affirmationPage });
 };
 
-export const getTechniquesPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info('getTechniquesPage');
-  return h.view('techniques', { techniques: [] });
+export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const { materialPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
+  logger.info('getMaterialsPage');
+  return h.view('materials', { materialPage });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -71,9 +101,10 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getGratitudePage');
   return h.view('gratitude');
 };
-export const devlopmentPlanPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
+export const devlopmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const { developmentPlanPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
   logger.info('devlopmentPlanPage');
-  return h.view('developmentPlan');
+  return h.view('developmentPlan', { developmentPlanPage });
 };
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {

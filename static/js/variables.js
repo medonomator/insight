@@ -10,20 +10,13 @@ const moreButtonAphorism = document.querySelector('.more-button-aphorism');
 const filterByTopic = document.getElementById('filter-by-topic');
 const filterByCategories = document.getElementById('filter-by-categories');
 const filterByAuthor = document.getElementById('filter-by-author');
+// Subscribe
+const subscribeInput = document.querySelector('.subscribe-input');
+const subscribeButton = document.querySelector('.subscribe-button');
+const errorElement = document.querySelector('.error-element');
+const successSubscribeButton = document.querySelector('.success-subscribe-button');
+const thanksForSubscription = document.querySelector('.thanks-for-subscription');
 // helpers
 const preloaderNone = () => (preloader.style.display = 'none');
 
-// // const faClone = document.querySelectorAll('.fa-clone');
-// // const faShare = document.querySelectorAll('.fa-share-alt');
-// // const shuffleButton = document.querySelector('.shuffle-button');
-// // const subscribeButton = document.querySelector('.subscribe-button');
-
-// // faClone.forEach(item => {
-// //   item.addEventListener('click', e => alert('В разработке...'));
-// // });
-// // faShare.forEach(item => {
-// //   item.addEventListener('click', e => alert('В разработке...'));
-// // });
-
-// shuffleButton.addEventListener('click', e => alert('Подставить функцию перемешки.'));
-// subscribeButton.addEventListener('click', e => alert('Вы подписались на новости.'));
+const shuffleButton = document.querySelector('.shuffle-button');

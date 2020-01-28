@@ -1,9 +1,7 @@
 import axios from 'axios';
+import { IS_DEVELOPMENT } from '../constant';
 
-export const getBaseUrl = () => {
-  return 'http://134.209.163.196';
-  // return 'localhost:5000';
-};
+export const getBaseUrl = () => (IS_DEVELOPMENT ? 'http://localhost:5000' : 'http://83.166.242.213');
 
 export const setAuthorizationToken = token => {
   if (token) {

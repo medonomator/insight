@@ -2,8 +2,8 @@ import * as Hapi from 'hapi';
 import {
   getMainPage,
   getAphorismsPage,
-  getNotesPage,
-  getTechniquesPage,
+  getAffirmationPage,
+  getMaterialsPage,
   getAdminBundle,
   getContactsPage,
   getGratitudePage,
@@ -34,13 +34,13 @@ const views: Hapi.ServerRoute[] = [
   },
   {
     method: 'GET',
-    path: '/notes',
-    handler: getNotesPage,
+    path: '/affirmation',
+    handler: getAffirmationPage,
   },
   {
     method: 'GET',
-    path: '/techniques',
-    handler: getTechniquesPage,
+    path: '/materials',
+    handler: getMaterialsPage,
   },
   {
     method: 'GET',
