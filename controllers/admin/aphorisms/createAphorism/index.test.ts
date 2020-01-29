@@ -1,6 +1,6 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../database/schemas/aphorisms';
-import { createAphorism, getAphorisms } from './index';
+import { aphorisms } from '../../../../database/schemas/aphorisms';
+import { createAphorism } from './';
 
 jest.mock('../../../helpers');
 jest.mock('mongoose', () => {

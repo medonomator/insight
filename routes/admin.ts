@@ -1,6 +1,9 @@
 import * as Hapi from 'hapi';
 import * as Joi from 'joi';
-import { getAphorisms, createAphorism, updateAphorism, deleteAphorism } from '../controllers/admin/aphorisms';
+import { createAphorism } from '../controllers/admin/aphorisms/createAphorism/';
+import { getAphorisms } from '../controllers/admin/aphorisms/getAphorisms';
+import { updateAphorism } from '../controllers/admin/aphorisms/updateAphorism';
+import { deleteAphorism } from '../controllers/admin/aphorisms/deleteAphorism';
 import { docsAphorisms, docsMainData } from '../config/docs';
 import { getMainData } from '../controllers/admin/mainData/getMainData';
 import { changeMainData } from '../controllers/admin/mainData/changeMainData';
