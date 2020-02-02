@@ -2,7 +2,7 @@ import Boom from 'boom';
 import { aphorisms } from '../../../../database/schemas/aphorisms';
 import { createAphorism } from './';
 
-jest.mock('../../../helpers');
+jest.mock('../../../../helpers');
 jest.mock('mongoose', () => {
   const Schema = jest.fn().mockImplementation(() => ({
     pre: jest.fn(),
@@ -51,7 +51,7 @@ const getRequest = (body: string) => ({
 });
 
 describe('Тестирование удачных ответов', () => {
-  test('Остатки успешно добавляются', async () => {
+  test('Создание афоризма', async () => {
     const request = getRequest('notDublicate');
     const result = await createAphorism(request as any);
     expect(result).toEqual('ok');
@@ -59,7 +59,7 @@ describe('Тестирование удачных ответов', () => {
 });
 
 describe('Обработка ошибок', () => {
-  test('Ошибка подключения к базе', async () => {
+  test('На существование афоризма', async () => {
     const request = getRequest('dublicate');
     const result = await createAphorism(request as any);
     expect(result).toMatchObject(Boom.conflict('The aphorism with such a body already exists'));

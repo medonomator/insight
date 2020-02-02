@@ -98,11 +98,13 @@ if (filterByTopic) {
   });
 }
 
-shuffleButton.addEventListener('click', e => {
-  funcRequest(`admin/aphorisms`, ({ data }) => {
-    aphorismsContainer.innerHTML = templateItemAphorism(data);
+if (shuffleButton) {
+  shuffleButton.addEventListener('click', e => {
+    funcRequest(`admin/aphorisms`, ({ data }) => {
+      aphorismsContainer.innerHTML = templateItemAphorism(data);
+    });
   });
-});
+}
 
 if (moreButtonAphorism) {
   let counter = 0;
