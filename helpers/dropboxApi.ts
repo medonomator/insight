@@ -19,7 +19,7 @@ export const dropboxUploadFile = () => {
     err => {
       if (err) {
         logger.error(err);
-        TelegramBot.sendMessage('Aphorisms backup failedx');
+        TelegramBot.sendMessage('Aphorisms backup failed');
       }
       TelegramBot.sendMessage('Aphorisms backup was successful');
     },

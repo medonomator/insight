@@ -78,6 +78,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
             .trim()
             .required(),
           tags: Joi.array().required(),
+          category: Joi.string()
+            .trim()
+            .required(),
         },
       },
     },

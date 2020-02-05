@@ -30,7 +30,11 @@
           <td style="width: 200px">{{ item.author }}</td>
           <td>{{ item.body }}</td>
           <td>
-            <span class="aphorisms-topic" v-for="(tag, index) in item.tags" :key="index">{{ tag.name }}</span>
+            <span
+              class="aphorisms-topic"
+              v-for="(tag, index) in item.tags"
+              :key="index"
+            >{{ tag.name }}</span>
           </td>
           <td>
             <font-awesome-icon @click="show('updateAphorism', item)" class="icon-pencil" icon="pen"></font-awesome-icon>
@@ -45,19 +49,19 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { getBaseUrl } from '../helpers';
-import ModalForm from '@/components/ModalForm';
+import axios from "axios";
+import { getBaseUrl } from "../helpers";
+import ModalForm from "@/components/ModalForm";
 
 export default {
   data() {
     return {
       aphorismData: [],
-      count: 0,
+      count: 0
     };
   },
   components: {
-    'modal-form': ModalForm,
+    "modal-form": ModalForm
   },
   async mounted() {
     const res = await axios.get(`${getBaseUrl()}/admin/aphorisms`);
@@ -66,46 +70,52 @@ export default {
   },
   methods: {
     authorFilterHandler: async function(value) {
-      const author = value ? `?author=${value}` : '';
+      const author = value ? `?author=${value}` : "";
       const res = await axios.get(`${getBaseUrl()}/admin/aphorisms${author}`);
       this.aphorismData = res.data.data;
       this.count = res.data.count;
     },
     bodyFilterHandler: async function(value) {
-      const body = value ? `?body=${value}` : '';
+      const body = value ? `?body=${value}` : "";
       const res = await axios.get(`${getBaseUrl()}/admin/aphorisms${body}`);
       this.aphorismData = res.data.data;
       this.count = res.data.count;
     },
     deleteAphorism: function(_id) {
-      axios.delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } }).then(() => {
-        this.aphorismData = this.aphorismData.filter(item => item._id !== _id);
-      });
+      axios
+        .delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } })
+        .then(() => {
+          this.aphorismData = this.aphorismData.filter(
+            item => item._id !== _id
+          );
+        });
     },
-    addAphorism: function({ author, body, tags }) {
+    addAphorism: function({ author, body, tags, category }) {
       axios
         .post(`${getBaseUrl()}/admin/aphorisms`, {
           author,
           body,
-          tags: tags.split(', '),
+          tags: tags.split(", "),
+          category
         })
         .then(res => {
           this.aphorismData.unshift({
             author,
             body,
-            tags: tags.split(', ').map(item => ({ name: item })),
-            _id: res.data._id,
+            tags: tags.split(", ").map(item => ({ name: item })),
+            _id: res.data._id
           });
-          this.$modal.hide('add-aphorism');
+          this.$modal.hide("add-aphorism");
         });
     },
-    updateAphorism: function({ author, body, tags, _id }) {
+    updateAphorism: function({ author, body, tags, _id, category }) {
       axios
         .put(`${getBaseUrl()}/admin/aphorisms`, {
           _id,
           author,
           body,
-          tags: tags.split(','),
+          tags: tags.split(","),
+          category
         })
         .then(() => {
           this.aphorismData = this.aphorismData.map(item => {
@@ -114,21 +124,22 @@ export default {
                   ...item,
                   author,
                   body,
-                  tags: tags.split(', ').map(item => ({ name: item })),
+                  tags: tags.split(", ").map(item => ({ name: item })),
                   _id,
+                  category
                 }
               : item;
           });
-          this.$modal.hide('add-aphorism');
+          this.$modal.hide("add-aphorism");
         });
     },
     show(nameModal, item) {
-      this.$modal.show('add-aphorism', { func: this[nameModal], item });
+      this.$modal.show("add-aphorism", { func: this[nameModal], item });
     },
     hide() {
-      this.$modal.hide('add-aphorism');
-    },
-  },
+      this.$modal.hide("add-aphorism");
+    }
+  }
 };
 </script>
 <style lang="sass" scoped>

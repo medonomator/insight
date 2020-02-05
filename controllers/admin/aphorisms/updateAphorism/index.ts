@@ -12,7 +12,7 @@ import { IItemNameMachine } from '../../../../interfaces';
  */
 export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
-    const { _id, author, body, tags } = req.payload;
+    const { _id, author, body, tags, category } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
@@ -20,7 +20,7 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName } });
+    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName, category } });
 
     return 'ok';
   } catch (err) {

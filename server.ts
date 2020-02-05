@@ -23,7 +23,7 @@ import statics from './routes/statics';
 
 import { insertDataToRedis } from './database/insertDataToRedis';
 import { serverHelthCheck } from './helpers/serverHelthCheck';
-import { log } from 'util';
+
 // Connect Mongodb
 mongoConnection();
 
