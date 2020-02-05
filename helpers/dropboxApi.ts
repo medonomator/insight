@@ -20,8 +20,9 @@ export const dropboxUploadFile = () => {
       if (err) {
         logger.error(err);
         TelegramBot.sendMessage('Aphorisms backup failed');
+      } else {
+        TelegramBot.sendMessage('Aphorisms backup was successful');
       }
-      TelegramBot.sendMessage('Aphorisms backup was successful');
     },
   );
   dropbox(
@@ -36,8 +37,9 @@ export const dropboxUploadFile = () => {
       if (err) {
         logger.error(err);
         TelegramBot.sendMessage('Subscribers backup failed');
+      } else {
+        TelegramBot.sendMessage('Subscribers backup was successful');
       }
-      TelegramBot.sendMessage('Subscribers backup was successful');
     },
   );
 };
