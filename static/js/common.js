@@ -128,12 +128,6 @@ if (moreButtonAphorism) {
 if (topArrow) {
   topArrow.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  window.addEventListener('click', function(e) {
-    if (e.target.closest('.fa-clone')) {
-      // TODO: ...
-    }
-  });
-
   window.addEventListener('scroll', e => {
     if (window.pageYOffset > 600) {
       topArrow.style.display = 'block';
@@ -150,29 +144,29 @@ successSubscribeButton.addEventListener('click', event => {
   thanksForSubscription.style.display = 'none';
 });
 
-subscribeButton.addEventListener('click', event => {
-  event.preventDefault();
+// subscribeButton.addEventListener('click', event => {
+//   event.preventDefault();
 
-  if (!subscribeInput.value) {
-    errorElement.innerHTML = 'Заполните поле email';
-    errorElement.style.display = 'block';
-  } else {
-    fetch(`${BASE_URL}/user/subscribeEmail`, {
-      method: 'POST',
-      body: JSON.stringify({ email: subscribeInput.value }),
-    })
-      .then(res => {
-        if (res.status === 400) {
-          throw 'Неверный email';
-        }
+//   if (!subscribeInput.value) {
+//     errorElement.innerHTML = 'Заполните поле email';
+//     errorElement.style.display = 'block';
+//   } else {
+//     fetch(`${BASE_URL}/user/subscribeEmail`, {
+//       method: 'POST',
+//       body: JSON.stringify({ email: subscribeInput.value }),
+//     })
+//       .then(res => {
+//         if (res.status === 400) {
+//           throw 'Неверный email';
+//         }
 
-        errorElement.style.display = 'none';
-        subscribeInput.value = '';
-        thanksForSubscription.style.display = 'flex';
-      })
-      .catch(error => {
-        errorElement.style.display = 'block';
-        errorElement.innerHTML = error;
-      });
-  }
-});
+//         errorElement.style.display = 'none';
+//         subscribeInput.value = '';
+//         thanksForSubscription.style.display = 'flex';
+//       })
+//       .catch(error => {
+//         errorElement.style.display = 'block';
+//         errorElement.innerHTML = error;
+//       });
+//   }
+// });
