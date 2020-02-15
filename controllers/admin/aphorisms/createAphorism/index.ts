@@ -25,7 +25,13 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
       });
     }
 
-    return aphorisms.create({ author, body, tags: inMachineName, category }) as any;
+    const newAphorism = await aphorisms.create({ author, body, tags: inMachineName, category });
+
+    console.log('=================================================');
+    console.log('logging', newAphorism);
+    console.log('=================================================');
+
+    return 'ok' as any;
   } catch (err) {
     logger.error(err);
     return Boom.badImplementation(err.message);

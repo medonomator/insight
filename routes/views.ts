@@ -25,23 +25,23 @@ const views: Hapi.ServerRoute[] = [
   {
     method: 'GET',
     path: '/',
-    handler: getMainPage,
-  },
-  {
-    method: 'GET',
-    path: '/aphorisms',
     handler: getAphorismsPage,
   },
-  {
-    method: 'GET',
-    path: '/affirmation',
-    handler: getAffirmationPage,
-  },
-  {
-    method: 'GET',
-    path: '/materials',
-    handler: getMaterialsPage,
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/aphorisms',
+  //   handler: getAphorismsPage,
+  // },
+  // {
+  //   method: 'GET',
+  //   path: '/affirmation',
+  //   handler: getAffirmationPage,
+  // },
+  // {
+  //   method: 'GET',
+  //   path: '/materials',
+  //   handler: getMaterialsPage,
+  // },
   {
     method: 'GET',
     path: '/contacts',
@@ -52,11 +52,11 @@ const views: Hapi.ServerRoute[] = [
     path: '/gratitude',
     handler: getGratitudePage,
   },
-  {
-    method: 'GET',
-    path: '/development-plan',
-    handler: devlopmentPlanPage,
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/development-plan',
+  //   handler: devlopmentPlanPage,
+  // },
   {
     method: 'GET',
     path: '/admin/{path*}',
