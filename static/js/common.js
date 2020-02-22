@@ -112,7 +112,7 @@ if (moreButtonAphorism) {
     counter++;
     funcRequest(`admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, res => {
       let aphorismsItems = document.createRange().createContextualFragment(loadingTemplateAphorism(res.data));
-      moreButtonAphorism.parentNode.insertBefore(aphorismsItems, moreButtonAphorism);
+      moreButtonWrapper.parentNode.insertBefore(aphorismsItems, moreButtonWrapper);
 
       if (res.count < 100) {
         moreButtonAphorism.value = moreButtonAphorism.value.replace('100', res.count);
