@@ -1,18 +1,18 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../../database/schemas/aphorisms';
+import { materials } from '../../../../database/schemas/materials';
 import { logger } from '../../../../helpers/logger';
-import {  IParamsUpdate, IResponse} from '../interfaces';
+import { IParamsUpdate, IResponse } from '../interfaces';
 import { cyrToLat } from '../../../../helpers';
 import { isEmpty } from 'lodash';
 import { IItemNameMachine } from '../../../../interfaces';
 /**
- * Update Aphorism
+ * Update Materials
  * @param {IParamsUpdate} params
- * @return {Promise<IResponse}>
+ * @return {Promise<IResponse>}
  */
-export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
+export const updateMaterials = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
-    const { _id, author, body, tags, category } = req.payload;
+    const { _id, name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
@@ -20,7 +20,7 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName, category } });
+    await materials.updateOne({ _id }, { $set: { name, description, tags: inMachineName, websiteUrl, youtubeUrl, books, audioBooks } });
 
     return 'ok';
   } catch (err) {

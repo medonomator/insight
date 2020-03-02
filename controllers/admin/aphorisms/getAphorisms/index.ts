@@ -5,7 +5,7 @@ import { takeAphorisms } from '../../../../helpers/aphorisms';
 /**
  * Get Aphorisms
  * @param {IParamsGet} params
- * @return Promise<{IResponse}>
+ * @return {Promise<IResponse}>
  */
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {

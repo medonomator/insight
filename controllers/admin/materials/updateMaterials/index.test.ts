@@ -1,6 +1,7 @@
 import Boom from 'boom';
-import { deleteAphorism } from './';
+import { updateMaterials } from './';
 
+jest.mock('../../../../helpers');
 jest.mock('mongoose', () => {
   const Schema = jest.fn().mockImplementation(() => ({
     pre: jest.fn(),
@@ -14,10 +15,10 @@ jest.mock('mongoose', () => {
     disconnect: jest.fn().mockResolvedValue('Ok'),
     Schema,
     model: jest.fn(() => ({
-      deleteOne: jest.fn(params => {
+      updateOne: jest.fn(params => {
         switch (params._id) {
           case '1':
-            return true;
+            return 'ok';
           case 'E':
             throw new Error('Database connection error');
         }
@@ -29,13 +30,20 @@ jest.mock('mongoose', () => {
 const getRequest = (_id: string) => ({
   payload: {
     _id,
+    name: 'name',
+    description: 'desc',
+    tags: [{ name: 'Труд' }],
+    websiteUrl: 'websiteUrl',
+    youtubeUrl: 'youtubeUrl',
+    audioBooks: 'audioBooks',
+    books: 'books',
   },
 });
 
 describe('Testing successful response', () => {
-  test('Aphorisms successful delete', async () => {
+  test('Successful update materials', async () => {
     const request = getRequest('1');
-    const result = await deleteAphorism(request as any);
+    const result = await updateMaterials(request as any);
     expect(result).toEqual('ok');
   });
 });
@@ -43,7 +51,7 @@ describe('Testing successful response', () => {
 describe('Error handling', () => {
   test('Database connection error', async () => {
     const request = getRequest('E');
-    const result = await deleteAphorism(request as any);
+    const result = await updateMaterials(request as any);
     expect(result).toMatchObject(Boom.badImplementation('Database connection error'));
   });
 });

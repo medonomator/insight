@@ -37,11 +37,11 @@ const views: Hapi.ServerRoute[] = [
   //   path: '/affirmation',
   //   handler: getAffirmationPage,
   // },
-  // {
-  //   method: 'GET',
-  //   path: '/materials',
-  //   handler: getMaterialsPage,
-  // },
+  {
+    method: 'GET',
+    path: '/materials',
+    handler: getMaterialsPage,
+  },
   {
     method: 'GET',
     path: '/contacts',

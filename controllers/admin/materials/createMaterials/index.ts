@@ -1,22 +1,22 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../../database/schemas/aphorisms';
+import { materials } from '../../../../database/schemas/materials';
 import { logger } from '../../../../helpers/logger';
 import { IParamsCreate, IResponse } from '../interfaces';
 import { IItemNameMachine } from '../../../../interfaces';
 import { cyrToLat } from '../../../../helpers';
 /**
- * Create New Aphorism
+ * Create New Material
  * @param {IParamsCreate} params
  * @return {Promise<IResponse}>
  */
-export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => {
+export const createMaterials = async (req: IParamsCreate): Promise<IResponse> => {
   try {
-    const { author, body, tags, category } = req.payload;
+    const { name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
-    const duplicate = await aphorisms.findOne({ body });
+    const duplicate = await materials.findOne({ name });
 
     if (duplicate) {
-      return Boom.conflict('The aphorism with such a body already exists');
+      return Boom.conflict('The material with such a body already exists');
     }
 
     if (tags) {
@@ -25,7 +25,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
       });
     }
 
-    await aphorisms.create({ author, body, tags: inMachineName, category });
+    await materials.create({ name, description, tags: inMachineName, websiteUrl, youtubeUrl, audioBooks, books });
 
     return 'ok';
   } catch (err) {

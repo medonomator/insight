@@ -1,5 +1,5 @@
 import Boom from 'boom';
-import { createAphorism } from './';
+import { createMaterials } from './';
 
 jest.mock('../../../../helpers');
 jest.mock('mongoose', () => {
@@ -15,8 +15,8 @@ jest.mock('mongoose', () => {
     disconnect: jest.fn().mockResolvedValue('Ok'),
     Schema,
     model: jest.fn(params => ({
-      findOne: jest.fn(({ body }) => {
-        switch (body) {
+      findOne: jest.fn(({ name }) => {
+        switch (name) {
           case 'dublicate':
             return true;
           case 'notDublicate':
@@ -32,19 +32,22 @@ jest.mock('mongoose', () => {
   };
 });
 
-const getRequest = (body: string) => ({
+const getRequest = (name: string) => ({
   payload: {
-    author: 'Д. Беллерс',
-    body,
+    name,
+    description: 'desc',
     tags: [{ name: 'Труд' }],
-    category: 'Мыслители, философы',
+    websiteUrl: 'websiteUrl',
+    youtubeUrl: 'youtubeUrl',
+    audioBooks: 'audioBooks',
+    books: 'books',
   },
 });
 
 describe('Testing successful response', () => {
-  test('create aphorisms', async () => {
+  test('Create new materials', async () => {
     const request = getRequest('notDublicate');
-    const result = await createAphorism(request as any);
+    const result = await createMaterials(request as any);
     expect(result).toEqual('ok');
   });
 });
@@ -52,12 +55,13 @@ describe('Testing successful response', () => {
 describe('Error handling', () => {
   test('On existence an aphorism', async () => {
     const request = getRequest('dublicate');
-    const result = await createAphorism(request as any);
-    expect(result).toMatchObject(Boom.conflict('The aphorism with such a body already exists'));
+    const result = await createMaterials(request as any);
+    expect(result).toMatchObject(Boom.conflict('The material with such a body already exists'));
   });
+
   test('Database connection error', async () => {
     const request = getRequest('E');
-    const result = await createAphorism(request as any);
+    const result = await createMaterials(request as any);
     expect(result).toMatchObject(Boom.badImplementation('Database connection error'));
   });
 });

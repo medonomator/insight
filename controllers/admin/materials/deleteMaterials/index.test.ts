@@ -1,5 +1,5 @@
 import Boom from 'boom';
-import { deleteAphorism } from './';
+import { deleteMaterials } from './';
 
 jest.mock('mongoose', () => {
   const Schema = jest.fn().mockImplementation(() => ({
@@ -33,9 +33,9 @@ const getRequest = (_id: string) => ({
 });
 
 describe('Testing successful response', () => {
-  test('Aphorisms successful delete', async () => {
+  test('Materials successful delete', async () => {
     const request = getRequest('1');
-    const result = await deleteAphorism(request as any);
+    const result = await deleteMaterials(request as any);
     expect(result).toEqual('ok');
   });
 });
@@ -43,7 +43,7 @@ describe('Testing successful response', () => {
 describe('Error handling', () => {
   test('Database connection error', async () => {
     const request = getRequest('E');
-    const result = await deleteAphorism(request as any);
+    const result = await deleteMaterials(request as any);
     expect(result).toMatchObject(Boom.badImplementation('Database connection error'));
   });
 });

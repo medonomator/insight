@@ -6,7 +6,7 @@ import { deleteElement } from '../../../../database/redis';
 /**
  * Delete Aphorism by id
  * @param {IParamsDelete} params
- * @return Promise<{IResponse}>
+ * @return {Promise<IResponse}>
  */
 export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => {
   try {

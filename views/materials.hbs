@@ -29,6 +29,45 @@
         {{/if}}
       </p>
     </div>
+
+    <div class="regular-page">
+      <div class="top-arrow">
+        <img src="{{path}}/img/scrollToTop.png" alt="alt">
+      </div>
+      <section class="aphorisms-container">
+
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+        {{#each aphorisms as |item index| }}
+        <div class="aphorisms-item">
+          <div class="aphorisms-tags">
+            {{#each this.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
+          </div>
+          <div class="aphorisms-item-body">
+            <p>{{this.body}}</p>
+          </div>
+          <div class="aphorisms-item-bottom">
+            <div class="aphorisms-authors">
+              <span>{{this.author}}</span>
+            </div>
+            <div class="aphorisms-icons">
+              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+      </section>
+
+    </div>
+
   </div>
   {{>footer}}
 </body>

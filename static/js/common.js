@@ -29,12 +29,10 @@ hamburger.addEventListener('click', () => {
 });
 
 const templateItemAphorism = data => {
-  let replaceHtml =
-    '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+  let replaceHtml = '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
-                      <div class="aphorisms-tags">${item.tags[0] &&
-                        item.tags.map(item => `<span>${item.name}</span>`).join('')}
+                      <div class="aphorisms-tags">${item.tags[0] && item.tags.map(item => `<span>${item.name}</span>`).join('')}
                       </div>
                       <div class="aphorisms-item-body">
                         <p>${item.body}</p>
@@ -59,8 +57,7 @@ const loadingTemplateAphorism = data => {
   let replaceHtml = '';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
-                      <div class="aphorisms-tags">${item.tags[0] &&
-                        item.tags.map(item => `<span>${item.name}</span>`).join('')}
+                      <div class="aphorisms-tags">${item.tags[0] && item.tags.map(item => `<span>${item.name}</span>`).join('')}
                       </div>
                       <div class="aphorisms-item-body">
                         <p>${item.body}</p>
@@ -111,8 +108,7 @@ if (moreButtonAphorism) {
   moreButtonAphorism.addEventListener('click', () => {
     counter++;
     funcRequest(`admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, res => {
-      let aphorismsItems = document.createRange().createContextualFragment(loadingTemplateAphorism(res.data));
-      moreButtonWrapper.parentNode.insertBefore(aphorismsItems, moreButtonWrapper);
+      aphorismsContainer.insertAdjacentHTML('beforeend', loadingTemplateAphorism(res.data));
 
       if (res.count < 100) {
         moreButtonAphorism.value = moreButtonAphorism.value.replace('100', res.count);
@@ -144,29 +140,29 @@ successSubscribeButton.addEventListener('click', event => {
   thanksForSubscription.style.display = 'none';
 });
 
-// subscribeButton.addEventListener('click', event => {
-//   event.preventDefault();
+subscribeButton.addEventListener('click', event => {
+  event.preventDefault();
 
-//   if (!subscribeInput.value) {
-//     errorElement.innerHTML = 'Заполните поле email';
-//     errorElement.style.display = 'block';
-//   } else {
-//     fetch(`${BASE_URL}/user/subscribeEmail`, {
-//       method: 'POST',
-//       body: JSON.stringify({ email: subscribeInput.value }),
-//     })
-//       .then(res => {
-//         if (res.status === 400) {
-//           throw 'Неверный email';
-//         }
+  if (!subscribeInput.value) {
+    errorElement.innerHTML = 'Заполните поле email';
+    errorElement.style.display = 'block';
+  } else {
+    fetch(`${BASE_URL}/user/subscribeEmail`, {
+      method: 'POST',
+      body: JSON.stringify({ email: subscribeInput.value }),
+    })
+      .then(res => {
+        if (res.status === 400) {
+          throw 'Неверный email';
+        }
 
-//         errorElement.style.display = 'none';
-//         subscribeInput.value = '';
-//         thanksForSubscription.style.display = 'flex';
-//       })
-//       .catch(error => {
-//         errorElement.style.display = 'block';
-//         errorElement.innerHTML = error;
-//       });
-//   }
-// });
+        errorElement.style.display = 'none';
+        subscribeInput.value = '';
+        thanksForSubscription.style.display = 'flex';
+      })
+      .catch(error => {
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = error;
+      });
+  }
+});

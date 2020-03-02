@@ -62,6 +62,8 @@
     
       <div class="main-menu">
         <ul>
+          <li><a href="/">Главная</a></li>
+          <li><a href="/materials">Материалы</a></li>
           <li><a href="/contacts">Контакты</a></li>
         </ul>
       </div>
@@ -95,13 +97,18 @@
     </div>
 
     <div class="regular-page">
+      <div class="top-arrow">
+        <img src="assets//img/scrollToTop.png" alt="alt">
+      </div>
       <section class="aphorisms-container">
+
         <div class="lds-ring">
           <div></div>
           <div></div>
           <div></div>
           <div></div>
         </div>
+
         <div class="aphorisms-item">
           <div class="aphorisms-tags">
             <span>Кастанеда</span>
@@ -193,13 +200,7 @@
             </div>
           </div>
         </div>
-        <div class="more-button-wrapper">
-          <input type="button" class="button more-button-aphorism" value="Показать еще 100"></input>
-        </div>
 
-        <div class="top-arrow">
-          <img src="assets//img/scrollToTop.png" alt="alt">
-        </div>
       </section>
 
       <div class="filter-block">
@@ -241,6 +242,10 @@
         </div>
       </div>
     </div>
+
+    <div class="more-button-wrapper">
+      <input type="button" class="button more-button-aphorism" value="Показать еще 100"></input>
+    </div>
     <!-- end wrapper -->
   </div>
   <footer class="footer">
@@ -253,8 +258,17 @@
         <a href="tg://medonomator">
           <i class="fa fa-telegram" aria-hidden="true"></i>
         </a>
+        <a href="https://github.com/medonomator/insight">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
       </div>
   
+      <div class="subscribe">
+        <p>Подписаться на новости</p>
+        <p class="error-element"></p>
+        <input class="subscribe-input" type="text" placeholder="Ваш email">
+        <input class="subscribe-button" type="button" value="Подписаться">
+      </div>
   
       <div class="footer-end-block">
         <a class="support-project" href="/contacts">Поддержать проект</a>

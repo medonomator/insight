@@ -41,13 +41,18 @@
     </div>
 
     <div class="regular-page">
+      <div class="top-arrow">
+        <img src="{{path}}/img/scrollToTop.png" alt="alt">
+      </div>
       <section class="aphorisms-container">
+
         <div class="lds-ring">
           <div></div>
           <div></div>
           <div></div>
           <div></div>
         </div>
+
         {{#each aphorisms as |item index| }}
         <div class="aphorisms-item">
           <div class="aphorisms-tags">
@@ -69,13 +74,7 @@
           </div>
         </div>
         {{/each}}
-        <div class="more-button-wrapper">
-          <input type="button" class="button more-button-aphorism" value="Показать еще 100"></input>
-        </div>
 
-        <div class="top-arrow">
-          <img src="{{path}}/img/scrollToTop.png" alt="alt">
-        </div>
       </section>
 
       <div class="filter-block">
@@ -109,6 +108,10 @@
           <input type="button" class="shuffle-button" value="Перемешать">
         </div>
       </div>
+    </div>
+
+    <div class="more-button-wrapper">
+      <input type="button" class="button more-button-aphorism" value="Показать еще 100"></input>
     </div>
     <!-- end wrapper -->
   </div>
