@@ -8,3 +8,4 @@
 **/.next
 **/package-lock.json
 **/yarn.lock
+static/backup/

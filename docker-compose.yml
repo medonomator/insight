@@ -10,18 +10,22 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - '6379:6379'
-  postgresql:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: example
-    ports:
-      - '5432:5432'
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+  # rabbit:
+  #   image: rabbitmq:3-management
+  #   stdin_open: true
+  #   tty: true
+  #   ports:
+  #     - '8080:15672'
+  #     - '5672:5672'
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=user
+  #     - RABBITMQ_DEFAULT_PASS=password
+  # postgresql:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: example
+  #   ports:
+  #     - '5432:5432'

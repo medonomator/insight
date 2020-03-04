@@ -1,8 +1,7 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../database/schemas/aphorisms';
-import { createAphorism, getAphorisms } from './index';
+import { createAphorism } from './';
 
-jest.mock('../../../helpers');
+jest.mock('../../../../helpers');
 jest.mock('mongoose', () => {
   const Schema = jest.fn().mockImplementation(() => ({
     pre: jest.fn(),
@@ -23,7 +22,7 @@ jest.mock('mongoose', () => {
           case 'notDublicate':
             return null;
           case 'E':
-            throw new Error('Ошибка подключения к базе');
+            throw new Error('Database connection error');
         }
       }),
       create: jest.fn(() => {
@@ -31,14 +30,6 @@ jest.mock('mongoose', () => {
       }),
     })),
   };
-});
-
-const findOne = aphorisms.findOne as jest.Mock;
-const create = aphorisms.create as jest.Mock;
-
-beforeEach(() => {
-  findOne.mockClear();
-  create.mockClear();
 });
 
 const getRequest = (body: string) => ({
@@ -50,26 +41,23 @@ const getRequest = (body: string) => ({
   },
 });
 
-describe('Тестирование удачных ответов', () => {
-  test('Остатки успешно добавляются', async () => {
+describe('Testing successful response', () => {
+  test('create aphorisms', async () => {
     const request = getRequest('notDublicate');
     const result = await createAphorism(request as any);
     expect(result).toEqual('ok');
   });
 });
 
-describe('Обработка ошибок', () => {
-  test('Ошибка подключения к базе', async () => {
+describe('Error handling', () => {
+  test('On existence an aphorism', async () => {
     const request = getRequest('dublicate');
     const result = await createAphorism(request as any);
     expect(result).toMatchObject(Boom.conflict('The aphorism with such a body already exists'));
   });
-});
-
-describe('Обработка ошибок', () => {
-  test('Ошибка подключения к базе', async () => {
+  test('Database connection error', async () => {
     const request = getRequest('E');
     const result = await createAphorism(request as any);
-    expect(result).toMatchObject(Boom.badImplementation('Ошибка подключения к базе'));
+    expect(result).toMatchObject(Boom.badImplementation('Database connection error'));
   });
 });

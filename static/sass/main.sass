@@ -118,16 +118,19 @@ select#filter-by-author
   &:hover
     color: white
 
-.more-button-aphorism
+.more-button-wrapper
+  display: flex
+  justify-content: flex-end
 
+.more-button-aphorism
   width: auto
   padding: 0 30px
   height: 40px
-  margin-left: 72%
   display: block
   font-size: 15px
   display: block
   font-size: 15px
+  margin-right: 335px
   &:hover
     color: white
 
@@ -403,11 +406,40 @@ select#filter-by-author
     padding-top: 40px
 
 .material-page
-  margin-top: 40px
-  p
-    color: white
+  margin-top: 292px
+  display: flex
+
+  .aphorisms-item-name
+    text-align: center
+    font-size: 24px
+    font-weight: 600
+    padding-bottom: 10px
+
+  .aphorisms-item-body
+    font-size: 18px
+    padding-top: 20px
+
+  .aphorisms-item-websiteurl, .aphorisms-item-audiobooks, .aphorisms-item-books
     font-size: 20px
-    font-size: 26px
+    font-weight: 600
+    color: #444444
+    transition: all .3s ease
+    padding-right: 10px
+    &:hover
+      color: #666
+
+  .aphorisms-item-youtubeurl
+
+    i
+      color: #dd2a25
+      font-size: 26px
+      position: relative
+      top: 3px
+
+  .aphorisms-item-bottom
+    margin-top: 20px
+  .aphorisms-icons
+    margin-top: 0
 
 .page-contact
   color: white

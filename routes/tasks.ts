@@ -3,7 +3,6 @@ import Boom from 'boom';
 import fs from 'fs';
 import { aphorisms } from '../database/schemas/aphorisms';
 import { subscribers } from '../database/schemas/subscribers';
-import { mainData } from '../database/schemas/mainData';
 import { logger } from '../helpers/logger';
 import { docsTasks } from '../config/docs';
 import { dropboxUploadFile } from '../helpers/dropboxApi';

@@ -3,8 +3,7 @@ import { mainData } from '../../../../database/schemas/mainData';
 import { logger } from '../../../../helpers/logger';
 /**
  * Get main data
- * @param {}
- * @return Promise<{}>
+ * @return {Promise<{}>}
  */
 export const getMainData = async () => {
   try {

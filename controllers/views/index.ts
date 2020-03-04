@@ -4,6 +4,7 @@ import Boom from 'boom';
 import { logger } from '../../helpers/logger';
 import { authors as authorsCollection } from '../../database/schemas/authors';
 import { topics as topicCollection } from '../../database/schemas/topics';
+import { materials } from '../../database/schemas/materials';
 import { mainData } from '../../database/schemas/mainData';
 import { takeAphorisms } from '../../helpers/aphorisms';
 import { IResTakeAphorisms } from '../admin/aphorisms/interfaces';
@@ -88,8 +89,10 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   const { materialPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
+  const allMaterials = await materials.find().lean();
+
   logger.info('getMaterialsPage');
-  return h.view('materials', { materialPage });
+  return h.view('materials', { materialPage, materials: allMaterials });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {

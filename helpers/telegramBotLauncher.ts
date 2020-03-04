@@ -2,7 +2,7 @@ import Telegraf from 'telegraf';
 import SocksProxyAgent from 'socks-proxy-agent';
 import { logger } from './logger';
 import proxyList from '../config/data/proxyList';
-import {  IS_DEVELOPMENT } from '../constants'
+import { IS_DEVELOPMENT } from '../constants';
 // var HttpProxyAgent = require('http-proxy-agent');
 // var ProxyAgent = require('proxy-agent');
 const BOT_ID = '409011202';
@@ -11,7 +11,7 @@ class TelegramBot {
   private static instance: TelegramBot;
   private _bot;
   private _proxyList: string[];
-  private _currentProxy = 0;
+  private _currentProxy = 12;
   constructor() {
     // TODO: in future need take proxy's from the database
     this._proxyList = proxyList;

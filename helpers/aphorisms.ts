@@ -1,4 +1,5 @@
 import Boom from 'boom';
+import { shuffle } from 'lodash';
 import { getAllElementsByKey } from '../database/redis';
 import { logger } from './logger';
 import { IAphorisms, IResTakeAphorisms } from '../controllers/admin/aphorisms/interfaces';
@@ -28,7 +29,7 @@ export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms 
         return list;
       };
       const randomList = generateRandomList(limit, aphorisms.length);
-      aphorisms = aphorisms.filter((_, index) => index === randomList[index]);
+      aphorisms = shuffle(aphorisms.filter((_, index) => index === randomList[index]));
     }
 
     const withoutSpaces = (str: string) => {

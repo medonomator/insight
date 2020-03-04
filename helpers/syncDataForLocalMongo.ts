@@ -9,6 +9,7 @@ export const syncDataForLocalMongo = async () => {
     const dataAphorisms = await aphorisms.countDocuments();
     if (!dataAphorisms) {
       const { data } = await axios.get(`${MAIN_HOST_URL}admin/aphorisms?limit=10000`);
+
       await aphorisms.insertMany(data.data);
       await synchronizationData();
       logger.info('Synchronization complete');

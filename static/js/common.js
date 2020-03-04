@@ -29,12 +29,10 @@ hamburger.addEventListener('click', () => {
 });
 
 const templateItemAphorism = data => {
-  let replaceHtml =
-    '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+  let replaceHtml = '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
-                      <div class="aphorisms-tags">${item.tags[0] &&
-                        item.tags.map(item => `<span>${item.name}</span>`).join('')}
+                      <div class="aphorisms-tags">${item.tags[0] && item.tags.map(item => `<span>${item.name}</span>`).join('')}
                       </div>
                       <div class="aphorisms-item-body">
                         <p>${item.body}</p>
@@ -59,8 +57,7 @@ const loadingTemplateAphorism = data => {
   let replaceHtml = '';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
-                      <div class="aphorisms-tags">${item.tags[0] &&
-                        item.tags.map(item => `<span>${item.name}</span>`).join('')}
+                      <div class="aphorisms-tags">${item.tags[0] && item.tags.map(item => `<span>${item.name}</span>`).join('')}
                       </div>
                       <div class="aphorisms-item-body">
                         <p>${item.body}</p>
@@ -98,19 +95,20 @@ if (filterByTopic) {
   });
 }
 
-shuffleButton.addEventListener('click', e => {
-  funcRequest(`admin/aphorisms`, ({ data }) => {
-    aphorismsContainer.innerHTML = templateItemAphorism(data);
+if (shuffleButton) {
+  shuffleButton.addEventListener('click', e => {
+    funcRequest(`admin/aphorisms`, ({ data }) => {
+      aphorismsContainer.innerHTML = templateItemAphorism(data);
+    });
   });
-});
+}
 
 if (moreButtonAphorism) {
   let counter = 0;
   moreButtonAphorism.addEventListener('click', () => {
     counter++;
     funcRequest(`admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, res => {
-      let aphorismsItems = document.createRange().createContextualFragment(loadingTemplateAphorism(res.data));
-      moreButtonAphorism.parentNode.insertBefore(aphorismsItems, moreButtonAphorism);
+      aphorismsContainer.insertAdjacentHTML('beforeend', loadingTemplateAphorism(res.data));
 
       if (res.count < 100) {
         moreButtonAphorism.value = moreButtonAphorism.value.replace('100', res.count);
@@ -125,12 +123,6 @@ if (moreButtonAphorism) {
 
 if (topArrow) {
   topArrow.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  window.addEventListener('click', function(e) {
-    if (e.target.closest('.fa-clone')) {
-      // TODO: ...
-    }
-  });
 
   window.addEventListener('scroll', e => {
     if (window.pageYOffset > 600) {

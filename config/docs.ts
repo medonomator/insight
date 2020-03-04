@@ -46,6 +46,29 @@ export const docsAphorisms = {
   },
 };
 
+export const docsMaterials = {
+  createMaterials: {
+    description: 'Create Materials',
+    notes: userAuth,
+    tags: ['api', 'user'],
+  },
+  getMaterials: {
+    description: 'Get Materials',
+    notes: noAuth,
+    tags: ['api', 'user'],
+  },
+  updateMaterials: {
+    description: 'Update Materials',
+    notes: userAuth,
+    tags: ['api', 'user'],
+  },
+  deleteMaterials: {
+    description: 'Delete Materials',
+    notes: userAuth,
+    tags: ['api', 'user'],
+  },
+};
+
 export const docsTasks = {
   synchronizationData: {
     description: 'Synchronization data for authors and categorires',

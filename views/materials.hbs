@@ -29,6 +29,63 @@
         {{/if}}
       </p>
     </div>
+
+    <div class="material-page">
+      <div class="top-arrow">
+        <img src="{{path}}/img/scrollToTop.png" alt="alt">
+      </div>
+      <section class="aphorisms-container">
+
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+        {{#each materials as |item index| }}
+        <div class="aphorisms-item">
+          <div class="aphorisms-item-name">{{this.name}}</div>
+          <div class="aphorisms-tags">
+            {{#each this.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
+          </div>
+          <div class="aphorisms-item-body">{{this.description}}</div>
+
+          <div class="aphorisms-item-bottom">
+
+            <div class="left-links">
+              {{#if this.websiteUrl}}
+              <a class="aphorisms-item-websiteurl" target="_blank" href="{{this.websiteUrl}}">Сайт</a>
+              {{/if}}
+
+              {{#if this.audioBooks}}
+              <a class="aphorisms-item-audiobooks" target="_blank" href="{{this.audioBooks}}">Аудиокниги</a>
+              {{/if}}
+
+              {{#if this.books}}
+              <a class="aphorisms-item-books" target="_blank" href="{{this.books}}">Книги</a>
+              {{/if}}
+
+              {{#if this.youtubeUrl}}
+              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{this.youtubeUrl}}">
+                <i id="fa-share" class="fa fa-youtube" aria-hidden="true"></i>
+              </a>
+              {{/if}}
+            </div>
+
+            <div class="aphorisms-icons">
+              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+      </section>
+
+    </div>
+
   </div>
   {{>footer}}
 </body>
