@@ -21,3 +21,9 @@ const thanksForSubscription = document.querySelector('.thanks-for-subscription')
 const preloaderNone = () => (preloader.style.display = 'none');
 
 const shuffleButton = document.querySelector('.shuffle-button');
+// share
+// const shareButton = document.querySelectorAll('.fa-share-alt');
+// console.log(shareButton);
+// shareButton.addEventListener('click', e => {
+//   alert('OPA');
+// });

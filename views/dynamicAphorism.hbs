@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <title>цитаты великих людей</title>
+  {{>head}}
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div class="wrapper">
+    {{>header}}
+
+    <h1>Мудрость афоризмов</h1>
+
+    <div class="regular-page" style="margin-bottom: 250px;">
+      <section class="aphorisms-container">
+        <div class="aphorisms-item">
+          <div class="aphorisms-tags">
+            {{#each aphorism.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
+          </div>
+          <div class="aphorisms-item-body">
+            <p>{{aphorism.body}}</p>
+          </div>
+          <div class="aphorisms-item-bottom">
+            <div class="aphorisms-authors">
+              <span>{{aphorism.author}}</span>
+            </div>
+            <div class="aphorisms-icons">
+              <i id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
+              <i id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  {{>footer}}
+</body>
+
+</html>

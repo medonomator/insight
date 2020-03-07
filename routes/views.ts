@@ -1,4 +1,5 @@
 import * as Hapi from 'hapi';
+import Joi from 'joi';
 import {
   getMainPage,
   getAphorismsPage,
@@ -7,7 +8,8 @@ import {
   getAdminBundle,
   getContactsPage,
   getGratitudePage,
-  devlopmentPlanPage,
+  developmentPlanPage,
+  dynamicAphorismsPage,
 } from '../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
@@ -26,6 +28,18 @@ const views: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/',
     handler: getAphorismsPage,
+  },
+  {
+    method: 'GET',
+    path: '/aphorism/{id}',
+    handler: dynamicAphorismsPage,
+    options: {
+      validate: {
+        params: {
+          id: Joi.string().trim(),
+        },
+      },
+    },
   },
   // {
   //   method: 'GET',
@@ -55,7 +69,7 @@ const views: Hapi.ServerRoute[] = [
   // {
   //   method: 'GET',
   //   path: '/development-plan',
-  //   handler: devlopmentPlanPage,
+  //   handler: developmentPlanPage,
   // },
   {
     method: 'GET',

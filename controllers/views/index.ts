@@ -4,6 +4,7 @@ import Boom from 'boom';
 import { logger } from '../../helpers/logger';
 import { authors as authorsCollection } from '../../database/schemas/authors';
 import { topics as topicCollection } from '../../database/schemas/topics';
+import { aphorisms } from '../../database/schemas/aphorisms';
 import { materials } from '../../database/schemas/materials';
 import { mainData } from '../../database/schemas/mainData';
 import { takeAphorisms } from '../../helpers/aphorisms';
@@ -104,10 +105,27 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info('getGratitudePage');
   return h.view('gratitude');
 };
-export const devlopmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+
+export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   const { developmentPlanPage } = (await mainData.findById(ID_MAINDATA_DOCUMENT)) as ImainData;
   logger.info('devlopmentPlanPage');
   return h.view('developmentPlan', { developmentPlanPage });
+};
+
+export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  try {
+    logger.info('dynamicAphorismsPage');
+    const aphorism = await aphorisms.findById(req.params.id).lean();
+
+    if (!aphorism) {
+      return h.view('404');
+    }
+
+    return h.view('dynamicAphorism', { aphorism });
+  } catch (error) {
+    logger.error('devlopmentPlanPage');
+    return h.view('404');
+  }
 };
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {

@@ -91,6 +91,14 @@ export class Server {
       server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();
+
+      server.ext('onPreResponse', (request, reply) => {
+        if (request.response.isBoom) {
+          return reply.view('404');
+        }
+        return reply.continue;
+      });
+
       logger.info('Server running at:', server.info.uri);
     } catch (err) {
       logger.error(`Server start error: `, err.message, err.stack);
