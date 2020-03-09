@@ -62,9 +62,6 @@ class TelegramBot {
 
   private handlerLostMessages() {
     if (this._lostMessages.length) {
-      console.log('=================================================');
-      console.log('_lostMessages', this._lostMessages);
-      console.log('=================================================');
       const message = this._lostMessages.shift() as string;
       this.sendMessage(message);
     }
