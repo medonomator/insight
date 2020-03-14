@@ -29,7 +29,7 @@ hamburger.addEventListener('click', () => {
 });
 
 const templateItemAphorism = data => {
-  let replaceHtml = '<section class="aphorisms-container"><div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+  let replaceHtml = '<section class="aphorisms-container">';
   data.forEach((item, index) => {
     replaceHtml += `<div class="aphorisms-item">
                       <div class="aphorisms-tags">${item.tags[0] && item.tags.map(item => `<span>${item.name}</span>`).join('')}
@@ -41,7 +41,18 @@ const templateItemAphorism = data => {
                         <div class="aphorisms-authors">
                           <span>${item.author}</span>
                         </div>
+
                         <div class="aphorisms-icons">
+
+                          <div class="share-buttons">
+                            <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-vk" aria-hidden="true"></i>
+                            <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-whatsapp" aria-hidden="true"></i>
+                            <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-telegram" aria-hidden="true"></i>
+                          </div>
+
                           <i name="${index}" id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
                           <i name="${index}" id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
                         </div>
@@ -67,6 +78,16 @@ const loadingTemplateAphorism = data => {
                           <span>${item.author}</span>
                         </div>
                         <div class="aphorisms-icons">
+
+                          <div class="share-buttons">
+                            <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-vk" aria-hidden="true"></i>
+                            <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-whatsapp" aria-hidden="true"></i>
+                            <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/${item._id}','Хороший Афоризм')"
+                              class="fa fa-telegram" aria-hidden="true"></i>
+                          </div>
+
                           <i name="${index}" id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
                           <i name="${index}" id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
                         </div>
@@ -122,7 +143,7 @@ if (moreButtonAphorism) {
 }
 
 if (topArrow) {
-  topArrow.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  topArrow.addEventListener('click', () => window.scrollTo({ top: 0 }));
 
   window.addEventListener('scroll', e => {
     if (window.pageYOffset > 600) {
@@ -166,3 +187,73 @@ subscribeButton.addEventListener('click', event => {
       });
   }
 });
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.fa-share-alt')) {
+    const currentElement = e.target.closest('.fa-share-alt');
+
+    currentElement.previousElementSibling.previousElementSibling.classList.toggle('share-buttons-toggle');
+    setTimeout(() => {
+      currentElement.previousElementSibling.previousElementSibling.classList.remove('share-buttons-toggle');
+    }, 10000);
+  }
+
+  if (e.target.closest('.fa-clone')) {
+    const aphorismElement = e.target.closest('.fa-clone').parentNode.parentNode.previousElementSibling.firstElementChild;
+    const copyText = e.target.closest('.fa-clone').firstElementChild;
+    // copyToClipboard(aphorismElement.textContent);
+
+    Clipboard.copy(aphorismElement.textContent);
+
+    copyText.style.display = 'block';
+    setTimeout(() => {
+      copyText.style.display = 'none';
+    }, 600);
+  }
+});
+
+window.Clipboard = (function(window, document, navigator) {
+  var textArea, copy;
+
+  function isOS() {
+    return navigator.userAgent.match(/ipad|iphone/i);
+  }
+
+  function createTextArea(text) {
+    textArea = document.createElement('textArea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+  }
+
+  function selectText() {
+    var range, selection;
+
+    if (isOS()) {
+      range = document.createRange();
+      range.selectNodeContents(textArea);
+      selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      textArea.setSelectionRange(0, 999999);
+    } else {
+      textArea.select();
+    }
+  }
+
+  function copyToClipboard() {
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+  }
+
+  copy = function(text) {
+    createTextArea(text);
+    selectText();
+    copyToClipboard();
+  };
+
+  return {
+    copy: copy,
+  };
+})(window, document, navigator);
+
+// How to use

@@ -67,7 +67,7 @@ gulp.task('styles', function() {
 
 gulp.task('js', function() {
   return gulp
-    .src(['static/js/variables.js', 'static/js/common.js'])
+    .src(['static/js/helpers.js', 'static/js/variables.js', 'static/js/common.js'])
     .pipe(concat('scripts.min.js'))
     .pipe(terser()) // Mifify js (opt.)
     .pipe(gulp.dest('dist/assets/js'))

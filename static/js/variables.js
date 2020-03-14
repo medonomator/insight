@@ -21,3 +21,4 @@ const thanksForSubscription = document.querySelector('.thanks-for-subscription')
 const preloaderNone = () => (preloader.style.display = 'none');
 
 const shuffleButton = document.querySelector('.shuffle-button');
+const copySuccessfully = document.querySelector('.copy-successfully');

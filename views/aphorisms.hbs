@@ -4,6 +4,7 @@
 <head>
   <title>цитаты великих людей</title>
   {{>head}}
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
@@ -69,9 +70,20 @@
               <span>{{this.author}}</span>
             </div>
             <div class="aphorisms-icons">
-              <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
-              <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм','IMG_PATH','DESC')"
-                name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+
+              <div class="share-buttons">
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-vk" aria-hidden="true"></i>
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-telegram" aria-hidden="true"></i>
+              </div>
+
+              <i class="fa fa-clone" aria-hidden="true">
+                <p class="copy-successfully">Скопировано</p>
+              </i>
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -130,10 +142,27 @@
       url += '&noparse=true';
       Share.popup(url);
     },
+    telegram: function (purl, ptitle, pimg, text) {
+      url = 'tg://msg?text=';
+      url += encodeURIComponent(purl);
+      Share.popup(url);
+    },
+    whatsapp: function (purl, ptitle, pimg, text) {
+      url = 'whatsapp://send?text=';
+      url += encodeURIComponent(purl);
+      Share.popup(url);
+    },
     popup: function (url) {
       window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
     }
   };
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Привет, Vue!'
+    }
+  })
 </script>
 
 </html>
