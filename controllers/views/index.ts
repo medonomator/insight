@@ -123,7 +123,27 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
     return h.view('dynamicAphorism', { aphorism });
   } catch (error) {
-    logger.error('devlopmentPlanPage');
+    logger.error('dynamicAphorismsPage');
+    return h.view('404');
+  }
+};
+
+export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  try {
+    logger.info('dynamicMaterialPage');
+    const material = await materials.findById(req.params.id).lean();
+
+    console.log('=================================================');
+    console.log('logging', material);
+    console.log('=================================================');
+
+    if (!material) {
+      return h.view('404');
+    }
+
+    return h.view('dynamicMaterial', { material });
+  } catch (error) {
+    logger.error('dynamicMaterialPage');
     return h.view('404');
   }
 };

@@ -132,6 +132,32 @@
     </div>
   </footer>
   
-  <script src="assets/js/scripts.min.js"></script></body>
+  <script src="assets/js/scripts.min.js"></script>
+  <script type="text/javascript">
+    Share = {
+      vkontakte: function (purl, ptitle, pimg, text) {
+        url = 'http://vkontakte.ru/share.php?';
+        url += 'url=' + encodeURIComponent(purl);
+        url += '&title=' + encodeURIComponent(ptitle);
+        url += '&description=' + encodeURIComponent(text);
+        url += '&image=' + encodeURIComponent(pimg);
+        url += '&noparse=true';
+        Share.popup(url);
+      },
+      telegram: function (purl, ptitle, pimg, text) {
+        url = 'tg://msg?text=';
+        url += encodeURIComponent(purl);
+        Share.popup(url);
+      },
+      whatsapp: function (purl, ptitle, pimg, text) {
+        url = 'whatsapp://send?text=';
+        url += encodeURIComponent(purl);
+        Share.popup(url);
+      },
+      popup: function (url) {
+        window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
+      }
+    };
+  </script></body>
 
 </html>

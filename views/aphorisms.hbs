@@ -4,7 +4,6 @@
 <head>
   <title>цитаты великих людей</title>
   {{>head}}
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
@@ -46,15 +45,14 @@
       <div class="top-arrow">
         <img src="{{path}}/img/scrollToTop.png" alt="alt">
       </div>
+
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <section class="aphorisms-container">
-
-        <div class="lds-ring">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
         {{#each aphorisms as |item index| }}
         <div class="aphorisms-item">
           <div class="aphorisms-tags">
@@ -156,13 +154,6 @@
       window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
     }
   };
-
-  var app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Привет, Vue!'
-    }
-  })
 </script>
 
 </html>

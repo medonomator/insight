@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <title>{{material.name}}</title>
+  {{>head}}
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div class="wrapper">
+    {{>header}}
+
+    <div class="material-page" style="margin-bottom: 250px; margin-top: 100px;">
+      <section class="aphorisms-container">
+        <div class="aphorisms-item">
+          <div class="aphorisms-item-name">{{material.name}}</div>
+          <div class="aphorisms-tags">
+            {{#each material.tags}}
+            <span>{{this.name}}</span>
+            {{/each}}
+          </div>
+          <div class="aphorisms-item-body">{{material.description}}</div>
+
+          <div class="aphorisms-item-bottom">
+
+            <div class="left-links">
+              {{#if material.websiteUrl}}
+              <a class="aphorisms-item-websiteurl" target="_blank" href="{{material.websiteUrl}}">Сайт</a>
+              {{/if}}
+
+              {{#if material.audioBooks}}
+              <a class="aphorisms-item-audiobooks" target="_blank" href="{{material.audioBooks}}">Аудиокниги</a>
+              {{/if}}
+
+              {{#if material.books}}
+              <a class="aphorisms-item-books" target="_blank" href="{{material.books}}">Книги</a>
+              {{/if}}
+
+              {{#if material.youtubeUrl}}
+              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{material.youtubeUrl}}">
+                <i id="fa-share" class="fa fa-youtube" aria-hidden="true"></i>
+              </a>
+              {{/if}}
+            </div>
+
+            <div class="aphorisms-icons">
+
+              <div class="share-buttons">
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/material/{{material._id}}','Хороший Афоризм')"
+                  class="fa fa-vk" aria-hidden="true"></i>
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/material/{{material._id}}','Хороший Афоризм')"
+                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/material/{{material._id}}','Хороший Афоризм')"
+                  class="fa fa-telegram" aria-hidden="true"></i>
+              </div>
+
+              <div></div>
+
+              <i id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  {{>footer}}
+</body>
+
+</html>
