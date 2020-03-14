@@ -4,12 +4,12 @@ services:
     image: mongo:4.2
     ports:
       - 27017:27017/tcp
-  redis:
-    image: 'bitnami/redis:latest'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - '6379:6379'
+  # redis:
+  #   image: 'bitnami/redis:latest'
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #   ports:
+  #     - '6379:6379'
   # rabbit:
   #   image: rabbitmq:3-management
   #   stdin_open: true
