@@ -133,10 +133,6 @@ export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
     logger.info('dynamicMaterialPage');
     const material = await materials.findById(req.params.id).lean();
 
-    console.log('=================================================');
-    console.log('logging', material);
-    console.log('=================================================');
-
     if (!material) {
       return h.view('404');
     }
