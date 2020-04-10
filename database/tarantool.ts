@@ -6,8 +6,5 @@ export const conn = new TarantoolConnection({
 });
 
 conn.on('connect', (err, res) => {
-  console.log('=============================');
-  console.log('logging', err);
-  console.log('logging', res);
-  console.log('=============================');
+  // ...
 });

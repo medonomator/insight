@@ -1,27 +1,13 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+import { Sequelize, Model } from 'sequelize';
+import { IUserInstance, IUserProps } from '../interfaces/sequelize';
 
-export const sequelize = new Sequelize('postgres', 'postgres', 'example', {
-  dialect: 'postgres',
+import aphorismSchema from './models/aphorisms';
+
+export const sequelize = new Sequelize('postgres://postgres:example@localhost:5432/postgres');
+
+export class Aphorism extends Model {}
+
+Aphorism.init(aphorismSchema, {
+  sequelize,
+  tableName: 'aphorisms',
 });
-
-class User extends Model {}
-User.init(
-  {
-    username: DataTypes.STRING,
-    birthday: DataTypes.DATE,
-    text: DataTypes.TEXT,
-  },
-  { sequelize, modelName: 'user' },
-);
-
-sequelize
-  .sync()
-  .then(() =>
-    User.create({
-      username: 'janedoe',
-      birthday: new Date(1980, 6, 20),
-    }),
-  )
-  .then(jane => {
-    console.log(jane.toJSON());
-  });

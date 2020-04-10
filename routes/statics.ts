@@ -10,20 +10,19 @@ const routersForStaticFolder: Hapi.ServerRoute[] = [
     handler: putFile,
     options: {
       ...docsStatic.staticUpload,
-      auth: {
-        strategy: 'users',
-      },
-      validate: {
-        payload: {
-          file: Joi.any(),
-        },
-      },
-      payload: {
-        output: 'stream',
-        maxBytes: 5242880, // 5mb
-        parse: true,
-        allow: 'multipart/form-data',
-      },
+      // auth: {
+      //   strategy: 'users',
+      // },
+      //   payload: {
+      //     file: Joi.any(),
+      //   },
+      // },
+      // payload: {
+      //   output: 'stream',
+      //   maxBytes: 5242880, // 5mb
+      //   parse: true,
+      //   allow: 'multipart/form-data',
+      // },
     },
   },
 ];

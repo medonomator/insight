@@ -8,12 +8,11 @@ import * as hapiAuthBasic from 'hapi-auth-basic';
 import Boom from 'boom';
 import { swaggerOptions } from './config';
 import mongoConnection from './database/mongoConnection';
+import { sequelize } from './database/sequelize';
 import { logger } from './helpers/logger';
 import { syncDataForLocalMongo } from './helpers/syncDataForLocalMongo';
 import userToken from './helpers/auth/user';
 import { IS_DEVELOPMENT } from './constants';
-// import { sequelize } from './database/sequelize';
-// sequelize;
 // Routes
 import users from './routes/users';
 import views from './routes/views';
@@ -85,19 +84,24 @@ export class Server {
         await syncDataForLocalMongo();
       }
 
+      sequelize.sync();
       await insertDataToRedis();
       serverHelthCheck();
 
-      server.route([...users, ...views, ...admin, ...tasks, ...statics]);
+      // server.route([...users, ...views, ...admin, ...tasks, ...statics]);
+      server.route([...statics]);
 
       await server.start();
 
-      server.ext('onPreResponse', (request, reply) => {
-        if (request.response.isBoom) {
-          return reply.view('404');
-        }
-        return reply.continue;
-      });
+      // server.ext('onPreResponse', (request, reply) => {
+      //   // console.log('=================================================');
+      //   // console.log('logging', request.response);
+      //   // console.log('=================================================');
+      //   if (request.response.output.statusCode === 404) {
+      //     return reply.view('404');
+      //   }
+      //   return reply.continue;
+      // });
 
       logger.info('Server running at:', server.info.uri);
     } catch (err) {
@@ -106,7 +110,7 @@ export class Server {
   }
 }
 
-export const server = new Server(process.env.PORT || '5000');
+const server = new Server(process.env.PORT || '5000');
 server.start();
 
 process.on('unhandledRejection', (err: Error) => {
