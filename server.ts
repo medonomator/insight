@@ -1,28 +1,29 @@
-import * as Hapi from 'hapi';
-import * as Inert from 'inert';
-import * as Vision from 'vision';
-import * as HapiSwagger from 'hapi-swagger';
-import * as JWT from 'hapi-auth-jwt2';
-import * as AuthBearer from 'hapi-auth-bearer-token';
-import * as hapiAuthBasic from 'hapi-auth-basic';
-import Boom from 'boom';
-import { swaggerOptions } from './config';
-import mongoConnection from './database/mongoConnection';
-import { sequelize } from './database/sequelize';
-import { logger } from './helpers/logger';
-import { syncDataForLocalMongo } from './helpers/syncDataForLocalMongo';
-import userToken from './helpers/auth/user';
-import { IS_DEVELOPMENT } from './constants';
+import * as Hapi from "hapi";
+import * as Inert from "inert";
+import * as Vision from "vision";
+import * as HapiSwagger from "hapi-swagger";
+import * as JWT from "hapi-auth-jwt2";
+import * as AuthBearer from "hapi-auth-bearer-token";
+import * as hapiAuthBasic from "hapi-auth-basic";
+import Boom from "boom";
+import { swaggerOptions } from "./config";
+import mongoConnection from "./database/mongoConnection";
+import { knex } from "./database/pgConnect";
+import { logger } from "./helpers/logger";
+import { syncDataForLocalMongo } from "./helpers/syncDataForLocalMongo";
+import userToken from "./helpers/auth/user";
+import { IS_DEVELOPMENT } from "./constants";
 // Routes
-import users from './routes/users';
-import views from './routes/views';
-import admin from './routes/admin';
-import tasks from './routes/tasks';
-import statics from './routes/statics';
+import users from "./routes/users";
+import views from "./routes/views";
+import admin from "./routes/admin";
+import tasks from "./routes/tasks";
+import statics from "./routes/statics";
 
-import { insertDataToRedis } from './database/insertDataToRedis';
-import { serverHelthCheck } from './helpers/serverHelthCheck';
+import { insertDataToRedis } from "./database/insertDataToRedis";
+import { serverHelthCheck } from "./helpers/serverHelthCheck";
 
+knex
 // Connect Mongodb
 mongoConnection();
 
@@ -30,7 +31,7 @@ export class Server {
   constructor(private port: string) {}
 
   private getErrorFunction(message: string) {
-    logger.error('Error Authorization');
+    logger.error("Error Authorization");
     return Boom.unauthorized(message);
   }
 
@@ -40,8 +41,14 @@ export class Server {
         port: this.port,
         routes: {
           cors: {
-            origin: ['*'],
-            headers: ['Access-Control-Allow-Origin', 'Accept', 'Authorization', 'Content-Type', 'user-agent'],
+            origin: ["*"],
+            headers: [
+              "Access-Control-Allow-Origin",
+              "Accept",
+              "Authorization",
+              "Content-Type",
+              "user-agent",
+            ],
             credentials: true,
           },
         },
@@ -63,19 +70,19 @@ export class Server {
 
       server.views({
         engines: {
-          hbs: require('handlebars'),
+          hbs: require("handlebars"),
         },
         relativeTo: __dirname,
-        partialsPath: 'views/partials',
-        helpersPath: 'views/helpers',
+        partialsPath: "views/partials",
+        helpersPath: "views/helpers",
         isCached: true,
-        path: 'views',
+        path: "views",
         context: {
-          path: '../static/',
+          path: "../static/",
         },
       });
 
-      server.auth.strategy('users', 'bearer-access-token', {
+      server.auth.strategy("users", "bearer-access-token", {
         validate: userToken,
         unauthorized: this.getErrorFunction,
       });
@@ -84,41 +91,41 @@ export class Server {
         await syncDataForLocalMongo();
       }
 
-      sequelize.sync();
       await insertDataToRedis();
       serverHelthCheck();
 
-      // server.route([...users, ...views, ...admin, ...tasks, ...statics]);
-      server.route([...statics]);
+      server.route([...users, ...views, ...admin, ...tasks, ...statics]);
 
       await server.start();
 
-      // server.ext('onPreResponse', (request, reply) => {
-      //   // console.log('=================================================');
-      //   // console.log('logging', request.response);
-      //   // console.log('=================================================');
-      //   if (request.response.output.statusCode === 404) {
-      //     return reply.view('404');
-      //   }
-      //   return reply.continue;
-      // });
+      server.ext("onPreResponse", (request, reply) => {
+        if (
+          request.response.output &&
+          request.response.output.statusCode === 404
+        ) {
+          return reply.view("404");
+        }
+        return reply.continue;
+      });
 
-      logger.info('Server running at:', server.info.uri);
+      logger.info("Server running at:", server.info.uri);
     } catch (err) {
       logger.error(`Server start error: `, err.message, err.stack);
     }
   }
 }
 
-const server = new Server(process.env.PORT || '5000');
+const server = new Server(process.env.PORT || "5000");
 server.start();
 
-process.on('unhandledRejection', (err: Error) => {
+process.on("unhandledRejection", (err: Error) => {
   logger.error(`unhandledRejection: `, err.stack);
   logger.error(`unhandledRejection: `, err.message);
+  process.exit(1);
 });
 
-process.on('uncaughtException', (err: Error) => {
+process.on("uncaughtException", (err: Error) => {
   logger.error(`uncaughtException: `, err.stack);
   logger.error(`uncaughtException: `, err.message);
+  process.exit(1);
 });
