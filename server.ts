@@ -7,12 +7,8 @@ import * as AuthBearer from "hapi-auth-bearer-token";
 import * as hapiAuthBasic from "hapi-auth-basic";
 import Boom from "boom";
 import { swaggerOptions } from "./config";
-import mongoConnection from "./database/mongoConnection";
-import { knex } from "./database/pgConnect";
 import { logger } from "./helpers/logger";
-import { syncDataForLocalMongo } from "./helpers/syncDataForLocalMongo";
 import userToken from "./helpers/auth/user";
-import { IS_DEVELOPMENT } from "./constants";
 // Routes
 import users from "./routes/users";
 import views from "./routes/views";
@@ -22,10 +18,6 @@ import statics from "./routes/statics";
 
 import { insertDataToRedis } from "./database/insertDataToRedis";
 import { serverHelthCheck } from "./helpers/serverHelthCheck";
-
-knex
-// Connect Mongodb
-mongoConnection();
 
 export class Server {
   constructor(private port: string) {}
@@ -86,10 +78,6 @@ export class Server {
         validate: userToken,
         unauthorized: this.getErrorFunction,
       });
-
-      if (IS_DEVELOPMENT) {
-        await syncDataForLocalMongo();
-      }
 
       await insertDataToRedis();
       serverHelthCheck();

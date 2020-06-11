@@ -1,6 +1,6 @@
 import Boom from 'boom';
-import { shuffle } from 'lodash';
-import { getAllElementsByKey } from '../database/redis';
+// import { shuffle } from 'lodash';
+// import { getAllElementsByKey } from '../database/redis';
 import { logger } from './logger';
 import { IAphorisms, IResTakeAphorisms } from '../controllers/admin/aphorisms/interfaces';
 
@@ -14,62 +14,63 @@ interface IParams {
   random?: boolean;
 }
 
-export const takeAphorisms = async (params: IParams): Promise<IResTakeAphorisms | Boom> => {
-  try {
-    let aphorisms: IAphorisms[] = (await getAllElementsByKey('mongoIds')) || [];
 
-    const { limit = 100, random = true, author, body, topic, category, offset } = params;
-    if (random) {
-      const generateRandomList = (lim: number, length = 0) => {
-        const list = {};
-        for (let i = lim; i > 0; i--) {
-          const randomNumber = Math.floor(Math.random() * length) + 1;
-          list[randomNumber] = randomNumber;
-        }
-        return list;
-      };
-      const randomList = generateRandomList(limit, aphorisms.length);
-      aphorisms = shuffle(aphorisms.filter((_, index) => index === randomList[index]));
-    }
+export const takeAphorisms = async (params: IParams): Promise<any> => {
+  // try {
+  //   let aphorisms: IAphorisms[] = (await getAllElementsByKey('mongoIds')) || [];
 
-    const withoutSpaces = (str: string) => {
-      return str.replace(/\. /, '.').replace(/\. /, '.');
-    };
-    // filters
-    if (author && author !== 'Все') {
-      const authorRegExp = new RegExp(author, 'g');
-      aphorisms = aphorisms.filter(item => authorRegExp.test(withoutSpaces(item.author)));
-    }
+  //   const { limit = 100, random = true, author, body, topic, category, offset } = params;
+  //   if (random) {
+  //     const generateRandomList = (lim: number, length = 0) => {
+  //       const list = {};
+  //       for (let i = lim; i > 0; i--) {
+  //         const randomNumber = Math.floor(Math.random() * length) + 1;
+  //         list[randomNumber] = randomNumber;
+  //       }
+  //       return list;
+  //     };
+  //     const randomList = generateRandomList(limit, aphorisms.length);
+  //     aphorisms = shuffle(aphorisms.filter((_, index) => index === randomList[index]));
+  //   }
 
-    if (body) {
-      const bodyRegExp = new RegExp(body, 'g');
-      aphorisms = aphorisms.filter(item => bodyRegExp.test(item.body));
-    }
+  //   const withoutSpaces = (str: string) => {
+  //     return str.replace(/\. /, '.').replace(/\. /, '.');
+  //   };
+  //   // filters
+  //   if (author && author !== 'Все') {
+  //     const authorRegExp = new RegExp(author, 'g');
+  //     aphorisms = aphorisms.filter(item => authorRegExp.test(withoutSpaces(item.author)));
+  //   }
 
-    if (category) {
-      aphorisms = aphorisms.filter(item => item.category === category);
-    }
+  //   if (body) {
+  //     const bodyRegExp = new RegExp(body, 'g');
+  //     aphorisms = aphorisms.filter(item => bodyRegExp.test(item.body));
+  //   }
 
-    if (topic && topic !== 'all') {
-      aphorisms = aphorisms.filter(item => {
-        for (const tag of item.tags) {
-          if (tag.machineName === topic) {
-            return item;
-          }
-        }
-      });
-    }
+  //   if (category) {
+  //     aphorisms = aphorisms.filter(item => item.category === category);
+  //   }
 
-    if (offset) {
-      aphorisms = aphorisms.slice(offset).slice(0, limit);
-    }
+  //   if (topic && topic !== 'all') {
+  //     aphorisms = aphorisms.filter(item => {
+  //       for (const tag of item.tags) {
+  //         if (tag.machineName === topic) {
+  //           return item;
+  //         }
+  //       }
+  //     });
+  //   }
 
-    return {
-      aphorisms,
-      count: aphorisms.length,
-    };
-  } catch (err) {
-    logger.error(err);
-    return Boom.badImplementation(err.message);
-  }
+  //   if (offset) {
+  //     aphorisms = aphorisms.slice(offset).slice(0, limit);
+  //   }
+
+  //   return {
+  //     aphorisms,
+  //     count: aphorisms.length,
+  //   };
+  // } catch (err) {
+  //   logger.error(err);
+  //   return Boom.badImplementation(err.message);
+  // }
 };

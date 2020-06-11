@@ -49,14 +49,15 @@
     "vision": "^5.4.4"
   },
   "devDependencies": {
-    "@types/pg": "^7.14.3",
     "@hapi/boom": "^8.0.1",
     "@types/boom": "^7.3.0",
     "@types/hapi": "^17.0.9",
     "@types/jest": "^24.9.1",
     "@types/joi": "^13.6.3",
+    "@types/knex": "^0.16.1",
     "@types/mongoose": "^5.5.11",
     "@types/node": "^11.13.6",
+    "@types/pg": "^7.14.3",
     "@types/pino": "^4.7.1",
     "@types/redis": "^2.8.14",
     "@types/tarantool-driver": "^3.0.0",

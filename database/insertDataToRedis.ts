@@ -1,28 +1,42 @@
-import { aphorisms } from './schemas/aphorisms';
-import { redisClient } from './redis';
-import { logger } from '../helpers/logger';
-
-const ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
+import { aphorisms } from "./schemas/aphorisms";
+import { logger } from "../helpers/logger";
+import { knex } from "./pgConnect";
+import aphorismsModel from "../models/redis/aphorisms";
+import { uniqBy, isEmpty } from "lodash";
 
 export const insertDataToRedis = async (): Promise<void> => {
   try {
-    const isMongoIds = await redisClient.exists('mongoIds');
-    if (!isMongoIds) {
-      const data: any = await aphorisms
-        .find()
-        .select('-__v -createdAt -updatedAt')
-        .sort({ createdAt: -1 })
-        .lean();
+    const aphorisms = await knex("aphorisms")
+      .select([
+        "aphorisms.id",
+        "aphorisms.body",
+        "aphorisms.tags",
+        "aphorisms.category",
+        "aphorisms.created_at",
+        "aphorisms.updated_at",
+        knex.ref("aphorism_authors.name").as("authorName"),
+        knex.ref("aphorism_authors.machineName").as("authorMachineName"),
+      ])
+      .leftJoin(
+        "aphorism_authors",
+        "aphorisms.author_id",
+        "aphorism_authors.id"
+      );
 
-      const prepareToWriteRedis = {};
-      data.map(item => {
-        prepareToWriteRedis[item._id.toString()] = JSON.stringify(item);
-      });
+    await aphorismsModel.setAll(aphorisms);
 
-      await redisClient.hmset('mongoIds', prepareToWriteRedis);
-      await redisClient.expire('mongoIds', ONE_YEAR);
-      logger.info('MongoIds recorded in the database');
-    }
+    const res = await aphorismsModel.getByAuthor("V.G.Belinskii");
+
+    console.log('==============================================');
+    console.log('loging', res.length);
+    console.log('==============================================');
+    
+    // res.forEach(item => {
+    //   console.log('==============================================');
+    //   console.log('loging', item.tags);
+    //   console.log('==============================================');
+      
+    // })
   } catch (error) {
     logger.error(error);
   }
