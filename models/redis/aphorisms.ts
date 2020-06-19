@@ -1,29 +1,25 @@
-import { aphorisms } from "./../../database/schemas/aphorisms";
 import { redisClient as redis } from "../../database/redis";
 import { logger } from "../../helpers/logger";
 import { CATEGORIES } from "../../constants/models";
 import { uniqBy, isEmpty } from "lodash";
+import { IRedisModel } from "../../interfaces/redis";
+import { IAphorisms } from "../../interfaces/aphorism";
+
 /**
  * Redis Aphorisms model
  */
-// TODO: need realize Implements and interfaces...
-class Aphorisms {
+class Aphorisms implements IRedisModel<IAphorisms[]> {
   private STORAGE_KEY = "aphorisms";
-  private aphorisms = [];
+  private aphorisms: IAphorisms[] = [];
+
   /**
-   * Save aphorisms list
-   * @param {IAphorism[]} params
-   * @return {Promise<'ok | Error'>}
+   * Set aphorisms list
    */
-  public async setAll(aphorisms): Promise<"ok" | Error> {
+  public async setAll(aphorisms: IAphorisms[]): Promise<"ok" | Error> {
     try {
       for await (const aphorism of aphorisms) {
         await this.set(aphorism);
-
-        const key = `${this.STORAGE_KEY}:${aphorism.author}`;
-        for await (const tag of aphorism.tags) {
-          await redis.zadd(key, aphorism.id, JSON.stringify(tag));
-        }
+        await this.setAuthorAphorism(aphorism);
       }
       return "ok";
     } catch (error) {
@@ -31,12 +27,11 @@ class Aphorisms {
       return error;
     }
   }
+
   /**
-   * Save aphorism
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
+   * Set aphorism
    */
-  public async set(aphorism) {
+  public async set(aphorism: IAphorisms) {
     let firstKey = "";
 
     if (aphorism.category === CATEGORIES.kastaneda) {
@@ -56,74 +51,66 @@ class Aphorisms {
       }
     }
 
-    // need add method "if exist"
     await redis.set(firstKey, JSON.stringify(aphorism));
   }
+
   /**
-   * Save aphorism
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
+   * Set author aphorism
+   */
+  public async setAuthorAphorism(aphorism: IAphorisms) {
+    const key = `${this.STORAGE_KEY}:${aphorism.authorMachineName}:${aphorism.id}`;
+    await redis.set(key, JSON.stringify(aphorism));
+  }
+
+  /**
+   * Get aphorisms by category
    */
   public async getByCategory(category: string): Promise<any> {
     const keys = await redis.keys(`${this.STORAGE_KEY}:${category}:*`);
     await this.filler(keys);
     return this.aphorisms;
   }
+
   /**
-   * Save aphorism
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
+   * Get aphorism by tag
    */
-  public async getByTag(tag: string): Promise<any> {
+  public async getByTag(tag: string): Promise<IAphorisms[]> {
     const keys = await redis.keys(
       `${this.STORAGE_KEY}:${CATEGORIES.mysliteliFilosophy}:${tag}:*`
     );
     await this.filler(keys);
     return this.aphorisms;
   }
-  /**
-   * Save aphorism
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
-   */
-  public async getByAuthor(author: string): Promise<any> {
-    const firstKey = `${this.STORAGE_KEY}:${author}`;
-    const secondKey = `${this.STORAGE_KEY}:${CATEGORIES.mysliteliFilosophy}:${author}:*`;
 
-    const res = await redis.zrange(firstKey, 0, 10);
-    const keys = await redis.keys(secondKey);
+  /**
+   * Get aphorism by author
+   */
+  public async getByAuthor(author: string): Promise<IAphorisms[]> {
+    const key = `${this.STORAGE_KEY}:${author}:*`;
+
+    const keys = await redis.keys(key);
 
     await this.filler(keys);
     return this.aphorisms;
   }
+
   /**
-   * Save aphorism
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
+   * Get all aphorisms
    */
-  public async getAll(): Promise<any> {
+  public async getAll(): Promise<IAphorisms[]> {
     const keys = await redis.keys(`${this.STORAGE_KEY}:*`);
     await this.filler(keys);
     return this.aphorisms;
   }
+
   /**
    * Inner helper
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
    */
-  private async filler(keys: string[]): Promise<any> {
+  private async filler(keys: string[]): Promise<void> {
     for await (const key of keys) {
-      // this.aphorisms.push(JSON.parse(await redis.get(key)));
+      this.aphorisms.push(JSON.parse(await redis.get(key)));
     }
     this.aphorisms = uniqBy(this.aphorisms, "id");
-  }
-  /**
-   * Inner helper
-   * @param {IAphorism} params
-   * @return {Promise<'ok'>}
-   */
-  private async keyBuilder(keys: string[]): Promise<any> {
-    // ...
   }
 }
 

@@ -1,8 +1,6 @@
-import { aphorisms } from "./schemas/aphorisms";
 import { logger } from "../helpers/logger";
 import { knex } from "./pgConnect";
 import aphorismsModel from "../models/redis/aphorisms";
-import { uniqBy, isEmpty } from "lodash";
 
 export const insertDataToRedis = async (): Promise<void> => {
   try {
@@ -22,21 +20,8 @@ export const insertDataToRedis = async (): Promise<void> => {
         "aphorisms.author_id",
         "aphorism_authors.id"
       );
-
-    await aphorismsModel.setAll(aphorisms);
-
-    const res = await aphorismsModel.getByAuthor("V.G.Belinskii");
-
-    console.log('==============================================');
-    console.log('loging', res.length);
-    console.log('==============================================');
-    
-    // res.forEach(item => {
-    //   console.log('==============================================');
-    //   console.log('loging', item.tags);
-    //   console.log('==============================================');
       
-    // })
+    await aphorismsModel.setAll(aphorisms);
   } catch (error) {
     logger.error(error);
   }
