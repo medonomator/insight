@@ -1,7 +1,7 @@
 import { redisClient as redis } from "../../database/redis";
 import { logger } from "../../helpers/logger";
 import { CATEGORIES } from "../../constants/models";
-import { uniqBy, isEmpty } from "lodash";
+import { uniqBy } from "lodash";
 import { IRedisModel } from "../../interfaces/redis";
 import { IAphorisms } from "../../interfaces/aphorism";
 
@@ -11,6 +11,8 @@ import { IAphorisms } from "../../interfaces/aphorism";
 class Aphorisms implements IRedisModel<IAphorisms[]> {
   private STORAGE_KEY = "aphorisms";
   private aphorisms: IAphorisms[] = [];
+  private tags = new Set();
+  private authors = new Set();
 
   /**
    * Set aphorisms list
@@ -21,6 +23,7 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
         await this.set(aphorism);
         await this.setAuthorAphorism(aphorism);
       }
+
       return "ok";
     } catch (error) {
       logger.error(error);
@@ -41,17 +44,16 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
     }
 
     if (aphorism.category !== CATEGORIES.kastaneda) {
-      {
-        for await (const tag of aphorism.tags) {
-          if (isEmpty(tag.machineName)) {
-          }
-          const secondKey = `${this.STORAGE_KEY}:${aphorism.category}:${tag.machineName}:${aphorism.authorMachineName}:${aphorism.id}`;
-          await redis.set(secondKey, JSON.stringify(aphorism));
-        }
+      for await (const tag of aphorism.tags) {
+        const secondKey = `${this.STORAGE_KEY}:${aphorism.category}:${tag.machineName}:${aphorism.authorMachineName}:${aphorism.id}`;
+        await redis.set(secondKey, JSON.stringify(aphorism));
+
+        this.tags.add(tag.name);
       }
     }
 
     await redis.set(firstKey, JSON.stringify(aphorism));
+    this.authors.add(aphorism.authorName);
   }
 
   /**
@@ -101,6 +103,20 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
     const keys = await redis.keys(`${this.STORAGE_KEY}:*`);
     await this.filler(keys);
     return this.aphorisms;
+  }
+
+  /**
+   * Get all tags
+   */
+  public async getTags(): Promise<Set<unknown>> {
+    return this.tags;
+  }
+
+  /**
+   * Get all authors
+   */
+  public async getAuthors(): Promise<Set<unknown>> {
+    return this.authors;
   }
 
   /**

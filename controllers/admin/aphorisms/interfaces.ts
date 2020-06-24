@@ -1,17 +1,6 @@
 import Boom from 'boom';
 import { IItemNameMachine } from '../../../interfaces';
-/**
- * GRUD for aphorisms
- */
-export interface IAphorisms {
-  _id: string;
-  author: string;
-  body: string;
-  tags: IItemNameMachine[];
-  category: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { IAphorisms } from "../../../interfaces/aphorism";
 
 export interface IResTakeAphorisms {
   aphorisms: IAphorisms[];
@@ -45,7 +34,7 @@ export interface IParamsUpdate {
 
 export interface IParamsDelete {
   payload: {
-    _id: string;
+    id: string;
   };
 }
 

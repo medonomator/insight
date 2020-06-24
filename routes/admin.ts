@@ -11,9 +11,7 @@ import { getMaterials } from "../controllers/admin/materials/getMaterials";
 import { updateMaterials } from "../controllers/admin/materials/updateMaterials";
 import { deleteMaterials } from "../controllers/admin/materials/deleteMaterials";
 // docs
-import { docsAphorisms, docsMainData, docsMaterials } from "../config/docs";
-import { getMainData } from "../controllers/admin/mainData/getMainData";
-import { changeMainData } from "../controllers/admin/mainData/changeMainData";
+import { docsAphorisms, docsMaterials } from "../config/docs";
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -87,52 +85,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
       validate: {
         payload: {
           _id: Joi.string().trim().required(),
-        },
-      },
-    },
-  },
-  {
-    method: "GET",
-    path: "/v1/admin/mainData",
-    handler: getMainData,
-    options: {
-      ...docsMainData.getMainData,
-      auth: {
-        strategy: "users",
-      },
-    },
-  },
-  {
-    method: "PUT",
-    path: "/v1/admin/mainData",
-    handler: changeMainData,
-    options: {
-      ...docsMainData.changeMainData,
-      auth: {
-        strategy: "users",
-      },
-      validate: {
-        payload: {
-          mainPage: Joi.object({
-            headerH1: Joi.string().allow(""),
-            headerText: Joi.string().allow(""),
-          }).optional(),
-          aphorismPage: Joi.object({
-            headerH1: Joi.string().allow(""),
-            headerText: Joi.string().allow(""),
-          }).optional(),
-          affirmationPage: Joi.object({
-            headerH1: Joi.string().allow(""),
-            headerText: Joi.string().allow(""),
-          }).optional(),
-          materialPage: Joi.object({
-            headerH1: Joi.string().allow(""),
-            headerText: Joi.string().allow(""),
-          }).optional(),
-          developmentPlanPage: Joi.object({
-            headerH1: Joi.string().allow(""),
-            headerText: Joi.string().allow(""),
-          }).optional(),
         },
       },
     },

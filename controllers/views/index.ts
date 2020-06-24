@@ -2,15 +2,8 @@ import * as Vision from "vision";
 import * as Hapi from "hapi";
 import Boom from "boom";
 import { logger } from "../../helpers/logger";
-import { authors as authorsCollection } from "../../database/schemas/authors";
-import { topics as topicCollection } from "../../database/schemas/topics";
-import { aphorisms } from "../../database/schemas/aphorisms";
-import { materials } from "../../database/schemas/materials";
-import { mainData } from "../../database/schemas/mainData";
-import { takeAphorisms } from "../../helpers/aphorisms";
-import { IResTakeAphorisms } from "../admin/aphorisms/interfaces";
-import { IItemNameMachine } from "../../interfaces";
 import aphorismsModel from "../../models/redis/aphorisms";
+import { IAphorisms } from "../../interfaces/aphorism";
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
@@ -28,8 +21,15 @@ export const getAphorismsPage = async (
 ) => {
   try {
     logger.info("getAphorismsPage");
+
+    const aphorisms = (await aphorismsModel.getAll()) as IAphorisms[];
+    const tags = await aphorismsModel.getTags();
+    const authors = await aphorismsModel.getAuthors();
+
     return h.view("aphorisms", {
-      aphorisms: await aphorismsModel.getAll(),
+      aphorisms,
+      tags,
+      authors
     });
   } catch (err) {
     logger.error(err);
@@ -77,7 +77,7 @@ export const dynamicAphorismsPage = async (
 ) => {
   try {
     logger.info("dynamicAphorismsPage");
-    const aphorism = await aphorisms.findById(req.params.id).lean();
+    const aphorism = "TODO";
 
     if (!aphorism) {
       return h.view("404");
@@ -96,7 +96,7 @@ export const dynamicMaterialPage = async (
 ) => {
   try {
     logger.info("dynamicMaterialPage");
-    const material = await materials.findById(req.params.id).lean();
+    const material = "TODO";
 
     if (!material) {
       return h.view("404");

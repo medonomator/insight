@@ -64,26 +64,26 @@ export default {
     "modal-form": ModalForm
   },
   async mounted() {
-    const res = await axios.get(`${getBaseUrl()}/admin/aphorisms`);
+    const res = await axios.get(`${getBaseUrl()}/v1/admin/aphorisms`);
     this.aphorismData = res.data.data;
     this.count = res.data.count;
   },
   methods: {
     authorFilterHandler: async function(value) {
       const author = value ? `?author=${value}` : "";
-      const res = await axios.get(`${getBaseUrl()}/admin/aphorisms${author}`);
+      const res = await axios.get(`${getBaseUrl()}/v1/admin/aphorisms${author}`);
       this.aphorismData = res.data.data;
       this.count = res.data.count;
     },
     bodyFilterHandler: async function(value) {
       const body = value ? `?body=${value}` : "";
-      const res = await axios.get(`${getBaseUrl()}/admin/aphorisms${body}`);
+      const res = await axios.get(`${getBaseUrl()}/v1/admin/aphorisms${body}`);
       this.aphorismData = res.data.data;
       this.count = res.data.count;
     },
     deleteAphorism: function(_id) {
       axios
-        .delete(`${getBaseUrl()}/admin/aphorisms`, { data: { _id } })
+        .delete(`${getBaseUrl()}/v1/admin/aphorisms`, { data: { _id } })
         .then(() => {
           this.aphorismData = this.aphorismData.filter(
             item => item._id !== _id
@@ -92,7 +92,7 @@ export default {
     },
     addAphorism: function({ author, body, tags, category }) {
       axios
-        .post(`${getBaseUrl()}/admin/aphorisms`, {
+        .post(`${getBaseUrl()}/v1/admin/aphorisms`, {
           author,
           body,
           tags: tags.split(", "),
@@ -110,7 +110,7 @@ export default {
     },
     updateAphorism: function({ author, body, tags, _id, category }) {
       axios
-        .put(`${getBaseUrl()}/admin/aphorisms`, {
+        .put(`${getBaseUrl()}/v1/admin/aphorisms`, {
           _id,
           author,
           body,

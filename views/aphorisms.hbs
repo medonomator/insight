@@ -11,19 +11,10 @@
   <div class="wrapper">
     {{>header}}
 
-    <h1>
-      {{#if aphorismPage.headerH1}}
-      {{aphorismPage.headerH1}}
-      {{else}}
-      Мудрость афоризмов
-      {{/if}}
-    </h1>
+    <h1>Мудрость афоризмов</h1>
 
     <div class="header-text">
       <p>
-        {{#if aphorismPage.headerText}}
-        {{aphorismPage.headerText}}
-        {{else}}
         Если ты жаждешь глубинной трансформации, этот ресурс поможет тебе. Раз ты здесь, значит,
         готов к переменам и
         открыт для нового.
@@ -36,8 +27,7 @@
         лучшей версии тебя.
         В каждом разделе мы собираем то, что способно изменить любого, кто к этому стремится. Дать ответ на нужный
         вопрос, заставить задуматься или просто вдохновить на новый день.
-        Читай, размышляй и используй то, что тебе подойдет. Удачи!
-        {{/if}}
+        Читай, размышляй и используй то, что тебе подойдет. Удачи!}
       </p>
     </div>
 
@@ -65,16 +55,16 @@
           </div>
           <div class="aphorisms-item-bottom">
             <div class="aphorisms-authors">
-              <span>{{this.author}}</span>
+              <span>{{this.authorName}}</span>
             </div>
             <div class="aphorisms-icons">
 
               <div class="share-buttons">
-                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
                   class="fa fa-vk" aria-hidden="true"></i>
-                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
                   class="fa fa-whatsapp" aria-hidden="true"></i>
-                <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/{{this._id}}','Хороший Афоризм')"
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
                   class="fa fa-telegram" aria-hidden="true"></i>
               </div>
 
@@ -101,8 +91,8 @@
         <div class="filter-block-item">
           <p>Топик</p>
           <select id="filter-by-topic">
-            {{#each categories}}
-            <option value={{this.machineName}}>{{this.name}}</option>
+            {{#each tags}}
+            <option value={{this}}>{{this}}</option>
             {{/each}}
           </select>
         </div>
@@ -111,7 +101,7 @@
           <p>Автор</p>
           <select id="filter-by-author">
             {{#each authors}}
-            <option value={{this.name}}>{{this.name}}</option>
+            <option value={{this}}>{{this}}</option>
             {{/each}}
           </select>
         </div>
