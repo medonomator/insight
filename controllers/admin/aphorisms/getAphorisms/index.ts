@@ -1,7 +1,13 @@
-import Boom from 'boom';
-import { logger } from '../../../../helpers/logger';
-import { IResponse, IParamsGet, IResTakeAphorisms } from '../interfaces';
-import { takeAphorisms } from '../../../../helpers/aphorisms';
+import { cyrToLat } from "./../../../../helpers/index";
+import Boom from "boom";
+import { logger } from "../../../../helpers/logger";
+import { IResponse, IParamsGet } from "../interfaces";
+import aphorismsModel from "../../../../models/redis/aphorisms";
+import { IAphorisms } from "../../../../interfaces/aphorism";
+import { knex } from "../../../../database/pgConnect";
+import aphorismsTable from "../../../../tables/aphorisms";
+import { shuffle } from "lodash";
+
 /**
  * Get Aphorisms
  * @param {IParamsGet} params
@@ -9,12 +15,25 @@ import { takeAphorisms } from '../../../../helpers/aphorisms';
  */
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
-    logger.info('Get aphorisms');
-    const resTakeAphorisms = (await takeAphorisms(params.query)) as IResTakeAphorisms;
+    logger.info("Get aphorisms");
+    const { author, topic, category, random = true } = params.query;
+    let aphorisms: IAphorisms[] = [];
+
+    if (author) {
+      aphorisms = await aphorismsModel.getByAuthor(author);
+    } else if (topic) {
+      aphorisms = await aphorismsModel.getByTag(topic);
+    } else if (category) {
+      aphorisms = await aphorismsModel.getByCategory(category);
+    } else if (!random) {
+      aphorisms = await aphorismsModel.getAll();
+    } else {
+      aphorisms = shuffle(await aphorismsModel.getAll());
+    }
 
     return {
-      data: resTakeAphorisms.aphorisms,
-      count: resTakeAphorisms.count,
+      data: aphorisms,
+      count: aphorisms.length,
     };
   } catch (err) {
     logger.error(err);

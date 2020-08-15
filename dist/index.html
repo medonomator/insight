@@ -2,11 +2,11 @@
 <html lang="ru">
 
 <head>
+  <title>цитаты великих людей</title>
   <meta charset="utf-8">
   
-  <title>Spiritual Evolution</title>
-  <meta name="description" content="">
-  
+  <meta name="description" content="цитаты великих людей">
+  <meta name="keywords" content="цитаты,афоризмы,высказывания">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
@@ -25,6 +25,7 @@
   <link rel="shortcut icon" type="image/png" href="assets/img/favicon/favicon.ico">
   <link rel="stylesheet" href="assets/css/main.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
     (function (m, e, t, r, i, k, a) {
@@ -74,15 +75,14 @@
       </div>
     
     </div>
-
     <h1>
       Только лучшее
     </h1>
 
     <div class="header-text">
       <p>
-        Данный раздел находится в активной разработке. Здесь мы вместе с вами концентрируем одни из самых сильных
-        направлений и метериалы, которые реально трансформируют при должном употреблении.
+        Здесь собираются разные полезные материалы и одни из самых сильных направлений, которые действительно
+        трансформируют.
       </p>
     </div>
 
@@ -99,11 +99,8 @@
           <div></div>
         </div>
 
-
       </section>
-
     </div>
-
   </div>
   <footer class="footer">
     <div class="wrapper">
@@ -134,6 +131,32 @@
     </div>
   </footer>
   
-  <script src="assets/js/scripts.min.js"></script></body>
+  <script src="assets/js/common.js"></script>
+  <script type="text/javascript">
+    Share = {
+      vkontakte: function (purl, ptitle, pimg, text) {
+        url = 'http://vkontakte.ru/share.php?';
+        url += 'url=' + encodeURIComponent(purl);
+        url += '&title=' + encodeURIComponent(ptitle);
+        url += '&description=' + encodeURIComponent(text);
+        url += '&image=' + encodeURIComponent(pimg);
+        url += '&noparse=true';
+        Share.popup(url);
+      },
+      telegram: function (purl, ptitle, pimg, text) {
+        url = 'tg://msg?text=';
+        url += encodeURIComponent(purl);
+        Share.popup(url);
+      },
+      whatsapp: function (purl, ptitle, pimg, text) {
+        url = 'whatsapp://send?text=';
+        url += encodeURIComponent(purl);
+        Share.popup(url);
+      },
+      popup: function (url) {
+        window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
+      }
+    };
+  </script></body>
 
 </html>

@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+  <title>цитаты великих людей</title>
   {{>head}}
 </head>
 
@@ -9,7 +10,6 @@
   <div class="bg"></div>
   <div class="wrapper">
     {{>header}}
-
 
     <h1>
       {{#if materialPage.headerH1}}
@@ -24,8 +24,8 @@
         {{#if materialPage.headerText}}
         {{materialPage.headerText}}
         {{else}}
-        Данный раздел находится в активной разработке. Здесь мы вместе с вами концентрируем одни из самых сильных
-        направлений и метериалы, которые реально трансформируют при должном употреблении.
+        Здесь собираются разные полезные материалы и одни из самых сильных направлений, которые действительно
+        трансформируют.
         {{/if}}
       </p>
     </div>
@@ -56,36 +56,45 @@
           <div class="aphorisms-item-bottom">
 
             <div class="left-links">
-              {{#if this.websiteUrl}}
-              <a class="aphorisms-item-websiteurl" target="_blank" href="{{this.websiteUrl}}">Сайт</a>
+              {{#if this.website_url}}
+              <a class="aphorisms-item-websiteurl" target="_blank" href="{{this.website_url}}">Сайт</a>
               {{/if}}
 
-              {{#if this.audioBooks}}
-              <a class="aphorisms-item-audiobooks" target="_blank" href="{{this.audioBooks}}">Аудиокниги</a>
+              {{#if this.audiobooks}}
+              <a class="aphorisms-item-audiobooks" target="_blank" href="{{this.audiobooks}}">Аудиокниги</a>
               {{/if}}
 
               {{#if this.books}}
               <a class="aphorisms-item-books" target="_blank" href="{{this.books}}">Книги</a>
               {{/if}}
 
-              {{#if this.youtubeUrl}}
-              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{this.youtubeUrl}}">
+              {{#if this.youtube_url}}
+              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{this.youtube_url}}">
                 <i id="fa-share" class="fa fa-youtube" aria-hidden="true"></i>
               </a>
               {{/if}}
             </div>
 
             <div class="aphorisms-icons">
-              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+
+              <div class="share-buttons">
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-vk" aria-hidden="true"></i>
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
+                  class="fa fa-telegram" aria-hidden="true"></i>
+              </div>
+
+              <div></div>
+
+              <i id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
             </div>
           </div>
         </div>
         {{/each}}
-
       </section>
-
     </div>
-
   </div>
   {{>footer}}
 </body>

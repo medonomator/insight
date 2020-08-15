@@ -1,7 +1,6 @@
 import * as Hapi from 'hapi';
 import Boom from 'boom';
 import fs from 'fs';
-import { aphorisms } from '../database/schemas/aphorisms';
 import { subscribers } from '../database/schemas/subscribers';
 import { logger } from '../helpers/logger';
 import { docsTasks } from '../config/docs';
@@ -22,10 +21,10 @@ const usersRoutes: Hapi.ServerRoute[] = [
     path: '/task/backup',
     handler: async () => {
       try {
-        const dataAphorisms = await aphorisms.find().select('-__v');
+        // const dataAphorisms = await aphorisms.find().select('-__v');
         const dataSubscribers = await subscribers.find();
 
-        await fs.promises.writeFile('static/backup/aphorisms.json', JSON.stringify(dataAphorisms));
+        // await fs.promises.writeFile('static/backup/aphorisms.json', JSON.stringify(dataAphorisms));
         await fs.promises.writeFile('static/backup/subscribers.json', JSON.stringify(dataSubscribers));
         dropboxUploadFile();
         return 'ok';

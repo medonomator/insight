@@ -1,5 +1,4 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../../database/schemas/aphorisms';
 import { logger } from '../../../../helpers/logger';
 import { IParamsCreate, IResponse } from '../interfaces';
 import { IItemNameMachine } from '../../../../interfaces';
@@ -13,7 +12,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
   try {
     const { author, body, tags, category } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
-    const duplicate = await aphorisms.findOne({ body });
+    const duplicate = 'TODO';
 
     if (duplicate) {
       return Boom.conflict('The aphorism with such a body already exists');
@@ -25,7 +24,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
       });
     }
 
-    await aphorisms.create({ author, body, tags: inMachineName, category });
+    // await aphorisms.create({ author, body, tags: inMachineName, category });
 
     return 'ok';
   } catch (err) {

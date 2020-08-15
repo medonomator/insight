@@ -193,6 +193,7 @@ select#filter-by-author
 .regular-page
   display: flex
   margin-top: 150px
+  position: relative
 
 /*** aphorisms  ***/
 
@@ -399,6 +400,9 @@ select#filter-by-author
         color: #a2acdf
         cursor: pointer
 
+.aphorisms-item-body p
+  margin-right: 150px
+
 .development-page
   p
     color: white
@@ -438,8 +442,9 @@ select#filter-by-author
 
   .aphorisms-item-bottom
     margin-top: 20px
-  .aphorisms-icons
-    margin-top: 0
+.aphorisms-icons
+  margin-top: 0
+  position: relative
 
 .page-contact
   color: white
@@ -498,4 +503,72 @@ select#filter-by-author
     transition: all .3s ease
     &:hover
       color: darken(white, 20%)
+
+// share-buttons
+.share-buttons
+  position: absolute
+  bottom: 44px
+  width: 140px
+  right: -4px
+  display: none
+  transition: all .3s ease
+
+.share-buttons-toggle
+  display: block
+  animation-duration: .4s
+  animation-name: show
+  background: white
+
+@keyframes showShareButtons
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+.share-buttons
+  .fa-vk
+    color: #5181b8
+    &:hover
+      color: lighten(#5181b8, 10%)!important
+  .fa-whatsapp
+    color: #43d352
+    &:hover
+      color: darken(#43d352, 10%)!important
+  .fa-telegram
+    color: #0088cc
+    &:hover
+      color: lighten(#0088cc, 10%)!important
+
+.support-phone
+  font-size: 18px
+  background: white
+  margin: 3px
+  padding-left: 5px
+  width: 305px
+
+.fa-clone
+  position: relative
+
+.copy-successfully
+  position: absolute
+  top: 0
+  left: -20px
+  background: white
+  animation-duration: .6s
+  animation-name: showCopySuccessfully
+  margin-top: -20px
+  font-size: 15px
+  color: #333
+  font-family: sans-serif
+  display: none
+  font-weight: 600
+
+@keyframes showCopySuccessfully
+  from
+    margin-top: 0
+    display: block
+
+  to
+    margin-top: -20px
+    display: none
 @import "media" // Всегда в конце

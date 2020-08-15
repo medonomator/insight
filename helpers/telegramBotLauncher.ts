@@ -11,7 +11,8 @@ class TelegramBot {
   private static instance: TelegramBot;
   private _bot;
   private _proxyList: string[];
-  private _currentProxy = 12;
+  private _lostMessages: string[] = [];
+  private _currentProxy = 2;
   constructor() {
     // TODO: in future need take proxy's from the database
     this._proxyList = proxyList;
@@ -33,15 +34,18 @@ class TelegramBot {
     try {
       await this._bot.telegram.sendMessage(BOT_ID, message);
       logger.info(`Message >>> ${message} <<< was sended`);
+
+      this.handlerLostMessages();
     } catch (err) {
+      this._lostMessages.push(message);
       this.reconnectNextProxy();
       logger.error(err);
     }
   };
 
-  public reconnectNextProxy() {
+  public async reconnectNextProxy() {
     if (this._currentProxy > this._proxyList.length) {
-      this._currentProxy = 0;
+      this._currentProxy = 10;
     } else {
       this._currentProxy = ++this._currentProxy;
     }
@@ -53,7 +57,14 @@ class TelegramBot {
     });
     const reconnectMessage = `Telegraf reconnecting with proxy: ${this._proxyList[this._currentProxy]}`;
     logger.warn(reconnectMessage);
-    this.sendMessage(reconnectMessage);
+    this.handlerLostMessages();
+  }
+
+  private handlerLostMessages() {
+    if (this._lostMessages.length) {
+      const message = this._lostMessages.shift() as string;
+      this.sendMessage(message);
+    }
   }
 }
 

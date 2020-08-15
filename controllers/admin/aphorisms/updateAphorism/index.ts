@@ -1,10 +1,10 @@
 import Boom from 'boom';
-import { aphorisms } from '../../../../database/schemas/aphorisms';
 import { logger } from '../../../../helpers/logger';
 import {  IParamsUpdate, IResponse} from '../interfaces';
 import { cyrToLat } from '../../../../helpers';
 import { isEmpty } from 'lodash';
 import { IItemNameMachine } from '../../../../interfaces';
+
 /**
  * Update Aphorism
  * @param {IParamsUpdate} params
@@ -12,7 +12,7 @@ import { IItemNameMachine } from '../../../../interfaces';
  */
 export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
-    const { _id, author, body, tags, category } = req.payload;
+    const { id, body, tags, category } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
     if (!isEmpty(tags)) {
@@ -20,7 +20,6 @@ export const updateAphorism = async (req: IParamsUpdate): Promise<IResponse> => 
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await aphorisms.updateOne({ _id }, { $set: { author, body, tags: inMachineName, category } });
 
     return 'ok';
   } catch (err) {

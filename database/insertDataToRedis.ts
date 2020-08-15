@@ -1,29 +1,26 @@
-import { aphorisms } from './schemas/aphorisms';
-import { redisClient } from './redis';
-import { logger } from '../helpers/logger';
-
-const ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
+import { logger } from "../helpers/logger";
+import { knex } from "./pgConnect";
+import aphorismsModel from "../models/redis/aphorisms";
+import aphorismsTable from "../tables/aphorisms";
+import aphorismsAuthors from "../tables/aphorism_authors";
 
 export const insertDataToRedis = async (): Promise<void> => {
-  try {
-    const isMongoIds = await redisClient.exists('mongoIds');
-    if (!isMongoIds) {
-      const data: any = await aphorisms
-        .find()
-        .select('-__v -createdAt -updatedAt')
-        .sort({ createdAt: -1 })
-        .lean();
-
-      const prepareToWriteRedis = {};
-      data.map(item => {
-        prepareToWriteRedis[item._id.toString()] = JSON.stringify(item);
-      });
-
-      await redisClient.hmset('mongoIds', prepareToWriteRedis);
-      await redisClient.expire('mongoIds', ONE_YEAR);
-      logger.info('MongoIds recorded in the database');
+    try {
+        const aphorisms = await knex(aphorismsTable.table)
+            .select([
+                aphorismsTable.columns.id,
+                aphorismsTable.columns.body,
+                aphorismsTable.columns.tags,
+                aphorismsTable.columns.category,
+                aphorismsTable.columns.created_at,
+                aphorismsTable.columns.updated_at,
+                knex.ref(aphorismsAuthors.columns.name).as("authorName"),
+                knex.ref(aphorismsAuthors.columns.machineName).as("authorMachineName"),
+            ])
+            .leftJoin(aphorismsAuthors.table, aphorismsTable.columns.author_id, aphorismsAuthors.columns.id);
+            
+        await aphorismsModel.setAll(aphorisms);
+    } catch (error) {
+        logger.error(error);
     }
-  } catch (error) {
-    logger.error(error);
-  }
 };

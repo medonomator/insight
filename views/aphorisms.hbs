@@ -2,6 +2,7 @@
 <html lang="ru">
 
 <head>
+  <title>цитаты великих людей</title>
   {{>head}}
 </head>
 
@@ -10,19 +11,10 @@
   <div class="wrapper">
     {{>header}}
 
-    <h1>
-      {{#if aphorismPage.headerH1}}
-      {{aphorismPage.headerH1}}
-      {{else}}
-      Мудрость афоризмов
-      {{/if}}
-    </h1>
+    <h1>Мудрость афоризмов</h1>
 
     <div class="header-text">
       <p>
-        {{#if aphorismPage.headerText}}
-        {{aphorismPage.headerText}}
-        {{else}}
         Если ты жаждешь глубинной трансформации, этот ресурс поможет тебе. Раз ты здесь, значит,
         готов к переменам и
         открыт для нового.
@@ -36,7 +28,6 @@
         В каждом разделе мы собираем то, что способно изменить любого, кто к этому стремится. Дать ответ на нужный
         вопрос, заставить задуматься или просто вдохновить на новый день.
         Читай, размышляй и используй то, что тебе подойдет. Удачи!
-        {{/if}}
       </p>
     </div>
 
@@ -44,15 +35,14 @@
       <div class="top-arrow">
         <img src="{{path}}/img/scrollToTop.png" alt="alt">
       </div>
+
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <section class="aphorisms-container">
-
-        <div class="lds-ring">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-
         {{#each aphorisms as |item index| }}
         <div class="aphorisms-item">
           <div class="aphorisms-tags">
@@ -65,11 +55,23 @@
           </div>
           <div class="aphorisms-item-bottom">
             <div class="aphorisms-authors">
-              <span>{{this.author}}</span>
+              <span>{{this.authorName}}</span>
             </div>
             <div class="aphorisms-icons">
-              <i name={{index}} id="fa-clone" class="fa fa-clone" aria-hidden="true"></i>
-              <i name={{index}} id="fa-share" class="fa fa-share-alt" aria-hidden="true"></i>
+
+              <div class="share-buttons">
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
+                  class="fa fa-vk" aria-hidden="true"></i>
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
+                  class="fa fa-whatsapp" aria-hidden="true"></i>
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/aphorism/{{this.id}}','Хороший Афоризм')"
+                  class="fa fa-telegram" aria-hidden="true"></i>
+              </div>
+
+              <i class="fa fa-clone" aria-hidden="true">
+                <p class="copy-successfully">Скопировано</p>
+              </i>
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
             </div>
           </div>
         </div>
@@ -89,8 +91,8 @@
         <div class="filter-block-item">
           <p>Топик</p>
           <select id="filter-by-topic">
-            {{#each categories}}
-            <option value={{this.machineName}}>{{this.name}}</option>
+            {{#each tags}}
+            <option value={{this}}>{{this}}</option>
             {{/each}}
           </select>
         </div>
@@ -99,7 +101,7 @@
           <p>Автор</p>
           <select id="filter-by-author">
             {{#each authors}}
-            <option value={{this.name}}>{{this.name}}</option>
+            <option value={{this}}>{{this}}</option>
             {{/each}}
           </select>
         </div>
@@ -117,5 +119,31 @@
   </div>
   {{>footer}}
 </body>
+<script type="text/javascript">
+  Share = {
+    vkontakte: function (purl, ptitle, pimg, text) {
+      url = 'http://vkontakte.ru/share.php?';
+      url += 'url=' + encodeURIComponent(purl);
+      url += '&title=' + encodeURIComponent(ptitle);
+      url += '&description=' + encodeURIComponent(text);
+      url += '&image=' + encodeURIComponent(pimg);
+      url += '&noparse=true';
+      Share.popup(url);
+    },
+    telegram: function (purl, ptitle, pimg, text) {
+      url = 'tg://msg?text=';
+      url += encodeURIComponent(purl);
+      Share.popup(url);
+    },
+    whatsapp: function (purl, ptitle, pimg, text) {
+      url = 'whatsapp://send?text=';
+      url += encodeURIComponent(purl);
+      Share.popup(url);
+    },
+    popup: function (url) {
+      window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
+    }
+  };
+</script>
 
 </html>

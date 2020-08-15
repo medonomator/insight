@@ -1,15 +1,15 @@
 version: '2'
 services:
-  mongo:
-    image: mongo:4.2
-    ports:
-      - 27017:27017/tcp
-  redis:
-    image: 'bitnami/redis:latest'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - '6379:6379'
+  # mongo:
+  #   image: mongo:4.2
+  #   ports:
+  #     - 27017:27017/tcp
+  # redis:
+  #   image: 'bitnami/redis:latest'
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
+  #   ports:
+  #     - '6379:6379'
   # rabbit:
   #   image: rabbitmq:3-management
   #   stdin_open: true
@@ -20,12 +20,12 @@ services:
   #   environment:
   #     - RABBITMQ_DEFAULT_USER=user
   #     - RABBITMQ_DEFAULT_PASS=password
-  # postgresql:
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_DB: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: example
-  #   ports:
-  #     - '5432:5432'
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - '5432:5432'
