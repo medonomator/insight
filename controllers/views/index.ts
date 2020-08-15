@@ -4,6 +4,9 @@ import Boom from "boom";
 import { logger } from "../../helpers/logger";
 import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
+import materialsTable from "../../tables/materials";
+import aphorismsTable from "../../tables/aphorisms";
+import { knex } from "../../database/pgConnect";
 import { shuffle } from "lodash";
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -19,7 +22,7 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     const NUMBER_FIRST_RENDER = 100;
-    const aphorisms = shuffle(await aphorismsModel.getAll());
+    const aphorisms: IAphorisms[] = shuffle(await aphorismsModel.getAll());
     const tags = await aphorismsModel.getTags();
     const authors = await aphorismsModel.getAuthors();
 
@@ -44,8 +47,9 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
+  const materials = await knex(materialsTable.table);
   logger.info("getMaterialsPage");
-  return h.view("materials");
+  return h.view("materials", { materials });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -65,7 +69,7 @@ export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 
 export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const aphorism = "TODO";
+    const aphorism = (await knex(aphorismsTable.table).where("id", req.params.id))[0];
 
     if (!aphorism) {
       return h.view("404");
@@ -82,12 +86,13 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    logger.info("dynamicMaterialPage");
-    const material = "TODO";
+    const material = (await knex(materialsTable.table).where("id", req.params.id))[0];
 
     if (!material) {
       return h.view("404");
     }
+
+    logger.info("dynamicMaterialPage");
 
     return h.view("dynamicMaterial", { material });
   } catch (error) {

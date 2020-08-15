@@ -1,5 +1,4 @@
 import Boom from 'boom';
-import { materials } from '../../../../database/schemas/materials';
 import { logger } from '../../../../helpers/logger';
 import { IParamsUpdate, IResponse } from '../interfaces';
 import { cyrToLat } from '../../../../helpers';
@@ -20,7 +19,7 @@ export const updateMaterials = async (req: IParamsUpdate): Promise<IResponse> =>
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
-    await materials.updateOne({ _id }, { $set: { name, description, tags: inMachineName, websiteUrl, youtubeUrl, books, audioBooks } });
+    // await materials.updateOne({ _id }, { $set: { name, description, tags: inMachineName, websiteUrl, youtubeUrl, books, audioBooks } });
 
     return 'ok';
   } catch (err) {

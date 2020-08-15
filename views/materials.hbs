@@ -11,7 +11,6 @@
   <div class="wrapper">
     {{>header}}
 
-
     <h1>
       {{#if materialPage.headerH1}}
       {{materialPage.headerH1}}
@@ -57,20 +56,20 @@
           <div class="aphorisms-item-bottom">
 
             <div class="left-links">
-              {{#if this.websiteUrl}}
-              <a class="aphorisms-item-websiteurl" target="_blank" href="{{this.websiteUrl}}">Сайт</a>
+              {{#if this.website_url}}
+              <a class="aphorisms-item-websiteurl" target="_blank" href="{{this.website_url}}">Сайт</a>
               {{/if}}
 
-              {{#if this.audioBooks}}
-              <a class="aphorisms-item-audiobooks" target="_blank" href="{{this.audioBooks}}">Аудиокниги</a>
+              {{#if this.audiobooks}}
+              <a class="aphorisms-item-audiobooks" target="_blank" href="{{this.audiobooks}}">Аудиокниги</a>
               {{/if}}
 
               {{#if this.books}}
               <a class="aphorisms-item-books" target="_blank" href="{{this.books}}">Книги</a>
               {{/if}}
 
-              {{#if this.youtubeUrl}}
-              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{this.youtubeUrl}}">
+              {{#if this.youtube_url}}
+              <a class="aphorisms-item-youtubeurl" target="_blank" href="{{this.youtube_url}}">
                 <i id="fa-share" class="fa fa-youtube" aria-hidden="true"></i>
               </a>
               {{/if}}

@@ -22,9 +22,9 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "postgres",
-      user: "postgres",
-      password: "1234",
+      database: process.env.POSTGRES_DATABASE,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
     },
     migrations: {
       tableName: "knex_migrations",
