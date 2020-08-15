@@ -1,14 +1,11 @@
 import * as Hapi from 'hapi';
 import Joi from 'joi';
 import {
-  getMainPage,
   getAphorismsPage,
-  getAffirmationPage,
   getMaterialsPage,
   getAdminBundle,
   getContactsPage,
   getGratitudePage,
-  developmentPlanPage,
   dynamicAphorismsPage,
   dynamicMaterialPage,
 } from '../controllers/views';
@@ -54,16 +51,6 @@ const views: Hapi.ServerRoute[] = [
       },
     },
   },
-  // {
-  //   method: 'GET',
-  //   path: '/aphorisms',
-  //   handler: getAphorismsPage,
-  // },
-  // {
-  //   method: 'GET',
-  //   path: '/affirmation',
-  //   handler: getAffirmationPage,
-  // },
   {
     method: 'GET',
     path: '/materials',
@@ -79,11 +66,6 @@ const views: Hapi.ServerRoute[] = [
     path: '/gratitude',
     handler: getGratitudePage,
   },
-  // {
-  //   method: 'GET',
-  //   path: '/development-plan',
-  //   handler: developmentPlanPage,
-  // },
   {
     method: 'GET',
     path: '/admin/{path*}',
