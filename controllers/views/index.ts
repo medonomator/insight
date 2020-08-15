@@ -4,6 +4,7 @@ import Boom from "boom";
 import { logger } from "../../helpers/logger";
 import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
+import { shuffle } from "lodash";
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
@@ -15,21 +16,21 @@ export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   }
 };
 
-export const getAphorismsPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    logger.info("getAphorismsPage");
-
-    const aphorisms = (await aphorismsModel.getAll()) as IAphorisms[];
+    const NUMBER_FIRST_RENDER = 100;
+    const aphorisms = shuffle(await aphorismsModel.getAll());
     const tags = await aphorismsModel.getTags();
     const authors = await aphorismsModel.getAuthors();
+
+    aphorisms.length = NUMBER_FIRST_RENDER;
+
+    logger.info("getAphorismsPage");
 
     return h.view("aphorisms", {
       aphorisms,
       tags,
-      authors
+      authors,
     });
   } catch (err) {
     logger.error(err);
@@ -37,18 +38,12 @@ export const getAphorismsPage = async (
   }
 };
 
-export const getAffirmationPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("getAffirmationPage");
   return h.view("affirmation");
 };
 
-export const getMaterialsPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("getMaterialsPage");
   return h.view("materials");
 };
@@ -63,25 +58,20 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
   return h.view("gratitude");
 };
 
-export const developmentPlanPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("devlopmentPlanPage");
   return h.view("developmentPlan");
 };
 
-export const dynamicAphorismsPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    logger.info("dynamicAphorismsPage");
     const aphorism = "TODO";
 
     if (!aphorism) {
       return h.view("404");
     }
+
+    logger.info("dynamicAphorismsPage");
 
     return h.view("dynamicAphorism", { aphorism });
   } catch (error) {
@@ -90,10 +80,7 @@ export const dynamicAphorismsPage = async (
   }
 };
 
-export const dynamicMaterialPage = async (
-  req,
-  h: Vision<Hapi.ResponseToolkit>
-) => {
+export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     logger.info("dynamicMaterialPage");
     const material = "TODO";

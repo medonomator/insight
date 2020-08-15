@@ -1,9 +1,12 @@
-import { cyrToLat } from './../../../../helpers/index';
+import { cyrToLat } from "./../../../../helpers/index";
 import Boom from "boom";
 import { logger } from "../../../../helpers/logger";
 import { IResponse, IParamsGet } from "../interfaces";
 import aphorismsModel from "../../../../models/redis/aphorisms";
 import { IAphorisms } from "../../../../interfaces/aphorism";
+import { knex } from "../../../../database/pgConnect";
+import aphorismsTable from "../../../../tables/aphorisms";
+import { shuffle } from "lodash";
 
 /**
  * Get Aphorisms
@@ -13,25 +16,19 @@ import { IAphorisms } from "../../../../interfaces/aphorism";
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
     logger.info("Get aphorisms");
-
+    const { author, topic, category, random = true } = params.query;
     let aphorisms: IAphorisms[] = [];
 
-    if (params.query.author) {
-  
-      aphorisms = await aphorismsModel.getByAuthor(
-        cyrToLat(params.query.author) as string
-      );
-
-      console.log('==============================================');
-      console.dir(aphorisms.length, {depth: 5})
-      console.log('==============================================');
-      
-    } else {
-      console.log('==============================================');
-      console.dir('WTF?', {depth: 5})
-      console.log('==============================================');
-      
+    if (author) {
+      aphorisms = await aphorismsModel.getByAuthor(author);
+    } else if (topic) {
+      aphorisms = await aphorismsModel.getByTag(topic);
+    } else if (category) {
+      aphorisms = await aphorismsModel.getByCategory(category);
+    } else if (!random) {
       aphorisms = await aphorismsModel.getAll();
+    } else {
+      aphorisms = shuffle(await aphorismsModel.getAll());
     }
 
     return {

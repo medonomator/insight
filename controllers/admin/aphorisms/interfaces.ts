@@ -1,5 +1,5 @@
-import Boom from 'boom';
-import { IItemNameMachine } from '../../../interfaces';
+import Boom from "boom";
+import { IItemNameMachine } from "../../../interfaces";
 import { IAphorisms } from "../../../interfaces/aphorism";
 
 export interface IResTakeAphorisms {
@@ -25,6 +25,7 @@ export interface IParamsGet {
     author?: string;
     body?: string;
     isAdmin?: boolean;
+    random?: boolean;
   };
 }
 
@@ -45,4 +46,4 @@ export interface IResponseGetAphorisms {
   authors?: IItemNameMachine[];
 }
 
-export type IResponse = IAphorisms | IResponseGetAphorisms | Boom | 'ok';
+export type IResponse = IAphorisms | IResponseGetAphorisms | Boom | "ok";

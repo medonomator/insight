@@ -9,7 +9,8 @@
     "docker": "docker-compose up -d",
     "rebuild": "pm2 delete all && git pull && npm run dev",
     "test": "jest -i --forceExit",
-    "test:watch": "jest -i --coverage --watch controllers/admin/aphorisms/updateAphorism/index.test.ts"
+    "test:watch": "jest -i --coverage --watch controllers/admin/aphorisms/updateAphorism/index.test.ts",
+    "seed": "knex seed:run"
   },
   "keywords": [],
   "author": "Dmitriy Zorin",

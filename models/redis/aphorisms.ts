@@ -4,6 +4,7 @@ import { CATEGORIES } from "../../constants/models";
 import { uniqBy } from "lodash";
 import { IRedisModel } from "../../interfaces/redis";
 import { IAphorisms } from "../../interfaces/aphorism";
+import { cyrToLat } from "../../helpers";
 
 /**
  * Redis Aphorisms model
@@ -61,6 +62,8 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
    */
   public async setAuthorAphorism(aphorism: IAphorisms) {
     const key = `${this.STORAGE_KEY}:${aphorism.authorMachineName}:${aphorism.id}`;
+
+    aphorism.authorName = aphorism.authorName.replace(/ /g, "");
     await redis.set(key, JSON.stringify(aphorism));
   }
 
@@ -77,9 +80,8 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
    * Get aphorism by tag
    */
   public async getByTag(tag: string): Promise<IAphorisms[]> {
-    const keys = await redis.keys(
-      `${this.STORAGE_KEY}:${CATEGORIES.mysliteliFilosophy}:${tag}:*`
-    );
+    tag = cyrToLat(tag);
+    const keys = await redis.keys(`${this.STORAGE_KEY}:${CATEGORIES.mysliteliFilosophy}:${tag}:*`);
     await this.filler(keys);
     return this.aphorisms;
   }
@@ -88,8 +90,8 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
    * Get aphorism by author
    */
   public async getByAuthor(author: string): Promise<IAphorisms[]> {
+    author = cyrToLat(author);
     const key = `${this.STORAGE_KEY}:${author}:*`;
-
     const keys = await redis.keys(key);
 
     await this.filler(keys);
@@ -123,6 +125,7 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
    * Inner helper
    */
   private async filler(keys: string[]): Promise<void> {
+    this.aphorisms = [];
     for await (const key of keys) {
       this.aphorisms.push(JSON.parse(await redis.get(key)));
     }

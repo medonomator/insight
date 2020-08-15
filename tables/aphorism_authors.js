@@ -1,0 +1,1 @@
+let aphorism_authors = { table: 'aphorism_authors', columns: {id: 'aphorism_authors.id',name: 'aphorism_authors.name',machineName: 'aphorism_authors.machineName',created_at: 'aphorism_authors.created_at',updated_at: 'aphorism_authors.updated_at',}}; module.exports = aphorism_authors
