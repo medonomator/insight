@@ -16,15 +16,17 @@
     <div class="subscribe">
       <p>Подписаться на новости</p>
       <p class="error-element"></p>
-      <input class="subscribe-input" dir="auto" type="email" placeholder="Ваш email" autocomplete="on">
-      <input class="subscribe-button" type="button" value="Подписаться">
+      <form  method="POST" >
+        <input class="subscribe-input" name="email" type="email" placeholder="Ваш email">
+        <input class="subscribe-button" type="button" value="Подписаться">
+      </form>
+
     </div>
 
     <div class="footer-end-block">
       {{!-- <a href="/development-plan">План развития проекта</a>  --}}
       <a class="support-project" href="/contacts">Поддержать проект</a>
     </div>
-
   </div>
 </footer>
 
@@ -54,4 +56,5 @@
       window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
     }
   };
+
 </script>

@@ -1,0 +1,1 @@
+let subscribers = { table: 'subscribers', columns: {id: 'subscribers.id',email: 'subscribers.email',created_at: 'subscribers.created_at',}}; module.exports = subscribers

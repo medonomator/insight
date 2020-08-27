@@ -1,11 +1,8 @@
-import { cyrToLat } from "./../../../../helpers/index";
 import Boom from "boom";
 import { logger } from "../../../../helpers/logger";
 import { IResponse, IParamsGet } from "../interfaces";
 import aphorismsModel from "../../../../models/redis/aphorisms";
 import { IAphorisms } from "../../../../interfaces/aphorism";
-import { knex } from "../../../../database/pgConnect";
-import aphorismsTable from "../../../../tables/aphorisms";
 import { shuffle } from "lodash";
 
 /**
