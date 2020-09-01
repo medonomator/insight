@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { logger } from '../../helpers/logger';
-import { users } from '../../database/schemas/users';
 import { TOKEN_SIGN_KEY } from '../../config';
+import { knex } from '../../database/pgConnect';
 
 export default async function tokenStrategy(request, token: string) {
   try {
@@ -11,14 +11,14 @@ export default async function tokenStrategy(request, token: string) {
           reject(err.message);
           return;
         }
-        resolve(decoded.userId);
+        resolve(decoded.id);
       });
     });
     if (!userId) {
       return { isValid: false, credentials: {} };
     }
 
-    const credentials = await users.findOne({ userId });
+    const credentials = await knex('users').where('id', userId);
     return { isValid: true, credentials };
   } catch (error) {
     logger.error(error);

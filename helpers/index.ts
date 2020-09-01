@@ -6,21 +6,22 @@ const CyrToLat = require('cyrillic-to-translit-js');
 interface ITokens {
   token: string;
   refreshToken: string;
+  expireIn: number
 }
 
 interface IPrepareTokensParams {
-  userId: string;
+  id: string;
   email: string;
 }
 
 export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
-  const tokenExpirationSeconds = 60 * 60 * 24 * 7; // make 1 week temporary for testing
+  const tokenExpirationSeconds = 60 * 60 * 24; // make 1 week temporary for testing
   const refreshTokenExpirationSeconds = 60 * 60 * 24 * 7; // week
 
   return {
     token: jwt.sign(
       {
-        userId: obj.userId,
+        userId: obj.id,
         email: obj.email,
         tokenSignKey: TOKEN_SIGN_KEY,
       },
@@ -32,7 +33,7 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
     ),
     refreshToken: jwt.sign(
       {
-        userId: obj.userId,
+        userId: obj.id,
         refresh: true,
         tokenSignKey: REFRESH_TOKEN_SIGN_KEY,
       },
@@ -42,6 +43,7 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
         expiresIn: Math.floor(tokenExpirationSeconds + refreshTokenExpirationSeconds),
       },
     ),
+    expireIn: tokenExpirationSeconds
   };
 };
 

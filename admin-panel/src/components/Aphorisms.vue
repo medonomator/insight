@@ -3,7 +3,7 @@
     <div>
       <!-- <strong>Всего: {{ this.count }}</strong> Афоризмов -->
     </div>
-    <modal-form />
+    <!-- <modal-form /> -->
 
     <input @click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
     <ul class="aphorisms-header">
@@ -51,7 +51,7 @@
 <script>
 import axios from "axios";
 import { getBaseUrl } from "../helpers";
-import ModalForm from "@/components/ModalForm";
+// import ModalForm from "@/components/ModalForm";
 
 export default {
   data() {
@@ -60,9 +60,9 @@ export default {
       count: 0
     };
   },
-  components: {
-    "modal-form": ModalForm
-  },
+  // components: {
+  //   "modal-form": ModalForm
+  // },
   async mounted() {
     const res = await axios.get(`${getBaseUrl()}/v1/admin/aphorisms`);
     this.aphorismData = res.data.data;

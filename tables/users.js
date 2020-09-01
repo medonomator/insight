@@ -1,0 +1,1 @@
+let users = { table: 'users', columns: {id: 'users.id',name: 'users.name',email: 'users.email',email_verified_at: 'users.email_verified_at',password: 'users.password',remember_token: 'users.remember_token',created_at: 'users.created_at',updated_at: 'users.updated_at',deleted_at: 'users.deleted_at',}}; module.exports = users

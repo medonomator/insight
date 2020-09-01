@@ -16,10 +16,10 @@ class TelegramBot {
   constructor() {
     // TODO: in future need take proxy's from the database
     this._proxyList = proxyList;
-    this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
-      telegram: {
-        agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
-      },
+    this._bot = new Telegraf(String('1056515171:AAHTs2J8E09FoVMpIreuZu8WPKPUHQk3IiA'), {
+      // telegram: {
+      //   agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
+      // },
     });
   }
 

@@ -1,7 +1,3 @@
-/**
- * Registration Customer
- * В ответ возвращаются токены, если регистрация успешна, или ошибка
- */
 export interface IParams {
   payload: {
     email: string;
@@ -11,11 +7,10 @@ export interface IParams {
 }
 
 export interface IUser {
+  id: string;
   email: string;
   password: string;
-  userId: string;
-  name: string;
-  _id: string;
+  name?: string;
   birthDate: string;
   sex: string;
   regDate: Date;
