@@ -1,29 +1,12 @@
 <template>
-  <div>
-    <v-app-bar class="app-bar">
-      <router-link to="/admin/content">Контент</router-link>
+  <div class="main">
+    <div class="left-bar">
       <router-link to="/admin/aphorisms">Афоризмы</router-link>
-      <router-link to="/admin/affirmation">Аффирмации</router-link>
       <router-link to="/admin/meterials">Материалы</router-link>
+      <router-link to="/admin/subscribers">Subscribers</router-link>
       <router-link to="/admin/tasks">Tasks</router-link>
-
-      <v-spacer></v-spacer>
-
-      <v-menu left bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
-    <router-view></router-view>
+    </div>
+    <router-view />
   </div>
 </template>
 
@@ -32,8 +15,23 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.app-bar {
-  background: #3753e7 !important;
+a {
+  text-decoration: none;
+}
+
+.left-bar {
+  background: #4e007d;
+  height: 100vh;
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  // box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  // box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  // box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   a {
     color: white;
     margin-right: 20px;
@@ -44,8 +42,9 @@ export default {};
     }
   }
 }
-.v-btn--outlined .v-btn__content .v-icon,
-.v-btn--round .v-btn__content .v-icon {
-  color: white;
+
+.main {
+  display: flex;
+  flex-direction: row;
 }
 </style>

@@ -10,8 +10,11 @@ import { createMaterials } from "../controllers/admin/materials/createMaterials"
 import { getMaterials } from "../controllers/admin/materials/getMaterials";
 import { updateMaterials } from "../controllers/admin/materials/updateMaterials";
 import { deleteMaterials } from "../controllers/admin/materials/deleteMaterials";
+// subscribers
+import { getSubscribers } from "../controllers/admin/subscribers/getSubscribers";
+
 // docs
-import { docsAphorisms, docsMaterials } from "../config/docs";
+import { docsAphorisms, docsMaterials, docSubscribers } from "../config/docs";
 
 const usersRoutes: Hapi.ServerRoute[] = [
   {
@@ -164,6 +167,17 @@ const usersRoutes: Hapi.ServerRoute[] = [
         payload: {
           _id: Joi.string().trim().required(),
         },
+      },
+    },
+  },
+  {
+    method: "GET",
+    path: "/v1/admin/subscribers",
+    handler: getSubscribers,
+    options: {
+      ...docSubscribers.getSubscribers,
+      auth: {
+        strategy: "users",
       },
     },
   },

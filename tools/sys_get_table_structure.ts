@@ -5,7 +5,7 @@ import { knex } from "../database/pgConnect";
     try {
         const data = await knex.raw(`SELECT * FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '${process.argv[2]}'`);
         const tableName = data.rows[0].table_name;
-        let table = `let ${tableName} = { table: '${tableName}', columns: {`;
+        let table = `const ${tableName} = { table: '${tableName}', columns: {`;
 
         data.rows.forEach((column) => {
             if (column.column_name) {

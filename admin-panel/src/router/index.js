@@ -1,70 +1,72 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Main from '@/components/Main';
-import Aphorisms from '@/components/Aphorisms';
-import Affirmation from '@/components/Affirmation';
-import Content from '@/components/Content';
-import Materials from '@/components/Materials';
-import Tasks from '@/components/Tasks';
-import LoginPage from '@/components/LoginPage';
-import axios from 'axios';
-import { getBaseUrl, getToken, setAuthorizationToken } from '../helpers';
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Main from "@/components/Main";
+import Aphorisms from "@/components/Aphorisms";
+import Subscribers from "@/components/Subscribers";
+import Materials from "@/components/Materials";
+import Tasks from "@/components/Tasks";
+import LoginPage from "@/components/LoginPage";
+import axios from "axios";
+import { getBaseUrl, getToken, setAuthorizationToken } from "../helpers";
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
     {
-      path: '/admin',
+      path: "/admin",
       component: Main,
-      beforeEnter: (to, from, next) => checkAuth(to, next),
+      name: "Main",
       children: [
         {
-          path: 'content',
-          component: Content,
-        },
-        {
-          path: 'aphorisms',
+          path: "aphorisms",
           component: Aphorisms,
+          name: "Aphorisms"
         },
         {
-          path: 'affirmation',
-          component: Affirmation,
+          path: "subscribers",
+          component: Subscribers,
+          name: "Subscribers"
         },
         {
-          path: 'meterials',
-          component: Materials,
+          path: "meterials",
+          component: Materials
         },
         {
-          path: 'tasks',
-          component: Tasks,
-        },
-      ],
+          path: "tasks",
+          component: Tasks
+        }
+      ]
     },
     {
-      path: '/admin/login',
+      path: "/admin/login",
       component: LoginPage,
-    },
+      name: "Login"
+    }
   ],
-  mode: 'history',
-  base: process.env.BASE_URL,
+  mode: "history",
+  base: process.env.BASE_URL
 });
 
-const checkAuth = (to, next) => {
-  const goToPath = path => {
-    if (to.path !== path) next(path);
-    next();
-  };
-
+router.beforeEach((to, from, next) => {
   if (getToken()) {
     setAuthorizationToken(getToken());
     axios
       .get(`${getBaseUrl()}/user/auth`)
-      .then(() => goToPath('/admin'))
-      .catch(() => goToPath('/admin/login'));
+      .then(() => {
+        next();
+      })
+      .catch(() => {
+        if (to.name !== "Login") next({ name: "Login" });
+        else next();
+      });
   } else {
-    goToPath('/admin/login');
+    if (to.name !== "Login") {
+      next({ name: "Login" });
+    } else {
+      next();
+    }
   }
-};
+});
 
 export default router;

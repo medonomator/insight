@@ -1,6 +1,7 @@
 <template>
   <div class="aphorisms">
     <div>
+      123
       <!-- <strong>Всего: {{ this.count }}</strong> Афоризмов -->
     </div>
     <!-- <modal-form /> -->
@@ -8,14 +9,14 @@
     <input @click="show('addAphorism')" type="button" value="Добавить" class="add-aphorism" />
     <ul class="aphorisms-header">
       <div class="header-input-filter">
-        <v-text-field @input="authorFilterHandler" label="Автор"></v-text-field>
+        <!-- <v-text-field @input="authorFilterHandler" label="Автор"></v-text-field> -->
       </div>
       <div class="header-input-filter">
-        <v-text-field @input="bodyFilterHandler" label="Афоризм"></v-text-field>
+        <!-- <v-text-field @input="bodyFilterHandler" label="Афоризм"></v-text-field> -->
       </div>
     </ul>
 
-    <v-simple-table>
+    <!-- <v-simple-table>
       <thead>
         <tr>
           <th class="text-left">Автор</th>
@@ -44,7 +45,7 @@
           </td>
         </tr>
       </tbody>
-    </v-simple-table>
+    </v-simple-table>-->
   </div>
 </template>
 
@@ -82,13 +83,9 @@ export default {
       this.count = res.data.count;
     },
     deleteAphorism: function(_id) {
-      axios
-        .delete(`${getBaseUrl()}/v1/admin/aphorisms`, { data: { _id } })
-        .then(() => {
-          this.aphorismData = this.aphorismData.filter(
-            item => item._id !== _id
-          );
-        });
+      axios.delete(`${getBaseUrl()}/v1/admin/aphorisms`, { data: { _id } }).then(() => {
+        this.aphorismData = this.aphorismData.filter(item => item._id !== _id);
+      });
     },
     addAphorism: function({ author, body, tags, category }) {
       axios
@@ -143,7 +140,6 @@ export default {
 };
 </script>
 <style lang="sass" scoped>
-
 .header-input-filter
   width: 150px
   margin-left: 15px
