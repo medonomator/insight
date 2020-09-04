@@ -103,5 +103,5 @@ export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("adminbundle");
-  return h.file("./static/vue/index.html");
+  return h.file("./static/index.html");
 };

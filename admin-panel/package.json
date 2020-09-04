@@ -1,5 +1,5 @@
 {
-  "name": "perenos2",
+  "name": "admin-panel",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "Dmitry Zorin <budteschastlivi1@gmail.com>",
@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "replace-path": "sh ./replace.sh",
-    "copy-files": "cp -r dist/* ../static/vue"
+    "copy-files": "cp -r dist/static/* ../static/ && cp -r dist/index.html ../static/"
   },
   "dependencies": {
     "axios": "^0.20.0",

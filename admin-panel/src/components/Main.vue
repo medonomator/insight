@@ -41,6 +41,8 @@ a {
       color: rgb(180, 255, 220);
     }
   }
+
+  margin-right: 20px;
 }
 
 .main {
