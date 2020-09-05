@@ -98,9 +98,9 @@ const usersRoutes: Hapi.ServerRoute[] = [
     handler: createMaterials,
     options: {
       ...docsMaterials.createMaterials,
-      // auth: {
-      //   strategy: 'users',
-      // },
+      auth: {
+        strategy: 'users',
+      },
       validate: {
         payload: {
           name: Joi.string().trim().required().min(3),

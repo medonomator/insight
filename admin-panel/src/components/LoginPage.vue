@@ -44,8 +44,8 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  margin-top: 200px;
   width: 300px;
   margin: auto;
+  margin-top: 150px;
 }
 </style>

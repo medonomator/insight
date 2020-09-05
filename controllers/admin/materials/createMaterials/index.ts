@@ -3,6 +3,7 @@ import { logger } from "../../../../helpers/logger";
 import { IParamsCreate, IResponse } from "../interfaces";
 import { IItemNameMachine } from "../../../../interfaces";
 import { cyrToLat } from "../../../../helpers";
+import { knex } from "../../../../database/pgConnect";
 /**
  * Create New Material
  * @param {IParamsCreate} params
@@ -12,19 +13,30 @@ export const createMaterials = async (req: IParamsCreate): Promise<IResponse> =>
   try {
     const { name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
-    const duplicate = "TODO";
+
+    const duplicate = await knex("materials")
+      .where({ name })
+      .first();
 
     if (duplicate) {
-      return Boom.conflict("The material with such a body already exists");
+      return Boom.conflict("The material with such name already exists");
     }
 
     if (tags) {
-      tags.forEach((name) => {
+      tags.forEach(name => {
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
     }
 
-    // await materials.create({ name, description, tags: inMachineName, websiteUrl, youtubeUrl, audioBooks, books });
+    await knex("materials").insert({
+      name,
+      description,
+      website_url: websiteUrl,
+      youtube_url: youtubeUrl,
+      audiobooks: audioBooks,
+      books,
+      tags: inMachineName
+    });
 
     return "ok";
   } catch (err) {

@@ -8,6 +8,7 @@ import {
   getGratitudePage,
   dynamicAphorismsPage,
   dynamicMaterialPage,
+  getCourses,
 } from '../controllers/views';
 
 const views: Hapi.ServerRoute[] = [
@@ -60,6 +61,11 @@ const views: Hapi.ServerRoute[] = [
     method: 'GET',
     path: '/contacts',
     handler: getContactsPage,
+  },
+  {
+    method: 'GET',
+    path: '/courses',
+    handler: getCourses,
   },
   {
     method: 'GET',

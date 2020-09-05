@@ -6,7 +6,9 @@
       <router-link to="/admin/subscribers">Subscribers</router-link>
       <router-link to="/admin/tasks">Tasks</router-link>
     </div>
-    <router-view />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -21,8 +23,8 @@ a {
 
 .left-bar {
   background: #4e007d;
-  height: 100vh;
-  width: 170px;
+  min-height: 100%;
+  min-width: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,5 +50,9 @@ a {
 .main {
   display: flex;
   flex-direction: row;
+}
+
+.content {
+  min-height: 100vh;
 }
 </style>

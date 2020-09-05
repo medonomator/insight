@@ -25,6 +25,16 @@
   <link rel="shortcut icon" type="image/png" href="assets/img/favicon/favicon.ico">
   <link rel="stylesheet" href="assets/css/main.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  
+  <!-- Get minor updates and patch fixes within a major version -->
+  <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
+  
+  <!-- Get patch fixes within a minor version -->
+  <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0/dist/smooth-scroll.polyfills.min.js"></script>
+  
+  <!-- Get a specific version -->
+  <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
   <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
@@ -48,6 +58,10 @@
 <body>
   <div class="bg"></div>
   <div class="wrapper">
+    <div id="bazinga"></div>
+    <nav data-scroll-header>
+      ...
+    </nav>
     <div class="header">
       <div class="logo">
         <a href="/">
@@ -120,14 +134,16 @@
       <div class="subscribe">
         <p>Подписаться на новости</p>
         <p class="error-element"></p>
-        <input class="subscribe-input" dir="auto" type="email" placeholder="Ваш email" autocomplete="on">
-        <input class="subscribe-button" type="button" value="Подписаться">
+        <form  method="POST" >
+          <input class="subscribe-input" name="email" type="email" placeholder="Ваш email">
+          <input class="subscribe-button" type="button" value="Подписаться">
+        </form>
+  
       </div>
   
       <div class="footer-end-block">
         <a class="support-project" href="/contacts">Поддержать проект</a>
       </div>
-  
     </div>
   </footer>
   
@@ -157,6 +173,7 @@
         window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
       }
     };
+  
   </script></body>
 
 </html>

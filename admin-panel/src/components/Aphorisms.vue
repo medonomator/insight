@@ -131,6 +131,9 @@ export default {
         });
     },
     show(nameModal, item) {
+      console.log('============================================================');
+      console.dir(item, { depth: 5 });
+      console.log('============================================================');
       this.$modal.show("add-aphorism", { func: this[nameModal], item });
     },
     hide() {
