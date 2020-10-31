@@ -1,6 +1,7 @@
 import { knex } from "../pgConnect";
 import Nodemailer from "nodemailer";
 import { encryptData } from '../../helpers';
+console.log(process.env.NODEMAILER_AUTH_USER);
 
 (async () => {
   try {
@@ -13,8 +14,8 @@ import { encryptData } from '../../helpers';
       port: 465,
       secure: true,
       auth: {
-        user: process.env.NODEMAILER_AUTH_USER,
-        pass: process.env.NODEMAILER_AUTH_PASSWORD,
+        user: process.env.NODEMAILER_AUTH_USER || 'spiritualevolution@yandex.ru',
+        pass: process.env.NODEMAILER_AUTH_PASSWORD || 'generator21',
       },
     });
 

@@ -1,2 +1,0 @@
-#!/bin/bash
-sed -i -e 's/href=\/static\/css/href=\/static\/vue\/static\/css/g' -e 's/src=\/static\/js/href=\/static\/vue\/static\/js/g' -e 's/src=\/static\/js/src=\/static\/vue\/static\/js/g' dist/index.html
