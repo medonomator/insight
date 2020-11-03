@@ -99,7 +99,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
     options: {
       ...docsMaterials.createMaterials,
       auth: {
-        strategy: 'users',
+        strategy: "users",
       },
       validate: {
         payload: {
@@ -167,6 +167,32 @@ const usersRoutes: Hapi.ServerRoute[] = [
         payload: {
           _id: Joi.string().trim().required(),
         },
+      },
+    },
+  },
+  {
+    method: "GET",
+    path: "/v1/admin/material-tags",
+    handler: () => {
+      // TODO: Temp
+      const materialTags = [
+        "Самообразование",
+        "Саморазвитие",
+        "Бизнес",
+        "Духовное знание",
+        "Эзотерика",
+        "Будущие тенденции",
+        "Личностный рост",
+        "Мотивация",
+      ];
+      return {
+        data: materialTags,
+      };
+    },
+    options: {
+      ...docsMaterials.getMaterialTags,
+      auth: {
+        strategy: "users",
       },
     },
   },

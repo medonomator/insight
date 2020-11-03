@@ -66,6 +66,11 @@ export const docsMaterials = {
     description: "Delete Materials",
     notes: userAuth,
     tags: ["api", "user"]
+  },
+  getMaterialTags: {
+    description: "Get Material Tags",
+    notes: userAuth,
+    tags: ["api", "user"]
   }
 };
 

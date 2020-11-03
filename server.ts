@@ -18,6 +18,7 @@ import statics from "./routes/statics";
 
 import { insertDataToRedis } from "./database/insertDataToRedis";
 import { serverHelthCheck } from "./helpers/serverHelthCheck";
+import { checkAndFillDataToLocalDatabase } from "./database/checkAndFillDataToLocalDatabase";
 
 export class Server {
   constructor(private port: string) {}
@@ -34,13 +35,7 @@ export class Server {
         routes: {
           cors: {
             origin: ["*"],
-            headers: [
-              "Access-Control-Allow-Origin",
-              "Accept",
-              "Authorization",
-              "Content-Type",
-              "user-agent",
-            ],
+            headers: ["Access-Control-Allow-Origin", "Accept", "Authorization", "Content-Type", "user-agent"],
             credentials: true,
           },
         },
@@ -79,6 +74,7 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
+      await checkAndFillDataToLocalDatabase();
       await insertDataToRedis();
       serverHelthCheck();
 
@@ -87,11 +83,10 @@ export class Server {
       await server.start();
 
       server.ext("onPreResponse", (request, reply) => {
-        if (
-          request.response.output &&
-          request.response.output.statusCode === 404
-        ) {
-          return reply.view("404");
+        if (request.response.output && request.response.output.statusCode === 404) {
+          if (!/\/admin/.test(request.url.href)) {
+            return reply.view("404");
+          }
         }
         return reply.continue;
       });
