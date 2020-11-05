@@ -1,9 +1,9 @@
 version: '2'
 services:
-  # mongo:
-  #   image: mongo:4.2
-  #   ports:
-  #     - 27017:27017/tcp
+  mongo:
+    image: mongo:4.4
+    ports:
+      - 27017:27017/tcp
   # redis:
   #   image: 'bitnami/redis:latest'
   #   environment:
@@ -20,12 +20,12 @@ services:
   #   environment:
   #     - RABBITMQ_DEFAULT_USER=user
   #     - RABBITMQ_DEFAULT_PASS=password
-  postgresql:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-    ports:
-      - '5432:5432'
+  # postgresql:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: 1234
+  #   ports:
+  #     - '5432:5432'
