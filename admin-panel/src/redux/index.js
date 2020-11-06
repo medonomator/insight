@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './reducers/counter'
+import notification from './reducers/notification'
 import materials from './reducers/materials'
 
 export default combineReducers({
-  counter,
-  materials
+  notification,
+  materials,
 })

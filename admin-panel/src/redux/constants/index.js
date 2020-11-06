@@ -1,7 +1,8 @@
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
-export const INCREMENT = 'counter/INCREMENT'
-export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED'
-export const DECREMENT = 'counter/DECREMENT'
-
-// materials
+// material
 export const GET_MATERIAL_TAGS = 'material/getMaterialTags'
+export const GET_MATERIALS = 'material/getMaterials'
+export const CHANGE_MATERIAL = 'material/changeMaterial'
+
+// notification
+export const SHOW_NOTIFICATION = 'notification/showNotification'
+export const CLOSE_NOTIFICATION = 'notification/closeNotification'

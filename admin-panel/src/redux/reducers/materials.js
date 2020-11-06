@@ -1,4 +1,4 @@
-import { GET_MATERIAL_TAGS } from '../constants'
+import { GET_MATERIAL_TAGS, GET_MATERIALS } from '../constants'
 
 const initialState = {
   materialTags: [],
@@ -11,6 +11,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         materialTags: action.payload,
+      }
+    case GET_MATERIALS:
+      return {
+        ...state,
+        materials: action.payload,
       }
     default:
       return state

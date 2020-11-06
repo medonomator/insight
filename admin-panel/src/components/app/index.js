@@ -6,6 +6,7 @@ import Materials from '../materials'
 import Settings from '../settings'
 import { getToken, setToken, setAuthorizationToken } from '../../helpers'
 import { Dimmer, Loader } from 'semantic-ui-react'
+import Notification from '../common/Notification'
 import { API } from '../../helpers/axios'
 import styles from './app.module.sass'
 
@@ -62,6 +63,8 @@ const App = (props) => {
         <Route exact path="/admin/materials" component={Materials} />
         <Route exact path="/admin/settings" component={Settings} />
       </main>
+
+      <Notification />
     </div>
   )
 }
