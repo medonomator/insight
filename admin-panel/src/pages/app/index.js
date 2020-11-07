@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Link } from 'react-router-dom'
-import Home from '../home'
+import Home from '../../components/home'
 import Aphorisms from '../aphorisms'
 import Materials from '../materials'
 import Settings from '../settings'
-import CustomTimeline from '../customTimeline'
+import Timeline from '../../components/timeline'
 import { getToken, setToken, setAuthorizationToken } from '../../helpers'
 import { Dimmer, Loader } from 'semantic-ui-react'
-import Notification from '../common/Notification'
+import Notification from '../../components/common/Notification'
 import { API } from '../../helpers/axios'
 import styles from './app.module.sass'
 
@@ -63,8 +63,13 @@ const App = (props) => {
         <Route exact path="/admin" component={Home} />
         <Route exact path="/admin/aphorisms" component={Aphorisms} />
         <Route exact path="/admin/materials" component={Materials} />
-        <Route exact path="/admin/timeline" component={CustomTimeline} />
+        <Route exact path="/admin/timeline" component={Timeline} />
         <Route exact path="/admin/settings" component={Settings} />
+        <Route
+          exact
+          path={`${props.match.path}/aphorisms/:id`}
+          component={() => <div>123</div>}
+        />
       </main>
 
       <Notification />

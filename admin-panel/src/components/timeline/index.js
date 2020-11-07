@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button } from 'semantic-ui-react'
 import styles from './timeline.module.sass'
 
-const CustomTimeline = () => {
+const Timeline = () => {
   const [mode, setMode] = useState('week')
   const [modeData, setModeData] = useState({})
   const [currentDay] = useState(new Date().getDay() + 1)
@@ -48,7 +48,7 @@ const CustomTimeline = () => {
 
   return (
     <div>
-      <h1>CustomTimeline</h1>
+      <h1>Timeline</h1>
 
       <Button.Group floated="left">
         <Button data-mode={'threeDays'} onClick={changeMode}>
@@ -117,4 +117,4 @@ const CustomTimeline = () => {
   )
 }
 
-export default CustomTimeline
+export default Timeline

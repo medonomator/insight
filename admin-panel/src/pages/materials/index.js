@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import CustomTable from '../common/CustomTable'
+import CustomTable from '../../components/common/CustomTable'
 import PopUp from './popUp'
 import { getMaterialTags, getMaterials } from '../../fetch'
 import { changeMaterial, deleteMaterial } from '../../redux/actions/material'
