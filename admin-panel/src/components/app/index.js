@@ -4,6 +4,7 @@ import Home from '../home'
 import Aphorisms from '../aphorisms'
 import Materials from '../materials'
 import Settings from '../settings'
+import CustomTimeline from '../customTimeline'
 import { getToken, setToken, setAuthorizationToken } from '../../helpers'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import Notification from '../common/Notification'
@@ -49,6 +50,7 @@ const App = (props) => {
           <Link to="/admin">Главная</Link>
           <Link to="/admin/aphorisms">Афоризмы</Link>
           <Link to="/admin/materials">Материалы</Link>
+          <Link to="/admin/timeline">Timeline</Link>
           <Link to="/admin/settings">Настройки</Link>
         </div>
       </header>
@@ -57,10 +59,11 @@ const App = (props) => {
         Logout
       </div>
 
-      <main>
+      <main className={styles.wrapper}>
         <Route exact path="/admin" component={Home} />
         <Route exact path="/admin/aphorisms" component={Aphorisms} />
         <Route exact path="/admin/materials" component={Materials} />
+        <Route exact path="/admin/timeline" component={CustomTimeline} />
         <Route exact path="/admin/settings" component={Settings} />
       </main>
 

@@ -1,5 +1,9 @@
 import { API } from '../helpers/axios'
-import { GET_MATERIAL_TAGS, GET_MATERIALS } from '../redux/constants'
+import {
+  GET_MATERIAL_TAGS,
+  GET_MATERIALS,
+  SHOW_NOTIFICATION,
+} from '../redux/constants'
 
 export const getMaterialTags = () => async (dispatch) => {
   try {
@@ -7,7 +11,13 @@ export const getMaterialTags = () => async (dispatch) => {
     dispatch({ type: GET_MATERIAL_TAGS, payload: res.data.data })
     return res
   } catch (error) {
-    // TODO: need dispatch global error
+    dispatch({
+      type: SHOW_NOTIFICATION,
+      payload: {
+        type: 'ERROR',
+        message: error.message,
+      },
+    })
   }
 }
 
@@ -17,6 +27,12 @@ export const getMaterials = () => async (dispatch) => {
     dispatch({ type: GET_MATERIALS, payload: res.data.data })
     return res
   } catch (error) {
-    // TODO: need dispatch global error
+    dispatch({
+      type: SHOW_NOTIFICATION,
+      payload: {
+        type: 'ERROR',
+        message: error.message,
+      },
+    })
   }
 }

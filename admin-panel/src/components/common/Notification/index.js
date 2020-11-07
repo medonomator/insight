@@ -6,9 +6,11 @@ import styles from './notification.module.sass'
 
 function Notification(props) {
   useEffect(() => {
-    setTimeout(() => {
-      props.closeNotification();
-    },2000)
+    if (props.isOpen) {
+      setTimeout(() => {
+        props.closeNotification()
+      }, 2000)
+    }
   })
 
   const COLORS = {
@@ -27,7 +29,8 @@ function Notification(props) {
       hidden={!props.isOpen}
       className={props.isOpen ? styles.main : {}}>
       <p className={styles.headerText}>{MESSAGES[props.data.type]}</p>
-      <p className={styles.mainText}>Main Text example</p>
+      <p className={styles.mainText}>{props.data.message}</p>
+      <p className={styles.line}></p>
     </div>
   )
 }
