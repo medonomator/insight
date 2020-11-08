@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Link } from 'react-router-dom'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import Home from '../../components/home'
 import Aphorisms from '../aphorisms'
 import Materials from '../materials'
 import Settings from '../settings'
 import Timeline from '../../components/timeline'
-import { getToken, setToken, setAuthorizationToken } from '../../helpers'
-import { Dimmer, Loader } from 'semantic-ui-react'
+import CheckCursor from '../../components/CheckCursor'
 import Notification from '../../components/common/Notification'
+
+import SingleAphorism from '../../containers/SingleAphorism'
+
+import { getToken, setToken, setAuthorizationToken } from '../../helpers'
 import { API } from '../../helpers/axios'
 import styles from './app.module.sass'
 
@@ -45,7 +49,7 @@ const App = (props) => {
 
   return (
     <div className={styles.main}>
-      <header className={styles.sidebar}>
+      <aside className={styles.sidebar}>
         <div className={styles.menu}>
           <Link to="/admin">Главная</Link>
           <Link to="/admin/aphorisms">Афоризмы</Link>
@@ -53,7 +57,7 @@ const App = (props) => {
           <Link to="/admin/timeline">Timeline</Link>
           <Link to="/admin/settings">Настройки</Link>
         </div>
-      </header>
+      </aside>
 
       <div onClick={logout} className={styles.logout}>
         Logout
@@ -68,11 +72,12 @@ const App = (props) => {
         <Route
           exact
           path={`${props.match.path}/aphorisms/:id`}
-          component={() => <div>123</div>}
+          component={SingleAphorism}
         />
       </main>
 
       <Notification />
+      <CheckCursor />
     </div>
   )
 }
