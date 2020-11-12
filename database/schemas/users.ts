@@ -1,4 +1,5 @@
 import * as Mongoose from 'mongoose';
+import { IUser } from "../../controllers/users/userRegister/interfaces";
 
 const usersSchema = new Mongoose.Schema(
   {
@@ -71,4 +72,4 @@ const usersSchema = new Mongoose.Schema(
   { versionKey: false },
 );
 
-export const users = Mongoose.model('users', usersSchema);
+export const users = <IUser | any>Mongoose.model('users', usersSchema);

@@ -67,8 +67,8 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          _id: Joi.string().trim().required(),
-          author: Joi.string().trim().required(),
+          id: Joi.string().trim().required(),
+          authorName: Joi.string().trim().required(),
           body: Joi.string().trim().required(),
           tags: Joi.array().required(),
           category: Joi.string().trim().required(),
@@ -87,7 +87,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          _id: Joi.string().trim().required(),
+          id: Joi.string().trim().required(),
         },
       },
     },
@@ -145,11 +145,14 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          _id: Joi.string().trim().required(),
-          author: Joi.string().trim().required(),
-          body: Joi.string().trim().required(),
-          tags: Joi.array().required(),
-          category: Joi.string().trim().required(),
+          id: Joi.string().trim().required(),
+          name: Joi.string().trim().required().min(3),
+          description: Joi.string().trim().required().min(5),
+          tags: Joi.array(),
+          websiteUrl: Joi.string().allow(""),
+          youtubeUrl: Joi.string().allow(""),
+          books: Joi.string().allow(""),
+          audioBooks: Joi.string().allow(""),
         },
       },
     },
@@ -165,7 +168,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          _id: Joi.string().trim().required(),
+          id: Joi.string().trim().required(),
         },
       },
     },

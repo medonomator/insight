@@ -126,10 +126,11 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
    */
   private async filler(keys: string[]): Promise<void> {
     this.aphorisms = [];
+
     for await (const key of keys) {
       this.aphorisms.push(JSON.parse(await redis.get(key)));
     }
-    this.aphorisms = uniqBy(this.aphorisms, "id");
+    this.aphorisms = uniqBy(this.aphorisms, "_id");
   }
 }
 

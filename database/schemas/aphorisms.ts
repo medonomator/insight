@@ -1,8 +1,9 @@
-import * as Mongoose from 'mongoose';
+import * as Mongoose from "mongoose";
+import { IAphorisms } from "../../interfaces/aphorism";
 
 const aphorismsSchema = new Mongoose.Schema(
   {
-    author: {
+    authorName: {
       type: String,
     },
     authorMachineName: {
@@ -24,11 +25,11 @@ const aphorismsSchema = new Mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
     },
     versionKey: false,
-  },
+  }
 );
 
-export const aphorisms = Mongoose.model('aphorisms', aphorismsSchema);
+export const aphorisms = <IAphorisms | any>Mongoose.model("aphorisms", aphorismsSchema);

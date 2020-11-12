@@ -1,25 +1,13 @@
 import { logger } from "../helpers/logger";
-import { knex } from "./pgConnect";
+import { aphorisms } from "../database/schemas/aphorisms";
 import aphorismsModel from "../models/redis/aphorisms";
-import aphorismsTable from "../tables/aphorisms";
-import aphorismsAuthors from "../tables/aphorism_authors";
+import { IAphorisms } from "../interfaces/aphorism";
 
 export const insertDataToRedis = async (): Promise<void> => {
   try {
-    const aphorisms = await knex(aphorismsTable.table)
-      .select([
-        aphorismsTable.columns.id,
-        aphorismsTable.columns.body,
-        aphorismsTable.columns.tags,
-        aphorismsTable.columns.category,
-        aphorismsTable.columns.created_at,
-        aphorismsTable.columns.updated_at,
-        knex.ref(aphorismsAuthors.columns.name).as("authorName"),
-        knex.ref(aphorismsAuthors.columns.machineName).as("authorMachineName"),
-      ])
-      .leftJoin(aphorismsAuthors.table, aphorismsTable.columns.author_id, aphorismsAuthors.columns.id);
+    const items: IAphorisms[] = await aphorisms.find();
 
-    await aphorismsModel.setAll(aphorisms);
+    await aphorismsModel.setAll(items);
   } catch (error) {
     logger.error(error);
   }

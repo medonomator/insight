@@ -1,21 +1,21 @@
 import Boom from "boom";
 import { logger } from "../../../../helpers/logger";
-import { knex } from "../../../../database/pgConnect";
-import subscribersTable from "../../../../tables/subscribers";
 import { ISubscriber, IResponse } from "./interfaces";
+import { subscribers } from "../../../../database/schemas/subscribers";
+
 /**
  * Get Subscribers
  * @return {Promise<IResponse}>
  */
-export const getSubscribers = async (): Promise<IResponse> => {
+export const getSubscribers = async () => {
   try {
     logger.info("Get Subscribers");
 
-    const subscribers: ISubscriber[] = await knex(subscribersTable.table);
+    const data: ISubscriber[] = await subscribers.find();
 
     return {
-      data: subscribers,
-      count: subscribers.length
+      data,
+      count: data.length,
     };
   } catch (err) {
     logger.error(err);

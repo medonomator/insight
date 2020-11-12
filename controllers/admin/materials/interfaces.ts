@@ -4,7 +4,7 @@ import { IItemNameMachine } from '../../../interfaces';
  * GRUD for materials
  */
 export interface IMaterials {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   tags: IItemNameMachine[];
@@ -32,7 +32,7 @@ export interface IParamsUpdate {
 
 export interface IParamsDelete {
   payload: {
-    _id: string;
+    id: string;
   };
 }
 

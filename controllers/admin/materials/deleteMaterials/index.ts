@@ -1,7 +1,8 @@
 import Boom from 'boom';
 import { logger } from '../../../../helpers/logger';
-// import { materials } from '../../../../database/schemas/materials';
 import { IResponse, IParamsDelete } from '../interfaces';
+import { materials } from "../../../../database/schemas/materials";
+
 /**
  * Delete Materials by id
  * @param {IParamsDelete} params
@@ -9,10 +10,10 @@ import { IResponse, IParamsDelete } from '../interfaces';
  */
 export const deleteMaterials = async (req: IParamsDelete): Promise<IResponse> => {
   try {
-    const { _id } = req.payload;
-    // await materials.deleteOne({ _id });
+    const { id } = req.payload;
+    await materials.deleteOne({ _id: id });
 
-    logger.info(`materials id: ${_id} deleted`);
+    logger.info(`materials id: ${id} deleted`);
     return 'ok';
   } catch (err) {
     logger.error(err);
