@@ -47,7 +47,7 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  const materials = await knex(materialsTable.table).orderBy('id', 'DESC');
+  const materials = await knex(materialsTable.table);
   logger.info("getMaterialsPage");
   return h.view("materials", { materials });
 };
@@ -65,11 +65,6 @@ export const getGratitudePage = (req, h: Vision<Hapi.ResponseToolkit>) => {
 export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("devlopmentPlanPage");
   return h.view("developmentPlan");
-};
-
-export const getCourses = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  logger.info("getCourses");
-  return h.view("courses");
 };
 
 export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -108,5 +103,5 @@ export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 
 export const getAdminBundle = (req, h: Vision<Hapi.ResponseToolkit>) => {
   logger.info("adminbundle");
-  return h.file("./static/index.html");
+  return h.file("./static/vue/index.html");
 };

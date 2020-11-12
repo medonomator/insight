@@ -19,18 +19,20 @@ const CheckCursor = (props) => {
     aside.onmousedown = function (e) {
       const { width } = aside.getBoundingClientRect()
 
-      const onMouseMove = (e) => {
-        aside.style.width = e.clientX + 'px'
+      function onMouseMove(e) {
+        aside.style.width = e.pageX + 'px'
       }
 
       if (e.clientX + PADDING > width && e.clientX - PADDING < width) {
-        document.addEventListener('mousemove', onMouseMove)
+        document.onmousemove = function (e) {
+          onMouseMove(e)
+        }
 
-        aside.mouseup = function () {
-          document.removeEventListener('mousemove', onMouseMove)
+        aside.onmouseup = function () {
+          alert('TODO')
+          document.onmousemove = null
           aside.onmouseup = null
         }
-      } else {
       }
     }
   }, [])

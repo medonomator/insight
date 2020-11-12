@@ -1,5 +1,5 @@
-import * as Hapi from 'hapi';
-import Joi from 'joi';
+import * as Hapi from "hapi";
+import Joi from "joi";
 import {
   getAphorismsPage,
   getMaterialsPage,
@@ -8,29 +8,28 @@ import {
   getGratitudePage,
   dynamicAphorismsPage,
   dynamicMaterialPage,
-  getCourses,
-} from '../controllers/views';
+} from "../controllers/views";
 
 const views: Hapi.ServerRoute[] = [
   {
-    method: 'GET',
-    path: '/{param*}',
+    method: "GET",
+    path: "/{param*}",
     handler: {
       directory: {
-        path: '.',
+        path: ".",
         redirectToSlash: true,
         index: true,
       },
     },
   },
   {
-    method: 'GET',
-    path: '/',
+    method: "GET",
+    path: "/",
     handler: getAphorismsPage,
   },
   {
-    method: 'GET',
-    path: '/aphorism/{id}',
+    method: "GET",
+    path: "/aphorism/{id}",
     handler: dynamicAphorismsPage,
     options: {
       validate: {
@@ -41,8 +40,8 @@ const views: Hapi.ServerRoute[] = [
     },
   },
   {
-    method: 'GET',
-    path: '/material/{id}',
+    method: "GET",
+    path: "/material/{id}",
     handler: dynamicMaterialPage,
     options: {
       validate: {
@@ -53,28 +52,23 @@ const views: Hapi.ServerRoute[] = [
     },
   },
   {
-    method: 'GET',
-    path: '/materials',
+    method: "GET",
+    path: "/materials",
     handler: getMaterialsPage,
   },
   {
-    method: 'GET',
-    path: '/contacts',
+    method: "GET",
+    path: "/contacts",
     handler: getContactsPage,
   },
   {
-    method: 'GET',
-    path: '/courses',
-    handler: getCourses,
-  },
-  {
-    method: 'GET',
-    path: '/gratitude',
+    method: "GET",
+    path: "/gratitude",
     handler: getGratitudePage,
   },
   {
-    method: 'GET',
-    path: '/admin/{path*}',
+    method: "GET",
+    path: "/admin/{path*}",
     handler: getAdminBundle,
   },
 ];

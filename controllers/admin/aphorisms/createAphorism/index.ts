@@ -3,6 +3,7 @@ import { logger } from '../../../../helpers/logger';
 import { IParamsCreate, IResponse } from '../interfaces';
 import { IItemNameMachine } from '../../../../interfaces';
 import { cyrToLat } from '../../../../helpers';
+import { aphorisms } from '../../../../database/schemas/aphorisms'
 
 /**
  * Create New Aphorism
@@ -25,7 +26,7 @@ export const createAphorism = async (req: IParamsCreate): Promise<IResponse> => 
       });
     }
 
-    // await aphorisms.create({ author, body, tags: inMachineName, category });
+    await aphorisms.create({ author, body, tags: inMachineName, category });
 
     return 'ok';
   } catch (err) {

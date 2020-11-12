@@ -1,39 +1,42 @@
-import { knex } from "../pgConnect";
 import Nodemailer from "nodemailer";
-import { encryptData } from '../../helpers';
-console.log(process.env.NODEMAILER_AUTH_USER);
+import { encryptData } from "../../helpers";
+import { users } from "../schemas/users";
+import mongoConnection from "../mongoConnection";
 
+mongoConnection();
 (async () => {
   try {
-
     const randomString = Math.random().toString(36);
-    const password = encryptData(randomString, 'admin@gmail.com'.toLowerCase())
+    const password = encryptData(randomString, "admin@gmail.com".toLowerCase());
 
     const transporter = Nodemailer.createTransport({
       host: "smtp.yandex.ru",
       port: 465,
       secure: true,
       auth: {
-        user: process.env.NODEMAILER_AUTH_USER || 'spiritualevolution@yandex.ru',
-        pass: process.env.NODEMAILER_AUTH_PASSWORD || 'generator21',
+        user: process.env.NODEMAILER_AUTH_USER,
+        pass: process.env.NODEMAILER_AUTH_PASSWORD,
       },
     });
 
-    const resInfo = await transporter.sendMail({
-      from: "spiritualevolution@yandex.ru",
-      to: 'budteschastlivi1@gmail.com',
-      subject: "Подписка",
-      text: `Благодарим за подписку на нашу платформу, ваш пароль: ${randomString}`,
-      // html: '<b>Hello world?</b>', // html body
-    }, null);
+    await transporter.sendMail(
+      {
+        from: "spiritualevolution@yandex.ru",
+        to: "budteschastlivi1@gmail.com",
+        subject: "Create Admin",
+        text: `Password: ${randomString}`,
+        // html: '<b>Hello world?</b>', // html body
+      },
+      null
+    );
 
-    const result = await knex("users").insert({ name: "admin", email: "admin@gmail.com", password });
+    const result = await users.create({ name: "admin", email: "admin@gmail.com", password });
 
-    console.log(result)
+    console.log(result);
 
-    process.exit(0)
+    process.exit(0);
   } catch (error) {
     console.log(error);
-    process.exit(0)
+    process.exit(0);
   }
 })();
