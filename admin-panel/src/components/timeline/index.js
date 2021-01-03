@@ -5,7 +5,7 @@ import styles from './timeline.module.sass'
 const Timeline = () => {
   const [mode, setMode] = useState('week')
   const [modeData, setModeData] = useState({})
-  const [currentDay] = useState(new Date().getDay() + 1)
+  const [currentDay] = useState(new Date().getDate())
   const [numberDaysInCurrentMonth, setNumberDaysInCurrentMonth] = useState(null)
 
   const changeMode = (e) => {
@@ -66,11 +66,11 @@ const Timeline = () => {
       </Button.Group>
 
       <Table className={styles.timeline} fixed celled>
-        <Table.Header >
+        <Table.Header>
           <Table.Row>
             {new Array(modeData.columns).fill('th').map((item, index) => {
               return (
-                <Table.HeaderCell  key={index}>
+                <Table.HeaderCell key={index}>
                   {currentDay + index + item}
                 </Table.HeaderCell>
               )

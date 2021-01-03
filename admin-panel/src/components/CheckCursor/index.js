@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import React, { useEfect } from 'react'
+import React from 'react'
 
 const CheckCursor = (props) => {
   useEffect(() => {

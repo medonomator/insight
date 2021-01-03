@@ -17,6 +17,10 @@ const Login = ({ history }) => {
         history.push('/admin')
       })
       .catch((err) => {
+        if (!err.response) {
+          return setError('Network error')
+        }
+
         setError(err.response && err.response.data.message)
       })
   }

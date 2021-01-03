@@ -44,7 +44,7 @@ const PopUp = (props) => {
             />
           </Form.Field>
           <Select
-            defaultValue={selectedOption}
+            // defaultValue={selectedOption}
             onChange={setSelectedOption}
             options={props.materialTags.map((item) => ({
               label: item,

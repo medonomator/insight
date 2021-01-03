@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import Home from '../../components/home'
 import Aphorisms from '../aphorisms'
 import Materials from '../materials'
 import Settings from '../settings'
 import Timeline from '../../components/timeline'
+import Features from '../../components/features'
 import CheckCursor from '../../components/CheckCursor'
 import Notification from '../../components/common/Notification'
 
@@ -51,11 +52,12 @@ const App = (props) => {
     <div className={styles.main}>
       <aside className={styles.sidebar}>
         <div className={styles.menu}>
-          <Link to="/admin">Главная</Link>
-          <Link to="/admin/aphorisms">Афоризмы</Link>
-          <Link to="/admin/materials">Материалы</Link>
-          <Link to="/admin/timeline">Timeline</Link>
-          <Link to="/admin/settings">Настройки</Link>
+          <NavLink exact activeClassName={styles.activeLink} to="/admin">Main</NavLink>
+          <NavLink activeClassName={styles.activeLink} to="/admin/aphorisms">Aphorisms</NavLink>
+          <NavLink activeClassName={styles.activeLink} to="/admin/materials">Materials</NavLink>
+          <NavLink activeClassName={styles.activeLink} to="/admin/timeline">Timeline</NavLink>
+          <NavLink activeClassName={styles.activeLink} to="/admin/features">Features</NavLink>
+          <NavLink activeClassName={styles.activeLink} to="/admin/settings">Settings</NavLink>
         </div>
       </aside>
 
@@ -68,6 +70,7 @@ const App = (props) => {
         <Route exact path="/admin/aphorisms" component={Aphorisms} />
         <Route exact path="/admin/materials" component={Materials} />
         <Route exact path="/admin/timeline" component={Timeline} />
+        <Route exact path="/admin/features" component={Features} />
         <Route exact path="/admin/settings" component={Settings} />
         <Route
           exact
