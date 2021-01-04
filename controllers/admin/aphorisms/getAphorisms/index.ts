@@ -13,7 +13,7 @@ import { shuffle } from "lodash";
 export const getAphorisms = async (params: IParamsGet): Promise<IResponse> => {
   try {
     logger.info("Get aphorisms");
-    const { author, topic, category, random = true } = params.query;
+    const { author, topic, category, random = true, limit } = params.query;
     let aphorisms: IAphorisms[] = [];
 
     if (author) {

@@ -22,6 +22,7 @@ const preloaderNone = () => (preloader.style.display = "none");
 
 const shuffleButton = document.querySelector(".shuffle-button");
 const copySuccessfully = document.querySelector(".copy-successfully");
+const scroll = new SmoothScroll(null, { speed: 700, speedAsDuration: true });
 
 if (sessionStorage.getItem("mainMenu") === "visible") {
   hamburger.classList.toggle("change");
@@ -167,8 +168,14 @@ if (shuffleButton) {
 
 if (moreButtonAphorism) {
   let counter = 0;
+  
   moreButtonAphorism.addEventListener("click", () => {
+    const pageOffset = window.pageYOffset;
     counter++;
+    preloader.style.display = "block";
+    
+    // scroll.animateScroll(pageOffset)
+    
     funcRequest(`v1/admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, (res) => {
       aphorismsContainer.insertAdjacentHTML("beforeend", loadingTemplateAphorism(res.data));
 
@@ -176,15 +183,17 @@ if (moreButtonAphorism) {
         moreButtonAphorism.value = moreButtonAphorism.value.replace("100", res.count);
       }
 
-      if (!res.count) {
+      if (!res.count || res.count > 500) {
         moreButtonAphorism.style.display = "none";
       }
+
+      window.scrollTo( 0, pageOffset);
     });
   });
 }
 
 if (topArrow) {
-  var scroll = new SmoothScroll(null, { speed: 700, speedAsDuration: true });
+  
   topArrow.addEventListener("click", () => scroll.animateScroll(0));
 
   window.addEventListener("scroll", (e) => {
