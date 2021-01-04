@@ -38,7 +38,7 @@ class TelegramBot {
       this.handlerLostMessages();
     } catch (err) {
       this._lostMessages.push(message);
-      this.reconnectNextProxy();
+      // this.reconnectNextProxy();
       logger.error(err);
     }
   };
