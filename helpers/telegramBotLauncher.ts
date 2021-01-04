@@ -50,11 +50,11 @@ class TelegramBot {
       this._currentProxy = ++this._currentProxy;
     }
 
-    this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
-      telegram: {
-        agent: new SocksProxyAgent(this._proxyList[this._currentProxy])
-      }
-    });
+    // this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
+    //   telegram: {
+    //     agent: new SocksProxyAgent(this._proxyList[this._currentProxy])
+    //   }
+    // });
     const reconnectMessage = `Telegraf reconnecting with proxy: ${this._proxyList[this._currentProxy]}`;
     logger.warn(reconnectMessage);
     this.handlerLostMessages();
