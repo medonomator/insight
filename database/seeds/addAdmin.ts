@@ -30,7 +30,7 @@ mongoConnection();
       null
     );
 
-    const result = await users.create({ name: "admin", email: "admin@gmail.com", password });
+    const result = await users.create({ name: "admin", email: "admin2@gmail.com", password });
 
     console.log(result);
 
