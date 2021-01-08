@@ -69,10 +69,6 @@ export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     const aphorism = await aphorisms.findById({ _id: req.params.id });
-
-    console.log('======================================================');
-    console.log(aphorism);
-    console.log('======================================================');
     if (!aphorism) {
       return h.view("404");
     }
@@ -89,10 +85,6 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
     const material = await materials.findById({ _id: req.params.id });
-
-    console.log('======================================================');
-    console.log(material);
-    console.log('======================================================');
     if (!material) {
       return h.view("404");
     }
