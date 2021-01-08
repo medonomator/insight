@@ -7,7 +7,7 @@ mongoConnection();
 (async () => {
   try {
     const randomString = Math.random().toString(36);
-    const password = encryptData(randomString, "admin@gmail.com".toLowerCase());
+    const password = encryptData(randomString, "admin2@gmail.com".toLowerCase());
 
     const transporter = Nodemailer.createTransport({
       host: "smtp.yandex.ru",

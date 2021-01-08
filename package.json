@@ -10,7 +10,8 @@
     "rebuild": "pm2 delete all && git pull && npm run dev",
     "test": "jest -i --forceExit",
     "test:watch": "jest -i --coverage --watch controllers/admin/aphorisms/updateAphorism/index.test.ts",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "add:admin": "ts-node ./database/seeds/addAdmin.ts"
   },
   "keywords": [],
   "author": "Dmitriy Zorin",
