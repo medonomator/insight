@@ -168,14 +168,14 @@ if (shuffleButton) {
 
 if (moreButtonAphorism) {
   let counter = 0;
-  
+
   moreButtonAphorism.addEventListener("click", () => {
     const pageOffset = window.pageYOffset;
     counter++;
     preloader.style.display = "block";
-    
+
     // scroll.animateScroll(pageOffset)
-    
+
     funcRequest(`v1/admin/aphorisms?random=false&offset=${100 * counter}&limit=100`, (res) => {
       aphorismsContainer.insertAdjacentHTML("beforeend", loadingTemplateAphorism(res.data));
 
@@ -187,13 +187,12 @@ if (moreButtonAphorism) {
         moreButtonAphorism.style.display = "none";
       }
 
-      window.scrollTo( 0, pageOffset);
+      window.scrollTo(0, pageOffset);
     });
   });
 }
 
 if (topArrow) {
-  
   topArrow.addEventListener("click", () => scroll.animateScroll(0));
 
   window.addEventListener("scroll", (e) => {
@@ -261,3 +260,15 @@ document.addEventListener("click", function (e) {
     }, 600);
   }
 });
+
+function copyToClipboard(str) {
+  const el = document.createElement("textarea");
+  el.value = str;
+  el.setAttribute("readonly", "");
+  el.style.position = "absolute";
+  el.style.left = "-9999px";
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+}

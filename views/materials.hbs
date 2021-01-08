@@ -12,21 +12,13 @@
     {{>header}}
 
     <h1>
-      {{#if materialPage.headerH1}}
-      {{materialPage.headerH1}}
-      {{else}}
       Только лучшее
-      {{/if}}
     </h1>
 
     <div class="header-text">
       <p>
-        {{#if materialPage.headerText}}
-        {{materialPage.headerText}}
-        {{else}}
         Здесь собираются разные полезные материалы и одни из самых сильных направлений, которые действительно
         трансформируют.
-        {{/if}}
       </p>
     </div>
 
@@ -78,11 +70,11 @@
             <div class="aphorisms-icons">
 
               <div class="share-buttons">
-                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/material/{{this.id}}','Хороший Афоризм')"
+                <i onclick="Share.vkontakte('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
                   class="fa fa-vk" aria-hidden="true"></i>
-                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/material/{{this.id}}','Хороший Афоризм')"
+                <i onclick="Share.whatsapp('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
                   class="fa fa-whatsapp" aria-hidden="true"></i>
-                <i onclick="Share.telegram('http://spiritual-evolution.ru/material/{{this.id}}','Хороший Афоризм')"
+                <i onclick="Share.telegram('http://spiritual-evolution.ru/material/{{this._id}}','Хороший Афоризм')"
                   class="fa fa-telegram" aria-hidden="true"></i>
               </div>
 

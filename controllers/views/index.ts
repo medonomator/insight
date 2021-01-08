@@ -4,8 +4,8 @@ import Boom from "boom";
 import { logger } from "../../helpers/logger";
 import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
-import materialsTable from "../../tables/materials";
-import aphorismsTable from "../../tables/aphorisms";
+import { aphorisms } from "../../database/schemas/aphorisms";
+import { materials } from "../../database/schemas/materials";
 import { knex } from "../../database/pgConnect";
 import { shuffle } from "lodash";
 
@@ -47,9 +47,8 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  const materials = await knex(materialsTable.table);
-  logger.info("getMaterialsPage");
-  return h.view("materials", { materials });
+  const materialsData = await materials.find().lean();
+  return h.view("materials", { materials: materialsData });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -69,8 +68,11 @@ export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 
 export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const aphorism = (await knex(aphorismsTable.table).where("id", req.params.id))[0];
+    const aphorism = await aphorisms.findById({ _id: req.params.id });
 
+    console.log('======================================================');
+    console.log(aphorism);
+    console.log('======================================================');
     if (!aphorism) {
       return h.view("404");
     }
@@ -86,8 +88,11 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const material = (await knex(materialsTable.table).where("id", req.params.id))[0];
+    const material = await materials.findById({ _id: req.params.id });
 
+    console.log('======================================================');
+    console.log(material);
+    console.log('======================================================');
     if (!material) {
       return h.view("404");
     }
