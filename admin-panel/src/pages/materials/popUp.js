@@ -39,13 +39,36 @@ const PopUp = (props) => {
             <input
               className={styles.materialInput}
               value={props.material.name}
-              onChange={(event) => props.setMaterial(event.target.value)}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  name: event.target.value,
+                })
+              }
               placeholder="Name"
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Description</label>
+            <input
+              value={props.material.description}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  description: event.target.value,
+                })
+              }
+              placeholder="Description"
             />
           </Form.Field>
           <Select
             // defaultValue={selectedOption}
-            onChange={setSelectedOption}
+            onChange={(event) => {
+              props.setMaterial({
+                ...props.material,
+                tags: event && event.map((item) => item.value),
+              })
+            }}
             options={props.materialTags.map((item) => ({
               label: item,
               value: item,
@@ -58,7 +81,12 @@ const PopUp = (props) => {
             <input
               className={styles.materialInput}
               value={props.material.audiobooks}
-              onChange={(event) => props.setMaterial(event.target.value)}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  audiobooks: event.target.value,
+                })
+              }
               placeholder="Audiobook"
             />
           </Form.Field>
@@ -67,7 +95,12 @@ const PopUp = (props) => {
             <input
               className={styles.materialInput}
               value={props.material.books}
-              onChange={(event) => props.setMaterial(event.target.value)}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  books: event.target.value,
+                })
+              }
               placeholder="Books"
             />
           </Form.Field>
@@ -75,8 +108,13 @@ const PopUp = (props) => {
             <label>WebsiteUrl</label>
             <input
               className={styles.materialInput}
-              value={props.material.website_url}
-              onChange={(event) => props.setMaterial(event.target.value)}
+              value={props.material.websiteUrl}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  websiteUrl: event.target.value,
+                })
+              }
               placeholder="WebsiteUrl"
             />
           </Form.Field>
@@ -84,14 +122,22 @@ const PopUp = (props) => {
             <label>YoutubeUrl</label>
             <input
               className={styles.materialInput}
-              value={props.material.youtube_url}
-              onChange={(event) => props.setMaterial(event.target.value)}
+              value={props.material.youtubeUrl}
+              onChange={(event) =>
+                props.setMaterial({
+                  ...props.material,
+                  youtubeUrl: event.target.value,
+                })
+              }
               placeholder="YoutubeUrl"
             />
           </Form.Field>
           <Button
             style={{ marginTop: '10px' }}
-            onClick={props.changeMaterial}
+            onClick={() => {
+              props.changeMaterial(props.material)
+              closeModal()
+            }}
             type="submit">
             Update
           </Button>

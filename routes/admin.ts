@@ -44,6 +44,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       ...docsAphorisms.getAphorisms,
       validate: {
         query: {
+          sort: Joi.string(),
           offset: Joi.number(),
           category: Joi.string().trim(),
           limit: Joi.number(),
@@ -87,7 +88,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          id: Joi.string().trim().required(),
+          _id: Joi.string().trim().required(),
         },
       },
     },
@@ -143,18 +144,6 @@ const usersRoutes: Hapi.ServerRoute[] = [
       auth: {
         strategy: "users",
       },
-      validate: {
-        payload: {
-          id: Joi.string().trim().required(),
-          name: Joi.string().trim().required().min(3),
-          description: Joi.string().trim().required().min(5),
-          tags: Joi.array(),
-          websiteUrl: Joi.string().allow(""),
-          youtubeUrl: Joi.string().allow(""),
-          books: Joi.string().allow(""),
-          audioBooks: Joi.string().allow(""),
-        },
-      },
     },
   },
   {
@@ -168,7 +157,7 @@ const usersRoutes: Hapi.ServerRoute[] = [
       },
       validate: {
         payload: {
-          id: Joi.string().trim().required(),
+          _id: Joi.string().trim().required(),
         },
       },
     },

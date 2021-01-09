@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { Link, Route } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import CustomTable from '../../components/common/CustomTable'
 import PopUp from './popUp'
 import { getMaterialTags, getMaterials } from '../../fetch'
 import { changeMaterial, deleteMaterial } from '../../redux/actions/material'
+import { Button } from 'semantic-ui-react'
 
 const Materials = (props) => {
   const [material, setMaterial] = useState({})
@@ -33,6 +35,10 @@ const Materials = (props) => {
     <div>
       <h1>Materials</h1>
 
+      <Button primary as={Link} to={`${props.match.path}/add`}>
+        Add
+      </Button>
+
       <CustomTable
         isLoaded={isLoaded}
         items={props.materials}
@@ -51,8 +57,8 @@ const Materials = (props) => {
           'tags',
           'audiobooks',
           'books',
-          'website_url',
-          'youtube_url',
+          'websiteUrl',
+          'youtubeUrl',
         ]}
         openModal={openModal}
         deleteMaterial={deleteMaterial}

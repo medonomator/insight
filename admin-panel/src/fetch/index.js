@@ -24,7 +24,7 @@ export const getMaterialTags = () => async (dispatch) => {
 export const getMaterials = () => async (dispatch) => {
   try {
     const res = await API('GET', 'v1/admin/materials')
-    dispatch({ type: GET_MATERIALS, payload: res.data.data })
+    dispatch({ type: GET_MATERIALS, payload: res.data.data.reverse() })
     return res
   } catch (error) {
     dispatch({

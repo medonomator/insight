@@ -18,6 +18,7 @@ export interface IParamsCreate {
 
 export interface IParamsGet {
   query: {
+    sort?: string;
     limit?: number;
     offset?: number;
     category?: string;
@@ -35,7 +36,7 @@ export interface IParamsUpdate {
 
 export interface IParamsDelete {
   payload: {
-    id: string;
+    _id: string;
   };
 }
 

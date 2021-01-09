@@ -6,7 +6,6 @@ import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
 import { aphorisms } from "../../database/schemas/aphorisms";
 import { materials } from "../../database/schemas/materials";
-import { knex } from "../../database/pgConnect";
 import { shuffle } from "lodash";
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -47,7 +46,7 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  const materialsData = await materials.find().lean();
+  const materialsData = await materials.find().sort({ createdAt: -1 }).lean();
   return h.view("materials", { materials: materialsData });
 };
 
@@ -68,7 +67,7 @@ export const developmentPlanPage = async (req, h: Vision<Hapi.ResponseToolkit>) 
 
 export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const aphorism = await aphorisms.findById({ _id: req.params.id });
+    const aphorism = await aphorisms.findById({ _id: req.params.id }).lean();
     if (!aphorism) {
       return h.view("404");
     }
@@ -84,7 +83,7 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const material = await materials.findById({ _id: req.params.id });
+    const material = await materials.findById({ _id: req.params.id }).lean();
     if (!material) {
       return h.view("404");
     }

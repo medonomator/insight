@@ -9,6 +9,7 @@ import Timeline from '../../components/timeline'
 import Features from '../../components/features'
 import CheckCursor from '../../components/CheckCursor'
 import Notification from '../../components/common/Notification'
+import AddMaterial from '../../components/materials/AddMaterial'
 
 import SingleAphorism from '../../containers/SingleAphorism'
 
@@ -76,6 +77,11 @@ const App = (props) => {
           exact
           path={`${props.match.path}/aphorisms/:id`}
           component={SingleAphorism}
+        />
+        <Route
+          exact
+          path={`${props.match.path}/materials/add`}
+          component={AddMaterial}
         />
       </main>
 

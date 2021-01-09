@@ -4,6 +4,7 @@ const materialsSchema = new Mongoose.Schema(
   {
     name: {
       type: String,
+      default: []
     },
     description: {
       type: String,
@@ -17,15 +18,19 @@ const materialsSchema = new Mongoose.Schema(
     ],
     websiteUrl: {
       type: String,
+      default: ''
     },
     youtubeUrl: {
       type: String,
+      default: ''
     },
     audioBooks: {
       type: String,
+      default: ''
     },
     books: {
       type: String,
+      default: ''
     },
   },
   {

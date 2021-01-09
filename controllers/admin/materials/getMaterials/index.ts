@@ -1,8 +1,7 @@
 import Boom from "boom";
 import { logger } from "../../../../helpers/logger";
 import { IResponse, IMaterials } from "../interfaces";
-import { knex } from "../../../../database/pgConnect";
-import materialsTable from "../../../../tables/materials";
+import { materials } from "../../../../database/schemas/materials";
 
 /**
  * Get Materials
@@ -10,7 +9,7 @@ import materialsTable from "../../../../tables/materials";
  */
 export const getMaterials = async (): Promise<IResponse> => {
   try {
-    const data: IMaterials[] = await knex(materialsTable.table);
+    const data: IMaterials[] = await materials.find().lean();
     logger.info("Get Materials");
     return { data, count: data.length };
   } catch (err) {

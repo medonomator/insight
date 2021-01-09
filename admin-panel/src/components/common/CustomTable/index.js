@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Loader } from 'semantic-ui-react'
 import { Helpers } from '../../../helpers'
 import styles from './customTable.module.sass'
+import { isEmpty } from 'lodash/isEmpty'
 
 const CustomTable = (props) => {
   const STANDART_HEIGHT = 20
@@ -29,11 +30,11 @@ const CustomTable = (props) => {
       <Table.Body>
         {props.items.map((item) => {
           return (
-            <Table.Row key={item.id}>
+            <Table.Row key={item._id}>
               <Table.Cell>{item[props.orderFields[0]]}</Table.Cell>
               <Table.Cell>
                 {item[props.orderFields[1]] &&
-                  item[props.orderFields[1]].length &&
+               
                   item[props.orderFields[1]]
                     .map((item) => item.name)
                     .join(', ')}
@@ -55,7 +56,7 @@ const CustomTable = (props) => {
                   className="pencil alternate big icon"></i>
               </Table.Cell>
               <Table.Cell
-                onClick={() => props.deleteMaterial(item.id)}
+                onClick={() => props.deleteMaterial(item._id)}
                 className={styles.delete}>
                 <i aria-hidden="true" className="delete big icon"></i>
               </Table.Cell>

@@ -10,15 +10,14 @@ import { aphorisms } from "../../../../database/schemas/aphorisms";
  */
 export const deleteAphorism = async (req: IParamsDelete): Promise<IResponse> => {
   try {
-    const { id } = req.payload;
-
-    const res = await aphorisms.findOneAndDelete({ _id: id });
+    const { _id } = req.payload;
+    const res = await aphorisms.findOneAndDelete({ _id });
 
     if (!res) {
       return Boom.notFound("The aphorism not found");
     }
 
-    logger.info(`aphorisms id: ${id} deleted`);
+    logger.info(`aphorisms id: ${_id} deleted`);
     return "ok";
   } catch (err) {
     logger.error(err);

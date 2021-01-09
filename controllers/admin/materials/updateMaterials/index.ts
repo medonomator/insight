@@ -13,9 +13,13 @@ import { materials } from "../../../../database/schemas/materials";
  */
 export const updateMaterials = async (req: IParamsUpdate): Promise<IResponse> => {
   try {
-    const { id, name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
+    const { _id, name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
+    console.log('======================================================');
+    console.log(tags);
+    console.log('======================================================');
+    
     if (!isEmpty(tags)) {
       tags.forEach((name: any) => {
         inMachineName.push({ name, machineName: cyrToLat(name) });
@@ -23,7 +27,7 @@ export const updateMaterials = async (req: IParamsUpdate): Promise<IResponse> =>
     }
 
     await materials.updateOne(
-      { _id: id },
+      { _id },
       { $set: { name, description, tags: inMachineName, websiteUrl, youtubeUrl, books, audioBooks } }
     );
 
