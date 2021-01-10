@@ -33,8 +33,7 @@ const CustomTable = (props) => {
             <Table.Row key={item._id}>
               <Table.Cell>{item[props.orderFields[0]]}</Table.Cell>
               <Table.Cell>
-                {item[props.orderFields[1]] &&
-               
+                {item[props.orderFields[1]] &&            
                   item[props.orderFields[1]]
                     .map((item) => item.name)
                     .join(', ')}
