@@ -4,6 +4,7 @@ import { IParamsCreate, IResponse } from "../interfaces";
 import { IItemNameMachine } from "../../../../interfaces";
 import { cyrToLat } from "../../../../helpers";
 import { materials } from "../../../../database/schemas/materials";
+import { isEmpty } from "lodash";
 
 /**
  * Create New Material
@@ -15,19 +16,13 @@ export const createMaterials = async (req: IParamsCreate): Promise<IResponse> =>
     const { name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
-    console.log('======================================================');
-    console.log(name);
-    console.log('======================================================');
     const duplicate = await materials.findOne({ name });
 
-    console.log('=====dubl=================================================');
-    console.log(duplicate);
-    console.log('======================================================');
     if (duplicate) {
       return Boom.conflict("The material with such a name already exists");
     }
 
-    if (tags) {
+    if (tags && !isEmpty(tags)) {
       tags.forEach((name) => {
         inMachineName.push({ name, machineName: cyrToLat(name) });
       });
