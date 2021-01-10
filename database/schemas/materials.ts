@@ -1,45 +1,40 @@
-import * as Mongoose from 'mongoose';
+import * as Mongoose from "mongoose";
 
 const materialsSchema = new Mongoose.Schema(
   {
     name: {
       type: String,
-      default: []
+      default: [],
     },
     description: {
       type: String,
       required: true,
     },
-    tags: [
-      {
-        name: String,
-        machineName: String,
-      },
-    ],
+    tags: [],
     websiteUrl: {
       type: String,
-      default: ''
+      default: "",
     },
     youtubeUrl: {
       type: String,
-      default: ''
+      default: "",
     },
     audioBooks: {
       type: String,
-      default: ''
+      default: "",
     },
     books: {
       type: String,
-      default: ''
+      default: "",
     },
   },
   {
     timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
     },
     versionKey: false,
-  },
+  }
 );
 
-export const materials = Mongoose.model('materials', materialsSchema);
+export const materials = Mongoose.model("materials", materialsSchema);
