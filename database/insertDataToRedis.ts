@@ -7,6 +7,9 @@ export const insertDataToRedis = async (): Promise<void> => {
   try {
     const items: IAphorisms[] = await aphorisms.find();
 
+    console.log('======================================================');
+    console.log(items);
+    console.log('======================================================');
     await aphorismsModel.setAll(items);
   } catch (error) {
     logger.error(error);
