@@ -25,6 +25,10 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
     const tags = await aphorismsModel.getTags();
     const authors = await aphorismsModel.getAuthors();
 
+    console.log('======================================================');
+    console.log(authors);
+    console.log('======================================================');
+
     aphorisms.length = NUMBER_FIRST_RENDER;
 
     logger.info("getAphorismsPage");

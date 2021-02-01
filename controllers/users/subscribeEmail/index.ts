@@ -13,8 +13,8 @@ export const subscribeEmail = async (req: IParams): Promise<"ok" | Boom> => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.NODEMAILER_AUTH_USER || 'spiritualevolution@yandex.ru',
-        pass: process.env.NODEMAILER_AUTH_PASSWORD || 'generator21',
+        user: process.env.NODEMAILER_AUTH_USER,
+        pass: process.env.NODEMAILER_AUTH_PASSWORD,
       },
     });
 
