@@ -54,9 +54,6 @@ class Aphorisms implements IRedisModel<IAphorisms[]> {
     }
 
     await redis.set(firstKey, JSON.stringify(aphorism));
-    console.log('======================================================');
-    console.log(aphorism);
-    console.log('======================================================');
     this.authors.add(aphorism.authorName);
   }
 
