@@ -1,9 +1,12 @@
-version: '2'
+version: "2"
 services:
   mongo:
     image: mongo:4.4
     ports:
       - 27017:27017/tcp
+    net:
+      bindIp: 0.0.0.0
+      port: 27017
   mongo-express:
     image: "mongo-express:latest"
     ports:
