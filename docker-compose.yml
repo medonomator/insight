@@ -4,16 +4,16 @@ services:
     image: mongo:4.4
     ports:
       - 27017:27017/tcp
-    networks:
-      mongo_net:
-        ipv4_address: 0.0.0.0
-  mongo-express:
-    image: "mongo-express:latest"
-    ports:
-      - "8081:8081"
     environment:
       - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+  # mongo-express:
+  #   image: "mongo-express:latest"
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
+  #     - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
   # redis:
   #   image: 'bitnami/redis:latest'
   #   environment:
