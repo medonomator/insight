@@ -5,8 +5,8 @@ services:
     ports:
       - 27017:27017/tcp
     environment:
-      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGOEXPRESS_LOGIN}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGOEXPRESS_PASSWORD}
   # mongo-express:
   #   image: "mongo-express:latest"
   #   ports:

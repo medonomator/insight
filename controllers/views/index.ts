@@ -5,8 +5,10 @@ import { logger } from "../../helpers/logger";
 import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
 import { aphorisms } from "../../database/schemas/aphorisms";
-import { materials } from "../../database/schemas/materials";
+// import { materials } from "../../database/schemas/materials";
 import { shuffle } from "lodash";
+import { materials } from '../../database/data/meterials'
+
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
@@ -24,10 +26,6 @@ export const getAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => 
     const aphorisms: IAphorisms[] = shuffle(await aphorismsModel.getAll());
     const tags = await aphorismsModel.getTags();
     const authors = await aphorismsModel.getAuthors();
-
-    console.log('======================================================');
-    console.log(authors);
-    console.log('======================================================');
 
     aphorisms.length = NUMBER_FIRST_RENDER;
 
@@ -50,8 +48,9 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  const materialsData = await materials.find().sort({ createdAt: -1 }).lean();
-  return h.view("materials", { materials: materialsData });
+  // const materialsData = await materials.find().sort({ createdAt: -1 }).lean();
+ 
+  return h.view("materials", { materials });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -87,14 +86,14 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    const material = await materials.findById({ _id: req.params.id }).lean();
-    if (!material) {
-      return h.view("404");
-    }
+    // const material = await materials.findById({ _id: req.params.id }).lean();
+    // if (!material) {
+    //   return h.view("404");
+    // }
 
     logger.info("dynamicMaterialPage");
 
-    return h.view("dynamicMaterial", { material });
+    return h.view("dynamicMaterial", {  });
   } catch (error) {
     logger.error("dynamicMaterialPage");
     return h.view("404");
