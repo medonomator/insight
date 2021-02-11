@@ -15,6 +15,11 @@ button:disabled {
   opacity: 0.5;
 }
 
+li {
+	list-style-type: none!important;
+}
+
+
 .ui[class*="left floated"].buttons {
   float: none;
 }

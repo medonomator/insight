@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
+import DatePicker from '../common/DatePicker'
 import styles from './features.module.sass'
 
 const Features = (props) => {
@@ -30,6 +31,7 @@ const Features = (props) => {
   return (
     <div className={styles.features}>
       <h1 ref={measuredRef}>Features</h1>
+      <DatePicker />
       <div className={styles.mouseCoords}>
         <p>
           clientX: <strong>{clientX}</strong>

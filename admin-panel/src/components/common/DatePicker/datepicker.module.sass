@@ -1,0 +1,40 @@
+.calendar 
+  width: 300px
+  display: flex
+  flex-flow: wrap
+  position: relative
+
+  li
+    border-radius: 4px
+    border: 1px solid
+    width: 30px
+    height: 30px
+    text-align: center
+    margin: 2px 
+    transition: all .3s ease
+
+    &:hover
+      cursor: pointer
+      background: green
+      color: white
+
+.arrows
+  position: relative
+  cursor: pointer
+
+  i:first-child
+    position: absolute
+    top: 60px
+    left: -25px
+
+  i:nth-child(2)
+    position: absolute
+    top: 60px
+    right: -260px
+
+.wrapper
+  text-align: center
+  font-weight: 600
+
+.currentDay
+  background: yellow

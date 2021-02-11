@@ -8,3 +8,6 @@ export const DELETE_MATERIAL = 'material/deleteMaterial'
 // notification
 export const SHOW_NOTIFICATION = 'notification/showNotification'
 export const CLOSE_NOTIFICATION = 'notification/closeNotification'
+
+// aphrisms
+export const GET_APHORISMS = 'aphorisms/getAphorisms'

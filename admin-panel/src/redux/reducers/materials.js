@@ -17,6 +17,17 @@ export default (state = initialState, action) => {
         ...state,
         materials: action.payload,
       }
+    case 'INCREMENT':
+      alert(333)
+      return {
+        ...state,
+        materials: action.payload,
+      }
+    case 'INCREMENT_ASYNC':
+      return {
+        ...state,
+        materials: action.payload,
+      }
     default:
       return state
   }

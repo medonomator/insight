@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import CustomTable from '../../components/common/CustomTable'
+import { getAphorisms } from '../../redux/reducers/aphorisms'
+import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 const Aphorisms = (props) => {
+  const [material, setMaterial] = useState({})
+  const [defaultTags, setDefaultTags] = useState([])
+  const [isLoaded, setLoader] = useState(false)
+
   const custom = [
     {
       id: 1,
@@ -20,19 +29,54 @@ const Aphorisms = (props) => {
     },
   ]
 
+  useEffect(() => {
+    setLoader(true)
+    props.getAphorisms()
+  }, [])
+
   return (
     <div>
       <h1>Aphorisms</h1>
-      {custom.map((item, index) => {
-        return (
-          <div key={index}>
-            {item.name}
-            <Link to={`${props.match.path}/${item.id}`}>Click me</Link>
-          </div>
-        )
-      })}
+      <Button primary as={Link} to={`${props.match.path}/add`}>
+        Add
+      </Button>
+      {/* 
+      <CustomTable
+        isLoaded={isLoaded}
+        items={props.materials}
+        headerCells={[
+          'Name',
+          'Tags',
+          'Audiobook',
+          'Books',
+          'WebSite',
+          'Youtube',
+          '',
+          '',
+        ]}
+        orderFields={[
+          'name',
+          'tags',
+          'audiobooks',
+          'books',
+          'websiteUrl',
+          'youtubeUrl',
+        ]}
+      /> */}
     </div>
   )
 }
 
-export default Aphorisms
+const mapStateToProps = (state) => ({
+  ...state.materials,
+})
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getAphorisms,
+    },
+    dispatch
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(Aphorisms)
