@@ -4,9 +4,9 @@ services:
     image: mongo:4.4
     ports:
       - 27017:27017/tcp
-    net:
-      bindIp: 0.0.0.0
-      port: 27017
+    networks:
+      mongo_net:
+        ipv4_address: 0.0.0.0
   mongo-express:
     image: "mongo-express:latest"
     ports:
