@@ -1,10 +1,15 @@
 import React from 'react'
 
-const Home = (props) => (
-  <div>
-    <h1>Home</h1>
-    <p>Count: {props.count}</p>
-  </div>
-)
+const Home = (props) => {
+  const addList = () => {
+    // ...
+  }
 
+  return (
+    <div>
+      <h1>Home</h1>
+      <button onClick={addList}>Add a list</button>
+    </div>
+  )
+}
 export default Home

@@ -3,11 +3,8 @@ import { getAphorisms } from '../fetch'
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
-function* helloSaga() {
-  console.log('Hello Sagas!')
-}
-
 export function* incrementAsync() {
+
   const products = yield getAphorisms()
   console.log(products)
   yield delay(5000)
@@ -19,5 +16,5 @@ export function* watchIncrementAsync() {
 }
 
 export default function* rootSaga() {
-  yield all([helloSaga(), watchIncrementAsync()])
+  yield all([watchIncrementAsync()])
 }

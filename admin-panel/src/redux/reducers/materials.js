@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
         materials: action.payload,
       }
     case 'INCREMENT':
-      alert(333)
       return {
         ...state,
         materials: action.payload,
