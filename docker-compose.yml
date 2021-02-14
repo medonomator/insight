@@ -1,19 +1,20 @@
 version: "2"
 services:
-  mongo:
-    image: mongo:4.4
-    ports:
-      - 27017:27017/tcp
+  db:
+    image: postgres:12
+    restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGOEXPRESS_LOGIN}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGOEXPRESS_PASSWORD}
-  # mongo-express:
-  #   image: "mongo-express:latest"
-  #   ports:
-  #     - "8081:8081"
-  #   environment:
-  #     - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
-  #     - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ../db:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
   # redis:
   #   image: 'bitnami/redis:latest'
   #   environment:
@@ -30,12 +31,3 @@ services:
   #   environment:
   #     - RABBITMQ_DEFAULT_USER=user
   #     - RABBITMQ_DEFAULT_PASS=password
-  # postgresql:
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_DB: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: 1234
-  #   ports:
-  #     - '5432:5432'
