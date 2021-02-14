@@ -10,11 +10,6 @@ services:
       - ./postgresql.conf:/etc/postgresql/postgresql.conf
     ports:
       - 5432:5432
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
   # redis:
   #   image: 'bitnami/redis:latest'
   #   environment:
