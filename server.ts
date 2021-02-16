@@ -77,7 +77,7 @@ export class Server {
         unauthorized: this.getErrorFunction,
       });
 
-      await checkAndFillDataToLocalDatabase();
+      // await checkAndFillDataToLocalDatabase();
       await insertDataToRedis();
       serverHelthCheck();
 
