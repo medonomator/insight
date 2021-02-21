@@ -1,16 +1,19 @@
 version: "2"
 services:
-  # mongo:
-  #   image: mongo:4.4
-  #   ports:
-  #     - 27017:27017/tcp
+  mongo:
+    image: mongo:4.4
+    ports:
+      - 27017:27017/tcp
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=insight
   mongo-express:
     image: "mongo-express:latest"
-    restart: always
     ports:
       - "8081:8081"
-    links:
-        - mongo
+    depends_on:
+      - mongo
     environment:
       - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
