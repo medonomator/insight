@@ -5,9 +5,8 @@ services:
     ports:
       - 27017:27017/tcp
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE=insight
+      - MONGO_INITDB_ROOT_USERNAME: root
+      - MONGO_INITDB_ROOT_PASSWORD: example
   mongo-express:
     image: "mongo-express:latest"
     ports:
@@ -15,8 +14,8 @@ services:
     depends_on:
       - mongo
     environment:
-      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD: example
   # redis:
   #   image: 'bitnami/redis:latest'
   #   environment:
