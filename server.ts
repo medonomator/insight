@@ -15,13 +15,13 @@ import views from "./routes/views";
 import admin from "./routes/admin";
 import tasks from "./routes/tasks";
 import statics from "./routes/statics";
-// import mongoConnection from "./database/mongoConnection";
+import mongoConnection from "./database/mongoConnection";
 
 import { insertDataToRedis } from "./database/insertDataToRedis";
 import { serverHelthCheck } from "./helpers/serverHelthCheck";
 import { checkAndFillDataToLocalDatabase } from "./database/checkAndFillDataToLocalDatabase";
-
-// mongoConnection();
+import { cronJobRunner } from "./workers/cronJobRunner";
+mongoConnection();
 
 export class Server {
   constructor(private port: string) {}
@@ -78,6 +78,7 @@ export class Server {
       });
 
       // await checkAndFillDataToLocalDatabase();
+      await cronJobRunner();
       await insertDataToRedis();
       serverHelthCheck();
 

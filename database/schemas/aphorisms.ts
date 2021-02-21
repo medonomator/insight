@@ -16,6 +16,9 @@ const aphorismsSchema = new Mongoose.Schema(
     category: {
       type: String,
     },
+    vkPosted: {
+      type: Boolean,
+    },
     tags: [
       {
         name: String,
