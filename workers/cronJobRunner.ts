@@ -7,15 +7,13 @@ import VkApi from "../helpers/vkApi";
 
 export const cronJobRunner = async () => {
   try {
-    cron.schedule("*/60 * * * *", async () => {
-      // const aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
+    cron.schedule("*/180 * * * *", async () => {
+      const aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
 
-      // if (!aphorism) {
-      //   await aphorisms.update({}, { vkPosted: false }, { multi: true });
-      // }
-      const aphorism: any = {};
-
-      aphorism.body = "<p>Text</p><br/><p>Text</p>";
+      if (!aphorism) {
+        await aphorisms.update({}, { vkPosted: false }, { multi: true });
+      }
+    
       await VkApi.wallPost(aphorism.body);
 
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });

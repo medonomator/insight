@@ -13,9 +13,9 @@ const sagaMiddleware = createSagaMiddleware()
 export default function configStore(preloadedState) {
   const middleware = [routerMiddleware(history), ReduxThunk, sagaMiddleware]
 
-  if (process.env.NODE_ENV === `development`) {
-    middleware.push(logger)
-  }
+  // if (process.env.NODE_ENV === `development`) {
+  //   middleware.push(logger)
+  // }
 
   const store = configureStore({
     reducer: createRootReducer(history),
@@ -26,8 +26,8 @@ export default function configStore(preloadedState) {
 
   sagaMiddleware.run(rootSaga)
 
-  const action = (type) => store.dispatch(type)
-  action({ type: 'INCREMENT_ASYNC' });
+  // const action = (type) => store.dispatch(type)
+  // action({ type: 'INCREMENT_ASYNC' });
 
   return store
 }

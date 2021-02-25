@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import CustomTable from '../../components/common/CustomTable'
-import { getAphorisms } from '../../redux/reducers/aphorisms'
+// import { getAphorisms } from '../../redux/reducers/aphorisms'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
@@ -31,7 +31,7 @@ const Aphorisms = (props) => {
 
   useEffect(() => {
     setLoader(true)
-    props.getAphorisms()
+    // props.getAphorisms()
   }, [])
 
   return (
@@ -74,7 +74,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      getAphorisms,
+      // getAphorisms,
     },
     dispatch
   )
