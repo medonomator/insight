@@ -6,11 +6,12 @@ import { uniq } from "lodash";
 
 export const globalPostInfoToTelegramBot = async () => {
   try {
-    const dzerjinsk = await axios.get("https://www.gismeteo.ru/weather-dzerzhinsk-11950/");
+    const dzerjinsk = await axios.get("https://world-weather.ru/pogoda/russia/dzerzhinsk/");
     const gelendjik = await axios.get("https://www.gismeteo.ru/weather-gelendzhik-5213/");
 
     let $ = cheerio.load(dzerjinsk.data);
-    let data: any = $(".tab-weather__value_l").html();
+    $("#weather-now-number span").remove();
+    let data: any = $("#weather-now-number").html();
     let temp = uniq(data.split(" "));
     let temperature = temp[temp.length - 1];
 
