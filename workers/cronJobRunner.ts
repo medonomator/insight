@@ -17,7 +17,7 @@ export const cronJobRunner = async () => {
 
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });
     });
-    
+
     cron.schedule("*/360 * * * *", async () => {
       await globalPostInfoToTelegramBot();
     });
