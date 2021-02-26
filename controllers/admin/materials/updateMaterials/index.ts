@@ -16,10 +16,6 @@ export const updateMaterials = async (req: IParamsUpdate): Promise<IResponse> =>
     const { _id, name, description, tags, websiteUrl, youtubeUrl, audioBooks, books } = req.payload;
     const inMachineName: IItemNameMachine[] = [];
 
-    console.log('======================================================');
-    console.log(tags);
-    console.log('======================================================');
-    
     if (!isEmpty(tags)) {
       tags.forEach((name: any) => {
         inMachineName.push({ name, machineName: cyrToLat(name) });

@@ -1,8 +1,7 @@
 import Boom from "boom";
 import { logger } from "../../../../helpers/logger";
 import { IResponse, IMaterials } from "../interfaces";
-// import { materials } from "../../../../database/schemas/materials";
-import { materials } from '../../../../database/data/meterials'
+import { materials } from '../../../../database/schemas/materials'
 
 /**
  * Get Materials
@@ -10,8 +9,8 @@ import { materials } from '../../../../database/data/meterials'
  */
 export const getMaterials = async (): Promise<IResponse> => {
   try {
-    // const data: IMaterials[] = await materials.find().lean();
-    const data = []
+    const data: IMaterials[] = await materials.find().lean();
+
     logger.info("Get Materials");
     return { data, count: data.length };
   } catch (err) {

@@ -3,8 +3,12 @@ import SocksProxyAgent from "socks-proxy-agent";
 import { logger } from "./logger";
 import proxyList from "../config/data/proxyList";
 import { IS_DEVELOPMENT } from "../constants";
+import dotenv from "dotenv";
 // var HttpProxyAgent = require('http-proxy-agent');
 // var ProxyAgent = require('proxy-agent');
+
+const { BOT_TOKEN }: any = dotenv.config().parsed;
+
 const BOT_ID = "409011202";
 // Singleton
 class TelegramBot {
@@ -16,7 +20,7 @@ class TelegramBot {
   constructor() {
     // TODO: in future need take proxy's from the database
     // this._proxyList = proxyList;
-    this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
+    this._bot = new Telegraf(String(BOT_TOKEN), {
       // telegram: {
       //   agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
       // },

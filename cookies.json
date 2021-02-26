@@ -1,0 +1,119 @@
+{
+  "www.instagram.com": {
+    "/": {
+      "ig_cb": {
+        "key": "ig_cb",
+        "value": "1",
+        "domain": "www.instagram.com",
+        "path": "/",
+        "hostOnly": true,
+        "pathIsDefault": true,
+        "creation": "2021-02-26T02:18:38.108Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      }
+    }
+  },
+  "instagram.com": {
+    "/": {
+      "ig_did": {
+        "key": "ig_did",
+        "value": "80D28D3E-6B04-4C30-9A2F-209494B7A023",
+        "expires": "2023-02-26T02:18:38.000Z",
+        "maxAge": 63072000,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:38.643Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      },
+      "csrftoken": {
+        "key": "csrftoken",
+        "value": "pVb9Lnw0UNvYByBpxvUOTcJjIKuNftge",
+        "expires": "2022-02-25T02:20:49.000Z",
+        "maxAge": 31449600,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:38.644Z",
+        "lastAccessed": "2021-02-26T02:20:49.615Z"
+      },
+      "mid": {
+        "key": "mid",
+        "value": "YDhafgAEAAHQe6aYf8c-uEgDB0ax",
+        "expires": "2023-02-26T02:18:38.000Z",
+        "maxAge": 63072000,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:38.644Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      },
+      "rur": {
+        "key": "rur",
+        "value": "FTW",
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:40.891Z",
+        "lastAccessed": "2021-02-26T02:20:49.617Z"
+      },
+      "ds_user_id": {
+        "key": "ds_user_id",
+        "value": "8463002721",
+        "expires": "2021-05-27T02:20:49.000Z",
+        "maxAge": 7776000,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:40.893Z",
+        "lastAccessed": "2021-02-26T02:20:49.620Z"
+      },
+      "sessionid": {
+        "key": "sessionid",
+        "value": "8463002721%3AJfo2bcbEQGtwAL%3A27",
+        "expires": "2022-02-26T02:18:40.000Z",
+        "maxAge": 31536000,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:40.895Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      },
+      "shbid": {
+        "key": "shbid",
+        "value": "5700",
+        "expires": "2021-03-05T02:18:41.000Z",
+        "maxAge": 604800,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:42.531Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      },
+      "shbts": {
+        "key": "shbts",
+        "value": "1614305921.3555048",
+        "expires": "2021-03-05T02:18:41.000Z",
+        "maxAge": 604800,
+        "domain": "instagram.com",
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "hostOnly": false,
+        "creation": "2021-02-26T02:18:42.535Z",
+        "lastAccessed": "2021-02-26T02:20:49.284Z"
+      }
+    }
+  }
+}

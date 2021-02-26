@@ -5,10 +5,8 @@ import { logger } from "../../helpers/logger";
 import aphorismsModel from "../../models/redis/aphorisms";
 import { IAphorisms } from "../../interfaces/aphorism";
 import { aphorisms } from "../../database/schemas/aphorisms";
-// import { materials } from "../../database/schemas/materials";
+import { materials } from "../../database/schemas/materials";
 import { shuffle } from "lodash";
-import { materials } from '../../database/data/meterials'
-
 
 export const getMainPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
@@ -48,9 +46,9 @@ export const getAffirmationPage = async (req, h: Vision<Hapi.ResponseToolkit>) =
 };
 
 export const getMaterialsPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
-  // const materialsData = await materials.find().sort({ createdAt: -1 }).lean();
- 
-  return h.view("materials", { materials });
+  const materialsData = await materials.find().sort({ createdAt: 1 }).lean();
+
+  return h.view("materials", { materials: materialsData });
 };
 
 export const getContactsPage = (req, h: Vision<Hapi.ResponseToolkit>) => {
@@ -86,14 +84,14 @@ export const dynamicAphorismsPage = async (req, h: Vision<Hapi.ResponseToolkit>)
 
 export const dynamicMaterialPage = async (req, h: Vision<Hapi.ResponseToolkit>) => {
   try {
-    // const material = await materials.findById({ _id: req.params.id }).lean();
-    // if (!material) {
-    //   return h.view("404");
-    // }
+    const material = await materials.findById({ _id: req.params.id }).lean();
+    if (!material) {
+      return h.view("404");
+    }
 
     logger.info("dynamicMaterialPage");
 
-    return h.view("dynamicMaterial", {  });
+    return h.view("dynamicMaterial", { material });
   } catch (error) {
     logger.error("dynamicMaterialPage");
     return h.view("404");
