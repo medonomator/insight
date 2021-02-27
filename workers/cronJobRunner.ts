@@ -17,10 +17,10 @@ export const cronJobRunner = async () => {
 
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });
     });
-    await globalPostInfoToTelegramBot();
-    // cron.schedule("*/360 * * * *", async () => {
-    //   await globalPostInfoToTelegramBot();
-    // });
+
+    cron.schedule("*/360 * * * *", async () => {
+      await globalPostInfoToTelegramBot();
+    });
     logger.info("All Jobs are running");
   } catch (error) {
     logger.error(error);
