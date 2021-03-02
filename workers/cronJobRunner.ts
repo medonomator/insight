@@ -6,7 +6,7 @@ import { globalPostInfoToTelegramBot } from "./globalPostInfoToTelegramBot";
 
 export const cronJobRunner = async () => {
   try {
-    cron.schedule("* * 1 * *", async () => {
+    cron.schedule("0 */3 * * *", async () => {
       const aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
 
       if (!aphorism) {
@@ -18,7 +18,7 @@ export const cronJobRunner = async () => {
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });
     });
 
-    cron.schedule("* * 3 * *", async () => {
+    cron.schedule("0 */6 * * *", async () => {
       await globalPostInfoToTelegramBot();
     });
     logger.info("All Jobs are running");
