@@ -1,7 +1,7 @@
 import axios from "axios";
 import { logger } from "../helpers/logger";
 import { insertDataToRedis } from "../database/insertDataToRedis";
-import TelegramBot from "./telegramBotLauncher";
+import TelegramSendMessage from "./telegramBotLauncher";
 import { MAIN_HOST_URL } from "../constants";
 
 const TIMELIFE_REQUEST = 1000 * 30; // 30 second
@@ -16,12 +16,12 @@ export const serverHelthCheck = () => {
 
       if (!res.data.length) {
         await insertDataToRedis();
-        TelegramBot.sendMessage("Update data in redis");
+        TelegramSendMessage("Update data in redis");
       } else {
         logger.info("Without failures");
       }
     } catch (err) {
-      TelegramBot.sendMessage("Website not response!");
+      TelegramSendMessage("Website not response!");
       logger.error(err);
     }
   }, TIME_UPDATE_CHECKER);

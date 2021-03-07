@@ -1,12 +1,12 @@
-import * as jwt from 'jsonwebtoken';
-import * as crypto from 'crypto';
-import { TOKEN_SIGN_KEY, REFRESH_TOKEN_SIGN_KEY } from '../config';
-const CyrToLat = require('cyrillic-to-translit-js');
+import * as jwt from "jsonwebtoken";
+import * as crypto from "crypto";
+import { TOKEN_SIGN_KEY, REFRESH_TOKEN_SIGN_KEY } from "../config";
+const CyrToLat = require("cyrillic-to-translit-js");
 
 interface ITokens {
   token: string;
   refreshToken: string;
-  expireIn: number
+  expireIn: number;
 }
 
 interface IPrepareTokensParams {
@@ -27,9 +27,9 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
       },
       TOKEN_SIGN_KEY,
       {
-        algorithm: 'HS256',
+        algorithm: "HS256",
         expiresIn: tokenExpirationSeconds,
-      },
+      }
     ),
     refreshToken: jwt.sign(
       {
@@ -39,25 +39,22 @@ export const prepareTokens = (obj: IPrepareTokensParams): ITokens => {
       },
       REFRESH_TOKEN_SIGN_KEY,
       {
-        algorithm: 'HS256',
+        algorithm: "HS256",
         expiresIn: Math.floor(tokenExpirationSeconds + refreshTokenExpirationSeconds),
-      },
+      }
     ),
-    expireIn: tokenExpirationSeconds
+    expireIn: tokenExpirationSeconds,
   };
 };
 
-export const encryptData = (str: string, secretKey = 'secretKey') => {
-  return crypto
-    .createHmac('sha256', secretKey)
-    .update(str)
-    .digest('hex');
+export const encryptData = (str: string, secretKey = "secretKey") => {
+  return crypto.createHmac("sha256", secretKey).update(str).digest("hex");
 };
 
 export const cyrToLat = (symbols: string) => {
-  return new CyrToLat()
-    .transform(symbols)
-    .replace("'", '')
-    .replace(',', '')
-    .replace(/ /g, '');
+  return new CyrToLat().transform(symbols).replace("'", "").replace(",", "").replace(/ /g, "");
+};
+
+export const getRandomNumberFromArray = (arr: string[]) => {
+  return Math.round(Math.random() * arr.length - 1);
 };

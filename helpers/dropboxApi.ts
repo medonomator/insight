@@ -1,51 +1,47 @@
-import fs from 'fs';
-import { logger } from '../helpers/logger';
-import dropboxV2Api from 'dropbox-v2-api';
-import TelegramBot from './telegramBotLauncher';
+import fs from "fs";
+import { logger } from "../helpers/logger";
+import dropboxV2Api from "dropbox-v2-api";
+import TelegramSendMessage from "./telegramBotLauncher";
 
 const dropbox = dropboxV2Api.authenticate({
   token: process.env.DROPBOX_TOKEN,
 });
 
-const timeNow = () =>
-  new Date()
-    .toISOString()
-    .slice(0, -8)
-    .replace('T', '_');
+const timeNow = () => new Date().toISOString().slice(0, -8).replace("T", "_");
 
 export const dropboxUploadFile = () => {
   dropbox(
     {
-      resource: 'files/upload',
+      resource: "files/upload",
       parameters: {
         path: `/backup/aphorisms_${timeNow()}.json`,
       },
-      readStream: fs.createReadStream('static/backup/aphorisms.json'),
+      readStream: fs.createReadStream("static/backup/aphorisms.json"),
     },
-    err => {
+    (err) => {
       if (err) {
         logger.error(err);
-        TelegramBot.sendMessage('Aphorisms backup failed');
+        TelegramSendMessage("Aphorisms backup failed");
       } else {
-        TelegramBot.sendMessage('Aphorisms backup was successful');
+        TelegramSendMessage("Aphorisms backup was successful");
       }
-    },
+    }
   );
   dropbox(
     {
-      resource: 'files/upload',
+      resource: "files/upload",
       parameters: {
         path: `/backup/subscribers${timeNow()}.json`,
       },
-      readStream: fs.createReadStream('static/backup/subscribers.json'),
+      readStream: fs.createReadStream("static/backup/subscribers.json"),
     },
-    err => {
+    (err) => {
       if (err) {
         logger.error(err);
-        TelegramBot.sendMessage('Subscribers backup failed');
+        TelegramSendMessage("Subscribers backup failed");
       } else {
-        TelegramBot.sendMessage('Subscribers backup was successful');
+        TelegramSendMessage("Subscribers backup was successful");
       }
-    },
+    }
   );
 };

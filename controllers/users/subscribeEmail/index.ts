@@ -2,7 +2,7 @@ import Boom from "boom";
 import Nodemailer from "nodemailer";
 import { logger } from "../../../helpers/logger";
 import { IParams } from "./interfaces";
-import TelegramBot from "../../../helpers/telegramBotLauncher";
+import TelegramSendMessage from "../../../helpers/telegramBotLauncher";
 import { subscribers } from "../../../database/schemas/subscribers";
 
 export const subscribeEmail = async (req: IParams): Promise<"ok" | Boom> => {
@@ -36,8 +36,7 @@ export const subscribeEmail = async (req: IParams): Promise<"ok" | Boom> => {
       },
       null
     );
-
-    TelegramBot.sendMessage(`New subscriber is: ${email}`);
+    TelegramSendMessage(`Этот товарищ: ${email} оформил подписку на новости`);
 
     logger.info(resInfo);
     return "ok";

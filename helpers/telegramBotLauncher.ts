@@ -1,79 +1,58 @@
-import Telegraf from "telegraf";
-import SocksProxyAgent from "socks-proxy-agent";
-import { logger } from "./logger";
-import proxyList from "../config/data/proxyList";
-import { IS_DEVELOPMENT } from "../constants";
+import { Telegram, KeyboardBuilder } from "puregram";
 import dotenv from "dotenv";
-// var HttpProxyAgent = require('http-proxy-agent');
-// var ProxyAgent = require('proxy-agent');
+import { logger } from "./logger";
+import { IS_DEVELOPMENT, MESSAGES_FROM_MAIN_BOT, MAIN_BOT_ID } from "../constants";
+import { getRandomNumberFromArray } from "../helpers";
 
 const { BOT_TOKEN }: any = dotenv.config().parsed;
 
-const BOT_ID = "409011202";
-// Singleton
 class TelegramBot {
-  private static instance: TelegramBot;
-  private _bot;
-  private _proxyList: string[];
-  private _lostMessages: string[] = [];
-  private _currentProxy = 2;
+  private bot: Telegram;
   constructor() {
-    // TODO: in future need take proxy's from the database
-    // this._proxyList = proxyList;
-    this._bot = new Telegraf(String(BOT_TOKEN), {
-      // telegram: {
-      //   agent: new SocksProxyAgent(this._proxyList[this._currentProxy]),
-      // },
+    this.bot = new Telegram({
+      token: BOT_TOKEN,
     });
+
+    TelegramBot.startPolling(this.bot);
   }
 
-  public static Init(): TelegramBot {
-    if (!TelegramBot.instance) {
-      TelegramBot.instance = new TelegramBot();
-    }
-    return TelegramBot.instance;
+  private static startPolling(bot) {
+    bot.updates
+      .startPolling()
+      .then(() => console.log(`Bot started polling`))
+      .catch(console.error);
   }
 
-  public sendMessage = async (message: string) => {
-    try {
-      await this._bot.telegram.sendMessage(BOT_ID, message);
-      logger.info(`Message >>> ${message} <<< was sended`);
-
-      this.handlerLostMessages();
-    } catch (err) {
-      this._lostMessages.push(message);
-      // this.reconnectNextProxy();
-      logger.error(err);
+  public botLauncher = () => {
+    if (!IS_DEVELOPMENT) {
+      this.bot.api.sendMessage({ text: "Bot initialization", chat_id: MAIN_BOT_ID });
     }
+    logger.info("Bot initialization");
+
+    this.bot.updates.on("message", (context) => {
+      const randomNumber = getRandomNumberFromArray(MESSAGES_FROM_MAIN_BOT);
+      const SOME_BUTTON = "Some button";
+
+      // if (context.payload.text === SOME_BUTTON) {
+      //   context.send(MESSAGES_FROM_MAIN_BOT[randomNumber];
+      // }
+      // const keyboard = new KeyboardBuilder()
+      //   .textButton(SOME_BUTTON)
+      //   .row()
+      //   .textButton("Two buttons")
+      //   .textButton("In one row")
+      //   .resize();
+
+      // logger.info(`Message >>> ${message} <<< was sended`);
+      return context.send(MESSAGES_FROM_MAIN_BOT[randomNumber]);
+    });
+    //
+    return (text, chat_id = MAIN_BOT_ID) => {
+      this.bot.api.sendMessage({ text, chat_id });
+    };
   };
-
-  public async reconnectNextProxy() {
-    if (this._currentProxy > this._proxyList.length) {
-      this._currentProxy = 10;
-    } else {
-      this._currentProxy = ++this._currentProxy;
-    }
-
-    // this._bot = new Telegraf(String(process.env.BOT_TOKEN), {
-    //   telegram: {
-    //     agent: new SocksProxyAgent(this._proxyList[this._currentProxy])
-    //   }
-    // });
-    const reconnectMessage = `Telegraf reconnecting with proxy: ${this._proxyList[this._currentProxy]}`;
-    logger.warn(reconnectMessage);
-    this.handlerLostMessages();
-  }
-
-  private handlerLostMessages() {
-    if (this._lostMessages.length) {
-      const message = this._lostMessages.shift() as string;
-      this.sendMessage(message);
-    }
-  }
 }
 
-if (!IS_DEVELOPMENT) {
-  TelegramBot.Init().sendMessage("Bot initialization");
-}
+const TelegramSendMessage = new TelegramBot().botLauncher();
 
-export default TelegramBot.Init();
+export default TelegramSendMessage;

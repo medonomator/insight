@@ -3,17 +3,27 @@ import cron from "node-cron";
 import { aphorisms } from "../database/schemas/aphorisms";
 import VkApi from "../helpers/vkApi";
 import { globalPostInfoToTelegramBot } from "./globalPostInfoToTelegramBot";
+import TelegramSendMessage from "../helpers/telegramBotLauncher";
+import { APHORISM_CHANNEL_ID } from "../constants";
 
 export const cronJobRunner = async () => {
   try {
-    cron.schedule("0 */3 * * *", async () => {
-      const aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
+    cron.schedule("0 * * * *", async () => {
+      let aphorism: any = {};
+      aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
 
       if (!aphorism) {
         await aphorisms.update({}, { vkPosted: false }, { multi: true });
+        aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
       }
 
-      await VkApi.wallPost(`${aphorism.body} (${aphorism.authorName})`);
+      const aphorismText = `${aphorism.body} (${aphorism.authorName})`;
+
+      TelegramSendMessage(aphorismText, APHORISM_CHANNEL_ID);
+
+      if (encodeURIComponent(aphorism).length < 1000) {
+        await VkApi.wallPost(aphorismText);
+      }
 
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });
     });

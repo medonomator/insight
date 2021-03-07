@@ -1,5 +1,5 @@
 import { logger } from "../helpers/logger";
-import TelegramBot from "../helpers/telegramBotLauncher";
+import TelegramSendMessage from "../helpers/telegramBotLauncher";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { uniq } from "lodash";
@@ -15,15 +15,15 @@ export const globalPostInfoToTelegramBot = async () => {
     let temp = uniq(data.split(" "));
     let temperature = temp[temp.length - 1];
 
-    TelegramBot.sendMessage(`Температура в Дзержинске: ${temperature}`);
+    TelegramSendMessage(`Температура в Дзержинске: ${temperature}`);
 
     $ = cheerio.load(gelendjik.data);
-    $(".tab-weather__value_m").remove()
+    $(".tab-weather__value_m").remove();
     data = $(".tab-weather__value_l").html();
     temp = uniq(data.split(" "));
     temperature = temp[temp.length - 1];
 
-    TelegramBot.sendMessage(`Температура в Геленджике: ${temperature}`);
+    TelegramSendMessage(`Температура в Геленджике: ${temperature}`);
   } catch (error) {
     logger.error(error);
   }
