@@ -21,7 +21,7 @@ export const cronJobRunner = async () => {
 
       TelegramSendMessage(aphorismText, APHORISM_CHANNEL_ID);
 
-      if (encodeURIComponent(aphorism).length < 1000) {
+      if (encodeURIComponent(aphorismText).length < 1000) {
         await VkApi.wallPost(aphorismText);
       }
 
