@@ -8,7 +8,7 @@ import { APHORISM_CHANNEL_ID } from "../constants";
 
 export const cronJobRunner = async () => {
   try {
-    cron.schedule("0 * * * *", async () => {
+    cron.schedule("0 9,12,15,18,21 * * *", async () => {
       let aphorism: any = {};
       aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
 
