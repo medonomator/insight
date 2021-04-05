@@ -1,4 +1,4 @@
-import { Telegram, KeyboardBuilder } from "puregram";
+import { Telegram, KeyboardBuilder, MarkdownV2 } from "puregram";
 import dotenv from "dotenv";
 import { logger } from "./logger";
 import { IS_DEVELOPMENT, MESSAGES_FROM_MAIN_BOT, MAIN_BOT_ID } from "../constants";
@@ -48,7 +48,7 @@ class TelegramBot {
     });
     //
     return (text, chat_id = MAIN_BOT_ID) => {
-      this.bot.api.sendMessage({ text, chat_id });
+      this.bot.api.sendMessage({ text, chat_id, parse_mode: "MarkdownV2" });
     };
   };
 }

@@ -4,7 +4,9 @@ import { aphorisms } from "../database/schemas/aphorisms";
 import VkApi from "../helpers/vkApi";
 import { globalPostInfoToTelegramBot } from "./globalPostInfoToTelegramBot";
 import TelegramSendMessage from "../helpers/telegramBotLauncher";
-import { APHORISM_CHANNEL_ID } from "../constants";
+import { APHORISM_CHANNEL_ID, MAIN_BOT_ID } from "../constants";
+
+
 
 export const cronJobRunner = async () => {
   try {
@@ -19,7 +21,7 @@ export const cronJobRunner = async () => {
 
       const aphorismText = `${aphorism.body} (${aphorism.authorName})`;
 
-      TelegramSendMessage(aphorismText, APHORISM_CHANNEL_ID);
+      TelegramSendMessage(`${aphorism.body}\\. \n\n✏️ *${aphorism.authorName}*`, APHORISM_CHANNEL_ID);
 
       if (encodeURIComponent(aphorismText).length < 1000) {
         await VkApi.wallPost(aphorismText);
