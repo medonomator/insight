@@ -6,7 +6,6 @@ import { globalPostInfoToTelegramBot } from "./globalPostInfoToTelegramBot";
 import TelegramSendMessage from "../helpers/telegramBotLauncher";
 import { APHORISM_CHANNEL_ID, MAIN_BOT_ID } from "../constants";
 
-
 export const cronJobRunner = async () => {
   try {
     cron.schedule("0 9,12,15,18,21 * * *", async () => {
@@ -18,9 +17,10 @@ export const cronJobRunner = async () => {
         aphorism = await aphorisms.findOne({ vkPosted: false }).lean();
       }
 
-      const aphorismText = `${aphorism.body} (${aphorism.authorName})`;
 
-      TelegramSendMessage(`${aphorism.body} \n\n✏️ *${aphorism.authorName}*`, APHORISM_CHANNEL_ID);
+      const aphorismText = `${aphorism.body.replace(/\./g, '\\.').replace(/-/g, '\\-')} \n\n✏️ *${aphorism.authorName.replace(/\./g, '\\.')}*`;
+
+      TelegramSendMessage(aphorismText, APHORISM_CHANNEL_ID);
 
       if (encodeURIComponent(aphorismText).length < 1000) {
         await VkApi.wallPost(aphorismText);
