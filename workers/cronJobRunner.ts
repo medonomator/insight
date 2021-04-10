@@ -22,9 +22,9 @@ export const cronJobRunner = async () => {
 
       TelegramSendMessage(aphorismText, APHORISM_CHANNEL_ID);
 
-      if (encodeURIComponent(aphorismText).length < 1000) {
-        await VkApi.wallPost(aphorismText);
-      }
+      // if (encodeURIComponent(aphorismText).length < 1000) {
+      //   await VkApi.wallPost(aphorismText);
+      // }
 
       await aphorisms.update({ _id: aphorism._id }, { vkPosted: true });
     });
